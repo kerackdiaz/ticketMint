@@ -1,0 +1,92 @@
+package com.mindhub.ticketmind.models;
+
+import jakarta.persistence.*;
+
+import java.math.BigDecimal;
+import java.util.UUID;
+
+@Entity
+public class Ticket {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    private String name;
+    private BigDecimal basePrice;
+    private int availableQuantity;
+    private BigDecimal increasePercentage;
+
+    @Enumerated(EnumType.STRING)
+    private TicketType type;
+
+    @ManyToOne
+    private Event event;
+
+
+    public Ticket() {
+    }
+
+
+    public Ticket(String name, BigDecimal basePrice, int availableQuantity, BigDecimal increasePercentage, TicketType type, Event event) {
+        this.name = name;
+        this.basePrice = basePrice;
+        this.availableQuantity = availableQuantity;
+        this.increasePercentage = increasePercentage;
+        this.type = type;
+        this.event = event;
+    }
+
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BigDecimal getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(BigDecimal basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    public int getAvailableQuantity() {
+        return availableQuantity;
+    }
+
+    public void setAvailableQuantity(int availableQuantity) {
+        this.availableQuantity = availableQuantity;
+    }
+
+    public BigDecimal getIncreasePercentage() {
+        return increasePercentage;
+    }
+
+    public void setIncreasePercentage(BigDecimal increasePercentage) {
+        this.increasePercentage = increasePercentage;
+    }
+
+    public TicketType getType() {
+        return type;
+    }
+
+    public void setType(TicketType type) {
+        this.type = type;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+}
