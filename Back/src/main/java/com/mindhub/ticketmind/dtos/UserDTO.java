@@ -1,6 +1,6 @@
 package com.mindhub.ticketmind.dtos;
 
-import com.mindhub.ticketmind.models.User;
+import com.mindhub.ticketmind.models.Client;
 import com.mindhub.ticketmind.models.UserRole;
 
 import java.util.UUID;
@@ -17,16 +17,16 @@ public class UserDTO {
     private double commission;
     private String companyName;
 
-    public UserDTO(User user) {
-        this.id = user.getId();
-        this.email = user.getEmail();
-        this.firstname = user.getFirstname();
-        this.lastname = user.getLastname();
-        this.role = user.getRole();
-        this.status = user.isStatus();
-        this.balance = user.getBalance();
-        this.commission = user.getCommission();
-        this.companyName = user.getCompanyName();
+    public UserDTO(Client client) {
+        this.id = client.getId();
+        this.email = client.getEmail();
+        this.firstname = client.getFirstname();
+        this.lastname = client.getLastname();
+        this.role = client.getRole();
+        this.status = client.isStatus();
+        this.balance = client.getBalance();
+        this.commission = client.getCommission();
+        this.companyName = client.getCompanyName();
     }
 
     public UUID getId() {

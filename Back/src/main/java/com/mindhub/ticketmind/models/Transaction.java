@@ -17,6 +17,10 @@ public class Transaction {
     private String description;
     private Date date;
 
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
+
     public Transaction() {
     }
 

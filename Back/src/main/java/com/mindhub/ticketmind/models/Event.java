@@ -35,6 +35,9 @@ public class Event {
     @OneToMany(mappedBy = "event")
     private List<Ticket> ticketTypes;
 
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 
     public Event() {
     }

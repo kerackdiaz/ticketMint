@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-public class User {
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -29,21 +29,21 @@ public class User {
 
     private String companyName;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private List<Event> event;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private List<Transaction> transactions;
 
     @ManyToMany
-    @JoinTable(name= "favorites", joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns = @JoinColumn(name="event_id"))
+    @JoinTable(name= "favorites", joinColumns = @JoinColumn(name="client_id"), inverseJoinColumns = @JoinColumn(name="event_id"))
     private List<Event> myFavoritesEvents;
 
 
-    public User() {
+    public Client() {
     }
 
-    public User(String email, String firstname, String lastname, String password, UserRole role) {
+    public Client(String email, String firstname, String lastname, String password, UserRole role) {
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
