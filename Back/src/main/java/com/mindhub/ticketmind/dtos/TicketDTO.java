@@ -11,7 +11,7 @@ public class TicketDTO {
     private String name;
     private BigDecimal basePrice;
     private int availableQuantity;
-    private BigDecimal increasePercentage;
+    private double increasePercentage;
     private TicketType type;
 
 
@@ -41,7 +41,7 @@ public class TicketDTO {
         return availableQuantity;
     }
 
-    public BigDecimal getIncreasePercentage() {
+    public double getIncreasePercentage() {
         return increasePercentage;
     }
 

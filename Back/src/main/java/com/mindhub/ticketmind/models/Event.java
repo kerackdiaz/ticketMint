@@ -42,7 +42,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(String name, String description, List<CategoryEvent> categories, String imageURL, Date date, String venueName, String venueURL, City city, List<Notification> notifications, List<Ticket> ticketTypes) {
+    public Event(String name, String description, List<CategoryEvent> categories, String imageURL, Date date, String venueName, String venueURL, City city) {
         this.name = name;
         this.description = description;
         this.categories = categories;
@@ -51,8 +51,6 @@ public class Event {
         this.venueName = venueName;
         this.venueURL = venueURL;
         this.city = city;
-        this.notifications = notifications;
-        this.ticketTypes = ticketTypes;
     }
 
     public UUID getId() {
@@ -137,5 +135,13 @@ public class Event {
 
     public void setTicketTypes(List<Ticket> ticketTypes) {
         this.ticketTypes = ticketTypes;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

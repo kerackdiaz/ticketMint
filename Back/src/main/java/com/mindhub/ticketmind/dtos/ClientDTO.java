@@ -5,7 +5,7 @@ import com.mindhub.ticketmind.models.UserRole;
 
 import java.util.UUID;
 
-public class UserDTO {
+public class ClientDTO {
 
     private UUID id;
     private String email;
@@ -17,7 +17,7 @@ public class UserDTO {
     private double commission;
     private String companyName;
 
-    public UserDTO(Client client) {
+    public ClientDTO(Client client) {
         this.id = client.getId();
         this.email = client.getEmail();
         this.firstname = client.getFirstname();

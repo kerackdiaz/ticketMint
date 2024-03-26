@@ -21,7 +21,7 @@ public class Client {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    private boolean status;
+    private boolean status = false;
 
     private double balance;
 

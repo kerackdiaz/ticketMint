@@ -15,7 +15,7 @@ public class Ticket {
     private String name;
     private BigDecimal basePrice;
     private int availableQuantity;
-    private BigDecimal increasePercentage;
+    private double increasePercentage;
 
     @Enumerated(EnumType.STRING)
     private TicketType type;
@@ -28,7 +28,7 @@ public class Ticket {
     }
 
 
-    public Ticket(String name, BigDecimal basePrice, int availableQuantity, BigDecimal increasePercentage, TicketType type, Event event) {
+    public Ticket(String name, BigDecimal basePrice, int availableQuantity, double increasePercentage, TicketType type, Event event) {
         this.name = name;
         this.basePrice = basePrice;
         this.availableQuantity = availableQuantity;
@@ -66,11 +66,11 @@ public class Ticket {
         this.availableQuantity = availableQuantity;
     }
 
-    public BigDecimal getIncreasePercentage() {
+    public double getIncreasePercentage() {
         return increasePercentage;
     }
 
-    public void setIncreasePercentage(BigDecimal increasePercentage) {
+    public void setIncreasePercentage(double increasePercentage) {
         this.increasePercentage = increasePercentage;
     }
 
