@@ -55,10 +55,9 @@ public class EventService {
             List<CategoryEvent> categories = new ArrayList<>();
             if (categoryNames != null && !categoryNames.isEmpty()) {
                 for (String categoryName : categoryNames) {
-                    String categoryNameUpper = categoryName.toUpperCase(); // Convertir a mayúsculas
+                    String categoryNameUpper = categoryName.toUpperCase();
                     CategoryEvent category = categoryEventRepository.findByName(categoryNameUpper);
                     if (category == null) {
-                        // Si la categoría no existe, créala y guárdala en la base de datos
                         category = new CategoryEvent(categoryNameUpper);
                         category = categoryEventRepository.save(category);
                     }

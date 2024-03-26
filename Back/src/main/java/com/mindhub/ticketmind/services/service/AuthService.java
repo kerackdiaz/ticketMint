@@ -150,8 +150,38 @@ public class AuthService {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             helper.setFrom("ticketMint@3mas1r.com");
             helper.setTo(client.getEmail());
-            helper.setSubject("Verificación de cuenta");
-            helper.setText("<html><body><h1>Por favor, haga clic en el siguiente enlace para verificar su cuenta:</h1><a href='http://tudominio.com/verificar?email=" + client.getEmail() + "'>Verificar cuenta</a></body></html>", true);
+            helper.setSubject("Account verification");
+            helper.setText("<html><body><table style=\"border-collapse: collapse; width: 100%; height: 58px;\" border=\"1\">\n" +
+                    "  <tbody>\n" +
+                    "    <tr style=\"height: 58px;\">\n" +
+                    "      <td style=\"width: 72.3514%; height: 58px; border:none; text-align: center;\">\n" +
+                    "        <span style=\"font-size: 36pt; font-family: impact, sans-serif;\">Hi " + client.getFirstname() + ", Welcome to</span>\n" +
+                    "      </td>\n" +
+                    "      <td style=\"width: 27.6486%; height: 58px; border:none;\">\n" +
+                    "        <img src=\"https://firebasestorage.googleapis.com/v0/b/homebankingapp-4b70f.appspot.com/o/ticketmint%2Fmailassets%2FticketmintLogo.png?alt=media&amp;token=e1c414f3-41e6-4da1-a5b8-7b63e3013612\" alt=\"\" width=\"101\" height=\"101\">\n" +
+                    "      </td>\n" +
+                    "    </tr>\n" +
+                    "  </tbody>\n" +
+                    "</table>\n" +
+                    "<br>\n" +
+                    "<table style=\"border-collapse: collapse; width: 100%;\" border=\"1\">\n" +
+                    "  <tbody>\n" +
+                    "    <tr>\n" +
+                    "      <td style=\"width: 50%; border:none\">\n" +
+                    "        <img src=\"https://firebasestorage.googleapis.com/v0/b/homebankingapp-4b70f.appspot.com/o/ticketmint%2Fmailassets%2FbannerTicket.png?alt=media&amp;token=1f680708-41ec-4333-bdec-c8e5e3f56ca0\" alt=\"\" width=\"391\" height=\"418\">\n" +
+                    "        <br>\n" +
+                    "      </td>\n" +
+                    "      <td style=\"width: 50%; text-align: center;  border:none\">\n" +
+                    "        <span style=\"font-family: tahoma, arial, helvetica, sans-serif; font-size: 18pt;\">Don't waste any more time! Activate your account right now and discover a world of possibilities waiting for you, click here to start enjoying all our exclusive services!\n" +
+                    "          <br>\n" +
+                    "          <br>\n" +
+                    "          <a href=\"https://ticketmint.onrender.com/api//verifyAccount?email=" + client.getEmail() + "' target=\"_blank\" class=\"cloudHQ__gmail_elements_final_btn\" style=\"background-color: #55347b; color: #ffffff; border: 0px solid #000000; border-radius: 3px; box-sizing: border-box; font-size: 13px; font-weight: bold; line-height: 40px; padding: 12px 24px; text-align: center; text-decoration: none; text-transform: uppercase; vertical-align: middle;\" rel=\"noopener\">Activate now</a>\n" +
+                    "          <br>\n" +
+                    "        </span>\n" +
+                    "      </td>\n" +
+                    "    </tr>\n" +
+                    "  </tbody>\n" +
+                    "</table></body></html>", true);
             javaMailSender.send(mimeMessage);
 
             response.put("success", true);
