@@ -1,25 +1,65 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CardEvent from '../components/CardEvent'
+import { TiStarFullOutline } from 'react-icons/ti'
+import { Link } from 'react-router-dom'
+
 
 function Event() {
+  const [location, setLocation] = useState('Select location')
+  const [search, setSearch] = useState('')
+  const [genre, setGenre] = useState('')
+
+  const [onFav, setOnFav] = useState(false)
+
+    const handleFav = () => {
+        setOnFav(!onFav)
+    }
+
+  /* useEffect(() => {
+    axios.get('https://ticket-mint-api.herokuapp.com/events',{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+  },[]) */
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value)
+  }
+
+  const handleLocation = (e) => {
+    setLocation(e.target.value)
+  }
+
+  const handleGenre = (e) => {
+    setGenre(e.target.value)
+  }
+
   return (
-    <div className='bg-[#0b0b1c] flex flex-1 flex-col items-center'>
-      <h1 className='text-3xl text-white '>Events</h1>
-      <div className='flex justify-between w-screen px-5'>
-        <select name="" id="" className='bg-[#0b0b1c] text-white '>
+    <div className='bg-[#0b0b1c] flex flex-1 flex-col items-center p-5'>
+      <h1 className='text-3xl text-white pt-5'>Events</h1>
+      <div className='flex justify-between w-full px-5 md:w-96'>
+        <select name="location" onChange={handleLocation} className='bg-[#0b0b1c] text-white '>
             <option value="Bogota">Bogota</option>
         </select>
-        <button type="button" className='text-white bg-[#8468fb] py-1 px-3 rounded-xl'>Favorites</button>
+        <Link to={'/favorites'}>
+        <button type="button" className='text-white bg-[#8468fb] py-1 px-3 flex items-center gap-2 rounded-xl'>Favorites <TiStarFullOutline/></button>
+        </Link>
       </div>
-      <label className='w-screen flex justify-center mt-5'>
-        <input type="search" placeholder='Search' className='bg-[#0b0b1c] text-white py-1 px-3 rounded-xl border-2 border-[#8468fb] w-[80%]' />
+      <label className='w-screen flex justify-center mt-5 px-5 md:w-96'>
+        <input onInput={handleSearch} type="search" placeholder='Search' className='bg-[#0b0b1c] text-white py-1 px-3 rounded-xl border-2 border-[#8468fb] w-full' />
       </label>
       <div className='flex gap-2 my-4'>
-      <button type="button" value={'Metal'} className='text-white py-1 px-3 rounded-xl bg-[#8468fb]'>Metal</button>
-      <button type="button" value={'Rock'} className='text-white py-1 px-3 rounded-xl bg-[#bbabff]'>Rock</button>
-      <button type="button" value={'Techno'} className='text-white py-1 px-3 rounded-xl bg-[#bbabff]'>Techno</button>
+      <button onClick={handleGenre} type="button" value={'Metal'} className={genre === 'Metal' ? 'text-white py-1 px-3 rounded-xl bg-[#8468fb]':'text-white py-1 px-3 rounded-xl bg-[#bbabff]'}>Metal</button>
+      <button onClick={handleGenre} type="button" value={'Rock'} className={genre === 'Rock' ? 'text-white py-1 px-3 rounded-xl bg-[#8468fb]':'text-white py-1 px-3 rounded-xl bg-[#bbabff]'}>Rock</button>
+      <button onClick={handleGenre} type="button" value={'Techno'} className={genre === 'Techno' ? 'text-white py-1 px-3 rounded-xl bg-[#8468fb]':'text-white py-1 px-3 rounded-xl bg-[#bbabff]'}>Techno</button>
       </div>
-      <CardEvent/>
+      <div className='flex flex-wrap  gap-4 justify-center'>
+      <CardEvent handleFav={handleFav} onFav={onFav} />
+      <CardEvent handleFav={handleFav} onFav={onFav}/>
+      <CardEvent handleFav={handleFav} onFav={onFav}/>
+      <CardEvent handleFav={handleFav} onFav={onFav}/>
+      </div>
     </div>
   )
 }
