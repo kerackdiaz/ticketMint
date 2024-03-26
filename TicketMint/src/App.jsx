@@ -1,34 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import Event from './pages/Event.jsx'
+import UserLayout from './layouts/UserLayout.jsx'
+import DetailsEvent from './pages/DetailsEvent.jsx'
+import MyTickets from './pages/MyTickets.jsx'
+import DetailTicket from './pages/DetailTicket.jsx'
+import QrScan from './pages/QrScan.jsx'
+import Collectibles from './pages/Collectibles.jsx'
+import Market from './pages/Market.jsx'
+import SellTicket from './pages/SellTicket.jsx'
+import Favorites from './pages/Favorites.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <BrowserRouter>
+      <UserLayout>
+      <Routes>
+        <Route path='/event' element={<Event/>}/>
+        <Route path='/details/:id' element={<DetailsEvent/>}/>
+        <Route path='/myTickets' element={<MyTickets/>}/>
+        <Route path='/detailTicket/:id' element={<DetailTicket/>}/>
+        <Route path='/scan/:id' element={<QrScan/>}/>
+        <Route path='/collectibles' element={<Collectibles/>}/>
+        <Route path='/market/:id' element={<Market/>}/>
+        <Route path='/sell/:id' element={<SellTicket/>}/>
+        <Route path='/favorites' element={<Favorites/>}/>
+      </Routes>
+    </UserLayout>
+    </BrowserRouter>
   )
 }
 
