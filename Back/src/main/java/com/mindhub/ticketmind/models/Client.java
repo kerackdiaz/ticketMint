@@ -29,15 +29,19 @@ public class Client {
 
     private String companyName;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client")
     private List<Event> event;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client")
     private List<Transaction> transactions;
 
+    @ManyToMany
+    @JoinTable(name= "favorites", joinColumns = @JoinColumn(name="client_id"), inverseJoinColumns = @JoinColumn(name="event_id"))
+    private List<Event> myFavoritesEvents;
 
-    @OneToMany(mappedBy = "client" ,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client")
     private List<Ticket> tickets;
+
 
     public Client() {
     }
@@ -49,6 +53,7 @@ public class Client {
         this.password = password;
         this.role = role;
     }
+
 
     public UUID getId() {
         return id;
@@ -142,13 +147,16 @@ public class Client {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
-
-
     public List<Ticket> getTickets() {
         return tickets;
     }
 
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    public void addTicket(Ticket ticket) {
+        ticket.setClient(this);
+        tickets.add(ticket);
     }
 }

@@ -16,6 +16,7 @@ public class Transaction {
     private TransactionType type;
     private String description;
     private Date date;
+    private double amount;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -25,10 +26,11 @@ public class Transaction {
     }
 
 
-    public Transaction(TransactionType type, String description, Date date) {
+    public Transaction(TransactionType type, String description, Date date, double amount) {
         this.type = type;
         this.description = description;
         this.date = date;
+        this.amount = amount;
     }
 
     public UUID getId() {
@@ -57,5 +59,21 @@ public class Transaction {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
