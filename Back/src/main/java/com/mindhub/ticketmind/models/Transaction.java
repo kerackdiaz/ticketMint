@@ -2,6 +2,7 @@ package com.mindhub.ticketmind.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -15,7 +16,9 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     private TransactionType type;
     private String description;
-    private Date date;
+    private LocalDate date;
+
+    private Double amount;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -25,7 +28,7 @@ public class Transaction {
     }
 
 
-    public Transaction(TransactionType type, String description, Date date) {
+    public Transaction(TransactionType type, String description, LocalDate date, Double amount) {
         this.type = type;
         this.description = description;
         this.date = date;
@@ -51,11 +54,27 @@ public class Transaction {
         this.description = description;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
