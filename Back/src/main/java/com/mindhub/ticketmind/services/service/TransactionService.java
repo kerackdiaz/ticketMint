@@ -1,89 +1,37 @@
 package com.mindhub.ticketmind.services.service;
 
-<<<<<<< HEAD
+
+import com.mindhub.ticketmind.dtos.TicketTransactionRecordDTO;
 import com.mindhub.ticketmind.dtos.TransactionDTO;
-import com.mindhub.ticketmind.dtos.TransactionFormDTO;
 import com.mindhub.ticketmind.models.Client;
+import com.mindhub.ticketmind.models.Ticket;
 import com.mindhub.ticketmind.models.Transaction;
 import com.mindhub.ticketmind.models.TransactionType;
-import com.mindhub.ticketmind.repositories.ClientRepository;
-import com.mindhub.ticketmind.repositories.TransactionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-@Service
-=======
-import com.mindhub.ticketmind.dtos.TicketTransactionRecordDTO;
-import com.mindhub.ticketmind.models.*;
 import com.mindhub.ticketmind.repositories.ClientRepository;
 import com.mindhub.ticketmind.repositories.TicketRepository;
 import com.mindhub.ticketmind.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
->>>>>>> origin/Ticket-Transfer-Test-Nico
+@Service
 public class TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepository;
-<<<<<<< HEAD
+
 
     @Autowired
     private ClientRepository clientRepository;
 
-    public List<TransactionDTO> getAllTransactions() {
-        return transactionRepository.findAll().stream().map(TransactionDTO::new).toList();
-    }
-
-    public Map<String, Object> createTransaction(TransactionFormDTO transactionFormDTO, String userMail) {
-        Map<String, Object> response = new HashMap<>();
-        Client buyer = clientRepository.findByEmail(userMail);
-//        Client agency = ;
-//        Client admin;
-//        try {
-//            if (buyer == null) {
-//                response.put("error", false);
-//                response.put("message", "The user does not exist");
-//                return response;
-//            }
-//
-//            if (transactionFormDTO.description().isBlank()) {
-//                response.put("error", false);
-//                response.put("message", "The transaction type is required");
-//                return response;
-//
-//            }
-//
-//            Transaction transaction = new Transaction(TransactionType.valueOf(transactionFormDTO.));
-//
-//            transaction.setClient(client);
-//            transactionRepository.save(transaction);
-//
-//            response.put("success", true);
-//            response.put("message", "Transaction created successfully");
-//
-//        }catch (Exception e) {
-//            response.put("error", false);
-//            response.put("message", "An error occurred while creating transaction: " + e.getMessage());
-//            return response;
-//        }
-
-        return response;
-    }
-=======
-    @Autowired
-    private ClientRepository clientRepository;
     @Autowired
     private TicketRepository ticketRepository;
 
-    public List<Transaction> getAllTransactions() {
-        return transactionRepository.findAll();
-    }
+//    public List<TransactionDTO> getAllTransactions() {
+//        return transactionRepository.findAll().stream().map(TransactionDTO::new).toList();
+//    }
+
 
     public Map<String, Object> makeTicketTransaction(TicketTransactionRecordDTO ticketTransactionRecordDTO, String userMail) {
 
@@ -126,25 +74,20 @@ public class TransactionService {
                 return response;
             }
 
-            if(ticketOptional.isPresent()) {
-                Ticket ticket = ticketOptional.get();
-                if (ticket == null) {
-                    response.put("error", true);
-                    response.put("message", "Ticket requested to transfer not found");
-                    return response;
-                }
+            if(ticketOptional.isEmpty()) {
+                response.put("error", true);
+                response.put("message", "Ticket requested to transfer not found");
+                return response;
+            }
+            Ticket ticket =ticketOptional.get();
+
+            if(!sourceClient.getTickets().contains(ticket)) {
+                response.put("error", true);
+                response.put("message", "The ticket exists but it doesn't belong to the client that requested the transfer");
+                return response;
             }
 
-
-        List<Ticket> clientTickets = sourceClient.getTickets();
-        if(!clientHasTicket(clientTickets, ticketTransactionRecordDTO.ticketID())) {
-            response.put("error", true);
-            response.put("message", "The ticket exists but it doesn't belong to the client that requested the transfer");
-            return response;
-        }
-
-            List<Ticket> clientDestinationTickets = sourceClient.getTickets();
-            if(!clientHasTicket(clientDestinationTickets, ticketTransactionRecordDTO.ticketID())) {
+            if(destinationClient.getTickets().contains(ticket)) {
                 response.put("error", true);
                 response.put("message", "The destination client already has that ticket, contact support.");
                 return response;
@@ -171,9 +114,7 @@ public class TransactionService {
             sourceTransaction.setAmount(-ticketPrice);
             transactionRepository.save(destinationTransaction);
 
-            if(ticketOptional.isPresent()) {
-                Ticket ticket = ticketOptional.get();
-
+            try {
                 List<Ticket> sourceClientTickets = sourceClient.getTickets();
                 sourceClientTickets.remove(ticket);
 
@@ -185,6 +126,9 @@ public class TransactionService {
                 clientRepository.save(sourceClient);
                 clientRepository.save(destinationClient);
                 ticketRepository.save(ticket);
+            } catch (Exception e){
+                response.put("error", true);
+                response.put("message", "An error occurred transferring the ticket: " + e.getMessage());
             }
 
             response.put("success", true);
@@ -195,19 +139,6 @@ public class TransactionService {
             response.put("message", "An error occurred making the transaction: " + e.getMessage());
         }
         return response;
-
     }
 
-    private Boolean clientHasTicket (List<Ticket> clientTickets, UUID ticketId) {
-        for (Ticket clientTicket : clientTickets) {
-            if (ticketId == clientTicket.getId()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-
->>>>>>> origin/Ticket-Transfer-Test-Nico
 }
