@@ -1,5 +1,5 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import React,{useState, useEffect} from 'react'
+import {  Routes, Route, useNavigate } from 'react-router-dom'
 import Event from './pages/Event.jsx'
 import UserLayout from './layouts/UserLayout.jsx'
 import DetailsEvent from './pages/DetailsEvent.jsx'
@@ -15,13 +15,40 @@ import Contact from './pages/Contact'
 import Help from './pages/Help'
 import Privacity from './pages/Privacity'
 import Wallet from './pages/Wallet'
+import Login from './pages/Login';
+import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
+  const navigate = useNavigate();
+  const auth = useSelector((state) => state.authReducer.user.loggedIn);
+  const dispatch = useDispatch();
 
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const handleLogin = () => {
+    if(auth===null){
+      setIsLoggedIn(true);
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    dispatch(logout());
+
+  };
+useEffect(() => {
+  if(auth){
+    navigate('/')
+    console.log(auth)
+  }else{
+    navigate('/')
+  }
+},[auth])
   return (
-    <BrowserRouter>
       <UserLayout>
+      {isLoggedIn ? (
+        <>
+        <Header />
         <Routes>
           <Route path='/event' element={<Event />} />
           <Route path='/details/:id' element={<DetailsEvent />} />
@@ -39,8 +66,14 @@ function App() {
           <Route path="/Privacity" element={<Privacity />} />
           <Route path="/Wallet" element={<Wallet />} />
         </Routes>
+        </>
+        ) : (
+          <Routes>
+            <Route path="*" element={<Login onLogin={handleLogin} />} />
+          </Routes>
+        )}
       </UserLayout>
-    </BrowserRouter>
+
   )
 }
 

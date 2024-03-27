@@ -5,7 +5,25 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+
+      },
+      fontFamily: {
+        'gemunu': ['Gemunu Libre', 'sans-serif'],
+        'space-grotesk': ['Space Grotesk', 'sans-serif'],
+      },
+    },
+    screens: {
+      'movil': '320px',
+      
+      'tablet': '640px',
+
+      'laptop': '1024px',
+
+      'desktop': '1280px',
+
+    },
   },
   plugins: [],
-}
+};
