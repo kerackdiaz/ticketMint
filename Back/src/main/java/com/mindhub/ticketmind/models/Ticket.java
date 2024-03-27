@@ -19,14 +19,13 @@ public class Ticket {
 
     @Enumerated(EnumType.STRING)
     private TicketType type;
-
     @ManyToOne
     private Event event;
-
+    @ManyToOne
+    private Client client;
 
     public Ticket() {
     }
-
 
     public Ticket(String name, BigDecimal basePrice, int availableQuantity, double increasePercentage, TicketType type, Event event) {
         this.name = name;
@@ -89,4 +88,13 @@ public class Ticket {
     public void setEvent(Event event) {
         this.event = event;
     }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
 }
