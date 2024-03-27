@@ -102,7 +102,7 @@ public class TransactionService {
             transactionRepository.save(sourceTransaction);
 
             Transaction destinationTransaction = new Transaction();
-            destinationTransaction.setType(TransactionType.CREDIT);
+            destinationTransaction.setType(TransactionType.DEBIT);
             destinationTransaction.setDescription(ticketTransactionRecordDTO.description());
             destinationTransaction.setDate(new Date());
             sourceTransaction.setAmount(-ticketPrice);
