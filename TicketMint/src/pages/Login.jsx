@@ -75,15 +75,15 @@ const Login = ({ onLogin }) => {
 
     const handleSignUp = async (e) => {
         e.preventDefault();
-        if(isAgency){
-        const registerResponse = await postAgency({ firstName, lastName, email, password }, dispatch);
-        if (registerResponse.success) {
-            const loginResponse = await postLogin({ email, password }, dispatch);
-            if (loginResponse.success) {
-                onLogin();
-            }
-        } setMenssageError(registerResponse.message);
-        }
+        // if(isAgency){
+        // const registerResponse = await postAgency({ firstName, lastName, email, password }, dispatch);
+        // if (registerResponse.success) {
+        //     const loginResponse = await postLogin({ email, password }, dispatch);
+        //     if (loginResponse.success) {
+        //         onLogin();
+        //     }
+        // } setMenssageError(registerResponse.message);
+        // }
         const registerResponse = await postRegister({ firstName, lastName, email, password }, dispatch);
         if (registerResponse.success) {
             const loginResponse = await postLogin({ email, password }, dispatch);

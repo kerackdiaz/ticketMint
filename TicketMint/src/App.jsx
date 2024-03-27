@@ -16,6 +16,8 @@ import Help from './pages/Help'
 import Privacity from './pages/Privacity'
 import Wallet from './pages/Wallet'
 import Login from './pages/Login';
+import Header from './components/Header.jsx'
+import ActivateAccountComponent from './components/ActivateAccountComponent';
 import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
@@ -50,7 +52,7 @@ useEffect(() => {
         <>
         <Header />
         <Routes>
-          <Route path='/event' element={<Event />} />
+          <Route path='/' element={<Event />} />
           <Route path='/details/:id' element={<DetailsEvent />} />
           <Route path='/myTickets' element={<MyTickets />} />
           <Route path='/detailTicket/:id' element={<DetailTicket />} />
@@ -59,7 +61,6 @@ useEffect(() => {
           <Route path='/market/:id' element={<Market />} />
           <Route path='/sell/:id' element={<SellTicket />} />
           <Route path='/favorites' element={<Favorites />} />
-          {/*pepe*/}
           <Route path="/Configurations" element={<Configurations />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/Help" element={<Help />} />
@@ -69,7 +70,8 @@ useEffect(() => {
         </>
         ) : (
           <Routes>
-            <Route path="*" element={<Login onLogin={handleLogin} />} />
+            <Route path="/" element={<Login onLogin={handleLogin} />} />
+            <Route path="/verifyAccount" element={<ActivateAccountComponent />} />
           </Routes>
         )}
       </UserLayout>

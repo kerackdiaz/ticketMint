@@ -7,17 +7,16 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 
-const baseURL = "localhost:8080/api";
+const baseURL = "http://localhost:8080/api/";
 export const ClientProvider = () => {
  const token = useSelector((state) => state.authReducer.token.token);
  const dispatchC = useDispatch();
  const location = useLocation();
 
-
   useEffect(() => {
       const fetchClient = async () => {
           try {
-              const response = await axios.get(`${baseURL}clients/current`, { 
+              const response = await axios.get(`${baseURL}client/current`, { 
                 headers: {
                   'Authorization': `Bearer ${token}`,
                   // 'Accept': 'application/xml'
@@ -35,6 +34,27 @@ export const ClientProvider = () => {
 };
 
 
+export const EventProvider = () => {
+  const token = useSelector((state) => state.authReducer.token.token);
+  useEffect(() => {
+    const fetchEvents = async () => {
+        try {
+            const response = await axios.get(`${baseURL}events/all`, { 
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                // 'Accept': 'application/xml'
+              }
+            });
+            console.log(response.data)
+        } catch (error) {
+            console.error('Error fetching client:', error);
+        }
+    };fetchEvents();}
+    )
+}
+
+
+
 export const postLogin = async (data, dispatch) => {
   try {
     const response = await axios.post(`${baseURL}auth/login`, data)
@@ -47,7 +67,7 @@ export const postLogin = async (data, dispatch) => {
 
   export const postRegister = async (data) => {
     try {
-      const response = await axios.post(`${baseURL}auth/register`, data);
+      const response = await axios.post(`${baseURL}auth/register/user`, data);
       return response.data;
     } catch (error) {
       console.error('Error during registration:', error);

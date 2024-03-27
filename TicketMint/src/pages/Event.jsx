@@ -2,26 +2,24 @@ import React, { useEffect, useState } from 'react'
 import CardEvent from '../components/CardEvent'
 import { TiStarFullOutline } from 'react-icons/ti'
 import { Link } from 'react-router-dom'
-
+import { ClientProvider, EventProvider } from '../utils/Db'
 
 function Event() {
   const [location, setLocation] = useState('Select location')
   const [search, setSearch] = useState('')
   const [genre, setGenre] = useState('')
-
   const [onFav, setOnFav] = useState(false)
+
+  const client = ClientProvider()
+  console.log(client);
+
+  const events = EventProvider()
+  console.log(events);
 
     const handleFav = () => {
         setOnFav(!onFav)
     }
 
-  /* useEffect(() => {
-    axios.get('https://ticket-mint-api.herokuapp.com/events',{
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-  },[]) */
 
   const handleSearch = (e) => {
     setSearch(e.target.value)

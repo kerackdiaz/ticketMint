@@ -15,7 +15,7 @@ export const LINKS_HEADER = [ {
     icon: IoTicketOutline
 },
 {
-    href: "/event",
+    href: "/",
     name: "Event",
     icon: TbCalendarSearch
 },
