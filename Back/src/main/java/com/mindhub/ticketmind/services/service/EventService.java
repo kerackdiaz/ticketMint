@@ -1,6 +1,7 @@
 package com.mindhub.ticketmind.services.service;
 
 import com.mindhub.ticketmind.dtos.EventFormDTO;
+import com.mindhub.ticketmind.dtos.NotificationRecord;
 import com.mindhub.ticketmind.dtos.TicketFormDTO;
 import com.mindhub.ticketmind.models.*;
 import com.mindhub.ticketmind.repositories.*;
@@ -27,6 +28,9 @@ public class EventService {
 
     @Autowired
     private TicketRepository ticketRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     public List<Event> getAllEvents(){
         return  eventRepository.findAll();
@@ -121,13 +125,17 @@ public class EventService {
         return ticketRepository.findByEventId(id);
     }
 
+
+
+
     public Map<String, Object> createTicket(UUID eventId, TicketFormDTO ticketFormDTO, String userMail) {
         Map<String, Object> response = new HashMap<>();
+        Client client = clientRepository.findByEmail(userMail);
         try {
             Optional<Event> optionalEvent = eventRepository.findById(eventId);
             if (optionalEvent.isPresent()) {
                 Event event = optionalEvent.get();
-                Ticket ticket = new Ticket(ticketFormDTO.name(), ticketFormDTO.basePrice(), ticketFormDTO.availableQuantity(), 1.10, TicketType.valueOf(ticketFormDTO.type()),event);
+                Ticket ticket = new Ticket(ticketFormDTO.name(), ticketFormDTO.basePrice(), ticketFormDTO.availableQuantity(), client.getCommission(), TicketType.valueOf(ticketFormDTO.type()),event);
                 ticketRepository.save(ticket);
                 response.put("success", true);
                 response.put("message", "Ticket created successfully");
@@ -154,6 +162,41 @@ public class EventService {
             } else {
                 response.put("error", false);
                 response.put("message", "Ticket not found");
+            }
+        } catch (Exception e) {
+            response.put("error", true);
+            response.put("message", "An error occurred while deleting ticket: " + e.getMessage());
+        }
+        return response;
+    }
+
+    public Map<String, Object> newAlert(NotificationRecord notificationRecord, String userMail) {
+        Map<String, Object> response = new HashMap<>();
+        Client client = clientRepository.findByEmail(userMail);
+        if (client != null){
+            Event event = eventRepository.findByName(notificationRecord.event());
+            Notification notification = new Notification(notificationRecord.subjet(), event);
+            notificationRepository.save(notification);
+            response.put("success", true);
+            response.put("message", "Notification sent correctly");
+        }
+        return response;
+    }
+
+
+    public Map<String, Object> deleteAlert(UUID alertId, String userMail) {
+        Map<String, Object> response = new HashMap<>();
+        Client client = clientRepository.findByEmail(userMail);
+        try {
+            Optional<Notification> optionalAlert = notificationRepository.findById(alertId);
+            if (optionalAlert.isPresent() && client != null) {
+                Notification notification = optionalAlert.get();
+                notificationRepository.delete(notification);
+                response.put("success", true);
+                response.put("message", "Notification deleted successfully");
+            } else {
+                response.put("error", false);
+                response.put("message", "Notification not found");
             }
         } catch (Exception e) {
             response.put("error", true);

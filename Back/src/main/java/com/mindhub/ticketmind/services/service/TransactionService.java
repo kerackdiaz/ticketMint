@@ -29,37 +29,36 @@ public class TransactionService {
 
     public Map<String, Object> createTransaction(TransactionFormDTO transactionFormDTO, String userMail) {
         Map<String, Object> response = new HashMap<>();
-        Client client = clientRepository.findByEmail(userMail);
-
-        try {
-            if (client == null) {
-                response.put("error", false);
-                response.put("message", "The user does not exist");
-                return response;
-            }
-
-            if (transactionFormDTO.description().isBlank()) {
-                response.put("error", false);
-                response.put("message", "The transaction type is required");
-                return response;
-
-            }
-
-            Transaction transaction = new Transaction(TransactionType.DEBIT,
-                    transactionFormDTO.description(),
-                    LocalDate.now(), transactionFormDTO.amount());
-
-            transaction.setClient(client);
-            transactionRepository.save(transaction);
-
-            response.put("success", true);
-            response.put("message", "Transaction created successfully");
-
-        }catch (Exception e) {
-            response.put("error", false);
-            response.put("message", "An error occurred while creating transaction: " + e.getMessage());
-            return response;
-        }
+        Client buyer = clientRepository.findByEmail(userMail);
+//        Client agency = ;
+//        Client admin;
+//        try {
+//            if (buyer == null) {
+//                response.put("error", false);
+//                response.put("message", "The user does not exist");
+//                return response;
+//            }
+//
+//            if (transactionFormDTO.description().isBlank()) {
+//                response.put("error", false);
+//                response.put("message", "The transaction type is required");
+//                return response;
+//
+//            }
+//
+//            Transaction transaction = new Transaction(TransactionType.valueOf(transactionFormDTO.));
+//
+//            transaction.setClient(client);
+//            transactionRepository.save(transaction);
+//
+//            response.put("success", true);
+//            response.put("message", "Transaction created successfully");
+//
+//        }catch (Exception e) {
+//            response.put("error", false);
+//            response.put("message", "An error occurred while creating transaction: " + e.getMessage());
+//            return response;
+//        }
 
         return response;
     }

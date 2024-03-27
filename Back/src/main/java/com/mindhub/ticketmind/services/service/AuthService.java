@@ -69,7 +69,7 @@ public class AuthService {
         Client client = clientRepository.findByEmail(loginDTO.email());
         if (!client.isStatus()) {
             response.put("error", false);
-            response.put("message", "This account is deactivated");
+            response.put("message", "This account is not active");
             return response;
         }
         if (!passwordEncoder.matches(loginDTO.password(), client.getPassword())) {
@@ -175,7 +175,7 @@ public class AuthService {
                     "        <span style=\"font-family: tahoma, arial, helvetica, sans-serif; font-size: 18pt;\">Don't waste any more time! Activate your account right now and discover a world of possibilities waiting for you, click here to start enjoying all our exclusive services!\n" +
                     "          <br>\n" +
                     "          <br>\n" +
-                    "          <a href=\"https://ticketmint.onrender.com/api//verifyAccount?email=" + client.getEmail() + "' target=\"_blank\" class=\"cloudHQ__gmail_elements_final_btn\" style=\"background-color: #55347b; color: #ffffff; border: 0px solid #000000; border-radius: 3px; box-sizing: border-box; font-size: 13px; font-weight: bold; line-height: 40px; padding: 12px 24px; text-align: center; text-decoration: none; text-transform: uppercase; vertical-align: middle;\" rel=\"noopener\">Activate now</a>\n" +
+                    "          <a href=\"https://ticketmint.onrender.com/verifyAccount?verifyAccount="+client.getId()+"\"' target=\"_blank\" class=\"cloudHQ__gmail_elements_final_btn\" style=\"background-color: #55347b; color: #ffffff; border: 0px solid #000000; border-radius: 3px; box-sizing: border-box; font-size: 13px; font-weight: bold; line-height: 40px; padding: 12px 24px; text-align: center; text-decoration: none; text-transform: uppercase; vertical-align: middle;\" rel=\"noopener\">Activate now</a>\n" +
                     "          <br>\n" +
                     "        </span>\n" +
                     "      </td>\n" +

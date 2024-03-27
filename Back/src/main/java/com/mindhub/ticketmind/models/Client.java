@@ -35,10 +35,9 @@ public class Client {
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private List<Transaction> transactions;
 
-    @ManyToMany
-    @JoinTable(name= "favorites", joinColumns = @JoinColumn(name="client_id"), inverseJoinColumns = @JoinColumn(name="event_id"))
-    private List<Event> myFavoritesEvents;
 
+    @OneToMany(mappedBy = "client" ,fetch = FetchType.EAGER)
+    private List<Ticket> tickets;
 
     public Client() {
     }
@@ -142,5 +141,14 @@ public class Client {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }

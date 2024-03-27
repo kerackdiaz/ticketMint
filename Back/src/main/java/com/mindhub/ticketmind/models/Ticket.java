@@ -23,6 +23,9 @@ public class Ticket {
     @ManyToOne
     private Event event;
 
+    @ManyToOne
+    private Client client;
+
 
     public Ticket() {
     }
@@ -88,5 +91,13 @@ public class Ticket {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

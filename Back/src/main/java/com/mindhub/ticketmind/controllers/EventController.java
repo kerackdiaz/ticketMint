@@ -2,6 +2,7 @@ package com.mindhub.ticketmind.controllers;
 
 
 import com.mindhub.ticketmind.dtos.EventFormDTO;
+import com.mindhub.ticketmind.dtos.NotificationRecord;
 import com.mindhub.ticketmind.models.Event;
 import com.mindhub.ticketmind.services.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class EventController {
     }
 
 
+
+
     @PostMapping("/create/event")
     public ResponseEntity<?> createEvent(@RequestBody EventFormDTO eventFormDTO) {
         String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -39,5 +42,19 @@ public class EventController {
     public ResponseEntity<?> deleteEvent(@PathVariable UUID id) {
         String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
         return new ResponseEntity<>(eventService.deleteEvent(id, userMail), HttpStatus.OK);
+    }
+
+
+
+    @PostMapping("/newalert")
+    public ResponseEntity<?> newAlert(@RequestBody NotificationRecord notificationRecord){
+        String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity<>(eventService.newAlert(notificationRecord, userMail), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteAlert/{id}")
+    public ResponseEntity<?> deleteAlert(@PathVariable UUID id) {
+        String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity<>(eventService.deleteAlert(id, userMail), HttpStatus.OK);
     }
 }
