@@ -25,7 +25,7 @@ public class VerificationController {
     private ClientService clientService;
 
     @GetMapping("/verifyAccount")
-    public ResponseEntity<?> verifyAccount(@RequestParam("token") UUID id) {
+    public ResponseEntity<?> verifyAccount(@RequestParam("verifyAccount") UUID id) {
         return ResponseEntity.ok(clientService.activateAccount(id));
         }
 
