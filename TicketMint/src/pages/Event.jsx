@@ -36,8 +36,8 @@ function Event() {
   }
 
   return (
-    <div className='bg-[#0b0b1c] flex flex-1 flex-col items-center p-5'>
-      <h1 className='text-3xl text-white pt-5'>Events</h1>
+    <div className='bg-[#0b0b1c] flex flex-1 flex-col items-center'>
+      <h1 className='text-lg font-medium py-1 text-white '>Events</h1>
       <div className='flex justify-between w-full px-5 md:w-96'>
         <select name="location" onChange={handleLocation} className='bg-[#0b0b1c] text-white '>
             <option value="Bogota">Bogota</option>
