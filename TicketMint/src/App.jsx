@@ -1,36 +1,30 @@
-import React from 'react'
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Event from './pages/Event.jsx'
-import UserLayout from './layouts/UserLayout.jsx'
-import DetailsEvent from './pages/DetailsEvent.jsx'
-import MyTickets from './pages/MyTickets.jsx'
-import DetailTicket from './pages/DetailTicket.jsx'
-import QrScan from './pages/QrScan.jsx'
-import Collectibles from './pages/Collectibles.jsx'
-import Market from './pages/Market.jsx'
-import SellTicket from './pages/SellTicket.jsx'
-import Favorites from './pages/Favorites.jsx'
+import React from "react";
+import {  Route, Routes } from "react-router-dom";
+
+import UserLayout from "./layouts/UserLayout.jsx";
+import Report from "./pages/Report.jsx";
+import Events from "./pages/Events.jsx";
+import ToDo from "./pages/ToDo.jsx";
+import NewEvent from "./pages/NewEvent.jsx";
+import InBox from "./pages/Inbox.jsx";
+// import Chat from "./pages/Chat.jsx";
 
 function App() {
-
-
   return (
-    <BrowserRouter>
+    <>
       <UserLayout>
-      <Routes>
-        <Route path='/event' element={<Event/>}/>
-        <Route path='/details/:id' element={<DetailsEvent/>}/>
-        <Route path='/myTickets' element={<MyTickets/>}/>
-        <Route path='/detailTicket/:id' element={<DetailTicket/>}/>
-        <Route path='/scan/:id' element={<QrScan/>}/>
-        <Route path='/collectibles' element={<Collectibles/>}/>
-        <Route path='/market/:id' element={<Market/>}/>
-        <Route path='/sell/:id' element={<SellTicket/>}/>
-        <Route path='/favorites' element={<Favorites/>}/>
-      </Routes>
-    </UserLayout>
-    </BrowserRouter>
-  )
+        <Routes>
+          <Route path="/Report" element={<Report />} />
+          {/* <Route path="/Chat" element={<Chat />} /> */}
+          <Route path="/Events" element={<Events/>} />
+          <Route path="/ToDo" element={<ToDo />} />
+          <Route path="/NewEvent" element={<NewEvent />} />
+          <Route path="/Inbox" element={<InBox />} />
+        </Routes>
+       
+      </UserLayout>
+    </>
+  );
 }
 
-export default App
+export default App;
