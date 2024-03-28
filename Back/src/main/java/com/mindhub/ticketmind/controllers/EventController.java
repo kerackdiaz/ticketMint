@@ -1,8 +1,7 @@
 package com.mindhub.ticketmind.controllers;
 
 
-import com.mindhub.ticketmind.dtos.EventFormDTO;
-import com.mindhub.ticketmind.dtos.NotificationRecord;
+import com.mindhub.ticketmind.dtos.*;
 import com.mindhub.ticketmind.models.Event;
 import com.mindhub.ticketmind.services.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,8 @@ public class EventController {
 
 
     @GetMapping("/all")
-    public ResponseEntity<List<Event>> getAllEvents() {
-        List<Event> events = eventService.getAllEvents();
-        return new ResponseEntity<>(events, HttpStatus.OK);
+    public ResponseEntity<List<EventDTO>> getAllEvents() {
+        return new ResponseEntity<>(eventService.getAllEvents(), HttpStatus.OK);
     }
 
 
@@ -57,4 +55,13 @@ public class EventController {
         String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
         return new ResponseEntity<>(eventService.deleteAlert(id, userMail), HttpStatus.OK);
     }
-}
+
+    @GetMapping("/category")
+    public ResponseEntity<List<CategoryEventDTO>> getEventsByCategory() {
+        return new ResponseEntity<>(eventService.getAllCategories(), HttpStatus.OK);
+    }
+
+    @GetMapping("/city")
+    public ResponseEntity<List<CityDTO>> getEventsByCity() {
+        return new ResponseEntity<>(eventService.getAllCities(), HttpStatus.OK);
+    }}

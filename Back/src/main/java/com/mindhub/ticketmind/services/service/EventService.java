@@ -1,8 +1,6 @@
 package com.mindhub.ticketmind.services.service;
 
-import com.mindhub.ticketmind.dtos.EventFormDTO;
-import com.mindhub.ticketmind.dtos.NotificationRecord;
-import com.mindhub.ticketmind.dtos.TicketFormDTO;
+import com.mindhub.ticketmind.dtos.*;
 import com.mindhub.ticketmind.models.*;
 import com.mindhub.ticketmind.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +30,17 @@ public class EventService {
     @Autowired
     private NotificationRepository notificationRepository;
 
-    public List<Event> getAllEvents(){
-        return  eventRepository.findAll();
+    public List<EventDTO> getAllEvents(){
+        List<Event> events = eventRepository.findAll();
+        return  events.stream().map(EventDTO::new).toList();
+    }
+    public List<CityDTO> getAllCities(){
+        List<City> cities = cityRepository.findAll();
+        return  cities.stream().map(CityDTO::new).toList();
+    }
+    public List<CategoryEventDTO> getAllCategories(){
+        List<CategoryEvent> events = categoryEventRepository.findAll();
+        return  events.stream().map(CategoryEventDTO::new).toList();
     }
 
     public Map<String, Object> createEvent(EventFormDTO eventFormDTO, String userMail) {

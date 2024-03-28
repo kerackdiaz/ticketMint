@@ -2,6 +2,7 @@ package com.mindhub.ticketmind.dtos;
 
 import com.mindhub.ticketmind.models.Event;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -55,8 +56,9 @@ public class EventDTO {
         return imageURL;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMMM dd");
+        return formatter.format(date);
     }
 
     public String getVenueName() {
