@@ -1,17 +1,18 @@
 import axios from "axios";
 import {  useEffect } from "react"; 
-import { login,current } from "../redux/actions/auth.actions";
+import { login,current, getEvents, getCategories, getCities } from "../redux/actions/auth.actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from 'react-router-dom';
+
 
 import { useNavigate } from 'react-router-dom';
 
 
 const baseURL = "http://localhost:8080/api/";
 export const ClientProvider = () => {
- const token = useSelector((state) => state.authReducer.token.token);
- const dispatchC = useDispatch();
- const location = useLocation();
+  const token = useSelector((state) => state.authReducer.token.token);
+  const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
       const fetchClient = async () => {
@@ -19,10 +20,9 @@ export const ClientProvider = () => {
               const response = await axios.get(`${baseURL}client/current`, { 
                 headers: {
                   'Authorization': `Bearer ${token}`,
-                  // 'Accept': 'application/xml'
                 }
               });
-              dispatchC(current(response.data))
+              dispatch(current(response.data))
           } catch (error) {
               console.error('Error fetching client:', error);
           }
@@ -36,23 +36,60 @@ export const ClientProvider = () => {
 
 export const EventProvider = () => {
   const token = useSelector((state) => state.authReducer.token.token);
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchEvents = async () => {
         try {
             const response = await axios.get(`${baseURL}events/all`, { 
               headers: {
                 'Authorization': `Bearer ${token}`,
-                // 'Accept': 'application/xml'
               }
             });
             console.log(response.data)
+            dispatch(getEvents(response.data))
         } catch (error) {
             console.error('Error fetching client:', error);
         }
-    };fetchEvents();}
-    )
-}
+    };fetchEvents();},[])
+};
 
+export const CategortiesProvider = () => {
+  const token = useSelector((state) => state.authReducer.token.token);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchCategories = async () => {
+        try {
+            const response = await axios.get(`${baseURL}events/category`, { 
+              headers: {
+                'Authorization': `Bearer ${token}`,
+              }
+            });
+            console.log(response.data)
+            dispatch(getCategories(response.data))
+        } catch (error) {
+            console.error('Error fetching client:', error);
+        }
+    };fetchCategories();},[])
+};
+
+export const CitiesProvider = () => {
+  const token = useSelector((state) => state.authReducer.token.token);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchCities = async () => {
+        try {
+            const response = await axios.get(`${baseURL}events/city`, { 
+              headers: {
+                'Authorization': `Bearer ${token}`,
+              }
+            });
+            console.log(response.data)
+            dispatch(getCities(response.data))
+        } catch (error) {
+            console.error('Error fetching client:', error);
+        }
+    };fetchCities();},[])
+};
 
 
 export const postLogin = async (data, dispatch) => {

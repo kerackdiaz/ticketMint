@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { login,current, logout } from '../actions/auth.actions';
+import { login,current, logout, getEvents, getCategories, getCities } from '../actions/auth.actions';
 
 const initialState = {
     user:{
@@ -33,7 +33,25 @@ const authReducer = createReducer(initialState, (builder) => {
                 ...state,
                 user:action.payload.loggedIn=false
                }
-        });
+        })
+        .addCase(getEvents, (state, action) => {
+            return {
+                ...state,
+                events:action.payload
+               }
+        })
+        .addCase(getCategories, (state, action) => {
+            return {
+                ...state,
+                categories:action.payload
+               }
+        })
+        .addCase(getCities, (state, action) => {
+            return {
+                ...state,
+                cities:action.payload
+               }
+        })
 });
 
 
