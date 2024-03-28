@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.shadow-header {
+    box-shadow: -1px -5px 5px 0px rgba(255,255,255,0.75);
+}
+
+.slick-dots li {
+    margin: 0 3%;
+}
+.slick-dots li button {
+    font-size: 0;
+    line-height: 0;
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+    cursor: pointer;
+    color: transparent;
+    border: 0;
+    border-radius: 50%;
+    outline: none;
+    background: #55347B;
+}
+
+.slick-dots li.slick-active button {
+    background: #CA67F5;
+    opacity: 1;
+    width: 40px;
+    height: 20px;
+    border-radius: 25px;
+}
+
+.slick-arrow {
+    display: none!important;
+}
+
+
+ul.slick-dots li:last-child {
+   display: none;
+  }
