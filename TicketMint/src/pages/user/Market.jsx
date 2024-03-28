@@ -1,5 +1,5 @@
 import React from 'react'
-import CardCollectibles from '../components/CardCollectibles'
+import CardCollectibles from '../../components/CardCollectibles'
 import { Link } from 'react-router-dom'
 
 function Market() {

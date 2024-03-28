@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import CardMyTickets from '../components/CardMyTickets'
-import CardCollectibles from '../components/CardCollectibles'
+import CardMyTickets from '../../components/CardMyTickets'
+import CardCollectibles from '../../components/CardCollectibles'
 
 
 function Collectibles() {

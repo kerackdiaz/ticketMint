@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import CardEvent from '../components/CardEvent'
+import CardEvent from '../../components/CardEvent'
 import { TiStarFullOutline } from 'react-icons/ti'
 import { Link } from 'react-router-dom'
-import { CategortiesProvider, CitiesProvider, ClientProvider, EventProvider } from '../utils/Db'
+import { CategortiesProvider, CitiesProvider, ClientProvider, EventProvider } from '../../utils/Db'
 import { useSelector } from 'react-redux'
 
 function Event() {

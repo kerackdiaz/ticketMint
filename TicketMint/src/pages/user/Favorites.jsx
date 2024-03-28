@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import CardEvent from '../components/CardEvent'
+import CardEvent from '../../components/CardEvent'
 
 function Favorites() {
   const [onFav, setOnFav] = useState(true)

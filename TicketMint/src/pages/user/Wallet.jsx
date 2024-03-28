@@ -2,7 +2,7 @@ import React from 'react'
 import { IoSearchOutline, IoEyeOutline } from "react-icons/io5";
 import { GiDonkey } from "react-icons/gi";
 import { IoMdCloseCircle } from "react-icons/io";
-import Account from '../components/Account';
+import Account from '../../components/Account';
 
 
 const Wallet = () => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Switch from '../utils/Switch.jsx';
+import Switch from '../../utils/Switch.jsx';
 import { Link } from 'react-router-dom'
 import { MdOutlineDarkMode, MdOutlinePrivacyTip, MdOutlineLightMode } from "react-icons/md";
 import { PiCurrencyCircleDollarLight } from "react-icons/pi";

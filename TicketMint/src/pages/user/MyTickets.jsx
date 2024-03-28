@@ -1,5 +1,5 @@
 import React from 'react'
-import CardMyTickets from '../components/CardMyTickets'
+import CardMyTickets from '../../components/CardMyTickets'
 import { Link } from 'react-router-dom'
 
 function MyTickets() {
