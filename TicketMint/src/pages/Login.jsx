@@ -9,7 +9,6 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-// import {encrypt, descrypData} from '../utils/CryptoEnv';
 
 
 
@@ -29,37 +28,7 @@ const Login = ({ onLogin }) => {
 
     useEffect(() => {
         setMenssageError("");
-    }, [isRegistering])
-
-    useEffect(() => {
-        const userStored = localStorage.getItem('RememberMe');
-        if (userStored === 'true') {
-            const storedEmail = localStorage.getItem('storedEmail');
-            const storedPassword = localStorage.getItem('storedPassword');
-            setEmail(storedEmail);
-            // setPassword(descrypData(storedPassword));
-            setIsChecked(true);
-        } else {
-            setIsChecked(false);
-        }
-    }, []);
-
-    const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
-    };
-
-    useEffect(() => {
-        if (isChecked) {
-            localStorage.setItem('RememberMe', "true");
-            localStorage.setItem('storedEmail', email);
-            // localStorage.setItem('storedPassword', encrypt(password));
-        } else {
-            localStorage.removeItem('storedPassword');
-            localStorage.removeItem('storedEmail');
-            localStorage.setItem('RememberMe', "false");
-        }
-    }, [isChecked]);
-
+    }, [isRegistering]);
 
     const dispatch = useDispatch();
 
@@ -68,6 +37,7 @@ const Login = ({ onLogin }) => {
 
         const response = await postLogin({ email, password }, dispatch);
         if (response.success === true) {
+            const rememberUser = localStorage.setItem('userData', JSON.stringify({ email, password }));
             onLogin();
         }
         setMenssageError(response.message);
@@ -96,7 +66,7 @@ const Login = ({ onLogin }) => {
 
     const settings = {
         dots: true,
-        infinite: true,
+        infinite: false,
         arrow: false,
         speed: 500,
         slidesToShow: 1,

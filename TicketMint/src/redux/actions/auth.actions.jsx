@@ -10,6 +10,7 @@ export const current = createAction('CURRENT', (data) => {
         }
     }
 });
+
  export const login = createAction('LOGIN', (token) => {
     return {
         payload: {
@@ -28,4 +29,26 @@ export const logout = createAction('LOGOUT', (data) => {
     }
 });
 
+export const getEvents = createAction('EVENTS', (data) => {
+    return {
+        payload: {
+            ...data
+        }
+    }
+});
 
+export const getCategories = createAction('CATEGORIES', (data) => {
+    return {
+        payload: {
+            ...data
+        }
+    }
+});
+
+export const getCities = createAction('CITIES', (data) => {
+    return {
+        payload: {
+            ...data
+        }
+    }
+});
