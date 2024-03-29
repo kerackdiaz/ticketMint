@@ -5,16 +5,14 @@ import com.mindhub.ticketmind.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ClientService {
 
     @Autowired
     private ClientRepository clientRepository;
+
 
 
     public Map<String, Object> activateAccount(UUID id) {
@@ -38,7 +36,9 @@ public class ClientService {
        }
 
 
-
+    public List<Client> getAllClients() {
+        return clientRepository.findAll();
+    }
 
     public Client getClientByEmail(String email) {
         return clientRepository.findByEmail(email);

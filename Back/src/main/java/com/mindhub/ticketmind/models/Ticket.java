@@ -20,8 +20,10 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private TicketType type;
     @ManyToOne
+    @JoinColumn(name = "event_id")
     private Event event;
     @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
 
     public Ticket() {

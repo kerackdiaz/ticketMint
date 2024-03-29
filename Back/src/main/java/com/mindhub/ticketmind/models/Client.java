@@ -8,6 +8,7 @@ import java.util.UUID;
 @Entity
 public class Client {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -41,6 +42,9 @@ public class Client {
 
     @OneToMany(mappedBy = "client")
     private List<Ticket> tickets;
+
+    @OneToMany(mappedBy = "client")
+    private List<Notification> notifications;
 
 
     public Client() {
@@ -153,6 +157,14 @@ public class Client {
 
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
     }
 
     public void addTicket(Ticket ticket) {

@@ -64,4 +64,12 @@ public class EventController {
     @GetMapping("/city")
     public ResponseEntity<List<CityDTO>> getEventsByCity() {
         return new ResponseEntity<>(eventService.getAllCities(), HttpStatus.OK);
-    }}
+    }
+
+//    @PostMapping("/sendnotification")
+//    public ResponseEntity<?> sendNotification(@RequestBody NotificationRecord notificationRecord){
+//        String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
+//        return new ResponseEntity<>(eventService.sendNotification(notificationRecord, userMail), HttpStatus.OK);
+//    }
+
+}

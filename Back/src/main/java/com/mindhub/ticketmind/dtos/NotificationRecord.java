@@ -1,4 +1,6 @@
 package com.mindhub.ticketmind.dtos;
 
-public record NotificationRecord(String event, String subjet) {
+import java.util.UUID;
+
+public record NotificationRecord(UUID id, String subjet) {
 }

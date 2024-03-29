@@ -30,6 +30,8 @@ public class EventService {
     @Autowired
     private NotificationRepository notificationRepository;
 
+    @Autowired
+    private SocketIOService socketIOService;
     public List<EventDTO> getAllEvents(){
         List<Event> events = eventRepository.findAll();
         return  events.stream().map(EventDTO::new).toList();
@@ -181,11 +183,25 @@ public class EventService {
         Map<String, Object> response = new HashMap<>();
         Client client = clientRepository.findByEmail(userMail);
         if (client != null){
-            Event event = eventRepository.findByName(notificationRecord.event());
-            Notification notification = new Notification(notificationRecord.subjet(), event);
-            notificationRepository.save(notification);
-            response.put("success", true);
-            response.put("message", "Notification sent correctly");
+            if (eventRepository.existsById(notificationRecord.id()) ) {
+                try {
+                    Event event = eventRepository.findById(notificationRecord.id()).get();
+                    Notification notification = new Notification(notificationRecord.subjet(), event, new Date());
+                    notificationRepository.save(notification);
+                    socketIOService.sendNotification(notification); // Aquí enviamos la notificación
+                    response.put("success", true);
+                    response.put("message", "Notification sent correctly");
+                } catch (NoSuchElementException e) {
+                    response.put("error", true);
+                    response.put("message", "Event not found");
+                }
+            } else {
+                response.put("error", true);
+                response.put("message", "Event does not exist");
+            }
+        } else {
+            response.put("error", true);
+            response.put("message", "Client not found");
         }
         return response;
     }
@@ -211,4 +227,25 @@ public class EventService {
         }
         return response;
     }
+
+//    public Map<String, Object> sendNotification(NotificationRecord notificationRecord, String userMail) {
+//        Map<String,Object> response = new HashMap<>();
+//        Client client = clientRepository.findByEmail(userMail);
+//        if (client != null){
+//            if (eventRepository.existsById(notificationRecord.id())) {
+//                Event event = eventRepository.findById(notificationRecord.id()).get();
+//                Notification notification = new Notification(notificationRecord.subjet(), event);
+//                notificationRepository.save(notification);
+//                response.put("success", true);
+//                response.put("message", "Notification sent correctly");
+//            } else {
+//                response.put("error", true);
+//                response.put("message", "Event not found");
+//            }
+//        } else {
+//            response.put("error", true);
+//            response.put("message", "Client not found");
+//        }
+//        return response;
+//    }
 }

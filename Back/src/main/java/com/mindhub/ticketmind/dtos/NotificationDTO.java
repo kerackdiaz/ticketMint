@@ -2,6 +2,7 @@ package com.mindhub.ticketmind.dtos;
 
 import com.mindhub.ticketmind.models.Notification;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class NotificationDTO {
@@ -9,11 +10,13 @@ public class NotificationDTO {
     private String message;
     private EventDTO event;
 
+    private String date;
+
 
     public NotificationDTO(Notification notification) {
         this.id = notification.getId();
         this.message = notification.getMessage();
-        this.event = new EventDTO(notification.getEvent());;
+        this.date = notification.getDate();
     }
 
     public UUID getId() {
@@ -27,4 +30,6 @@ public class NotificationDTO {
     public EventDTO getEvent() {
         return event;
     }
+
+    public String getDate() { return date;}
 }
