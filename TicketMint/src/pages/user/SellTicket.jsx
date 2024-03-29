@@ -1,11 +1,17 @@
 import React from 'react'
 import { BsQrCodeScan } from 'react-icons/bs'
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 function SellTicket() {
+    const eventsUser = useSelector((state) => state.authReducer.user.events)
+    const { id } = useParams()
+    const event = eventsUser?.find((event) => event.id === id)
+
     return (
         <div className='bg-[#0b0b1c] flex flex-1 p-3 gap-6 flex-col items-center'>
             <h2 className='text-3xl text-white pt-3'>Sell Ticket</h2>
-            <img src="/prueba.png" alt="" />
+            <img src={event.imageURL} alt="" />
             <form className='flex w-full justify-center md:w-1/2 xl:w-1/3'>
                 <label className='w-full md:w-[300px] flex justify-center'>
                     <input className='w-[90%] bg-[#0b0b1c] border border-[#8468fb] placeholder:text-sm placeholder:text-center rounded-lg' type="number" placeholder='How much will NFT sell for?'/>

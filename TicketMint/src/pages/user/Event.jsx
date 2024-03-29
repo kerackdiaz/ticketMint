@@ -18,6 +18,7 @@ function Event() {
   const client = ClientProvider()
 
   const events = EventProvider()
+  
 
   const categories = CategortiesProvider()
 
