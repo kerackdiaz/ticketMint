@@ -40,3 +40,7 @@
 ul.slick-dots li:last-child {
    display: none;
   }
+
+  span.apexcharts-legend-text {
+    color: white!important;
+}
