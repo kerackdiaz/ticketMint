@@ -3,8 +3,10 @@ import Balance from '../../components/Balance'
 
 const Report = () => {
   return (
-    <div className="latptop:w-[65%] relative latptop:left-[15%] tablet:left-[25%] tablet:w-1/2 w-[80%] h-[80%] top-32 right-8 py-6 px-6 rounded-xl border border-gray-200 bg-white mt-10 flex flex-wrap gap-10">
+    <div className='w-full pl-[6vw] pt-[13vh]'>
+    <div className="mx-24 my-20 w-[80vw] content-center  py-12 px-16 rounded-xl border border-gray-200 bg-white  flex flex-wrap gap-10">
     <Balance />
+    </div>
     </div>
   )
 }
