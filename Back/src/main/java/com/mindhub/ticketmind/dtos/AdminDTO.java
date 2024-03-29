@@ -17,6 +17,12 @@ public class AdminDTO {
     private boolean status;
     private double balance;
     private double commission;
+
+    private String profilePic;
+
+    private Long phone;
+
+    private String address;
     private List<ClientDTO> clients;
 
     public AdminDTO(Client client, List<Client> clients) {
@@ -29,6 +35,56 @@ public class AdminDTO {
         this.balance = client.getBalance();
         this.commission = client.getCommission();
         this.clients = clients.stream().map(ClientDTO::new).collect(Collectors.toList());
+        this.profilePic = client.getProfilePic()!= null ? client.getProfilePic() : "https://firebasestorage.googleapis.com/v0/b/homebankingapp-4b70f.appspot.com/o/ticketmint%2FAvatar%2Fpp-ulver-bank.jpg?alt=media&token=c2d29368-0f78-4b2b-b845-fd5100e0c70c";
+        this.phone = client.getPhone();
+        this.address = client.getAddress();
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public double getCommission() {
+        return commission;
+    }
+
+    public List<ClientDTO> getClients() {
+        return clients;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public Long getPhone() {
+        return phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
 }

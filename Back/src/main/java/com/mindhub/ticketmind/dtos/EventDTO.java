@@ -20,6 +20,9 @@ public class EventDTO {
     private CityDTO city;
     private List<NotificationDTO> notifications;
     private List<TicketDTO> ticketTypes;
+    private String onwer;
+
+    private boolean status = false;
 
 
     public EventDTO(Event event) {
@@ -34,6 +37,8 @@ public class EventDTO {
         this.city = new CityDTO(event.getCity());
         this.notifications = event.getNotifications().stream().map(NotificationDTO::new).collect(Collectors.toList());
         this.ticketTypes = event.getTicketTypes().stream().map(TicketDTO::new).collect(Collectors.toList());
+        this.status = event.isStatus();
+        this.onwer = event.getClient().getCompanyName();
     }
 
     public UUID getId() {
@@ -79,5 +84,13 @@ public class EventDTO {
 
     public List<TicketDTO> getTicketTypes() {
         return ticketTypes;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public String getOnwer() {
+        return onwer;
     }
 }

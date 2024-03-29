@@ -25,6 +25,8 @@ public class Event {
     private String venueName;
     private String venueURL;
 
+    private boolean status = false;
+
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
@@ -143,5 +145,14 @@ public class Event {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

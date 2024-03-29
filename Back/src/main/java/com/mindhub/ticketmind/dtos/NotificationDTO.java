@@ -9,7 +9,6 @@ public class NotificationDTO {
     private UUID id;
     private String message;
     private EventDTO event;
-
     private String date;
 
 

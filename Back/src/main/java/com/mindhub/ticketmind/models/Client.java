@@ -30,6 +30,12 @@ public class Client {
 
     private String companyName;
 
+    private String profilePic;
+
+    private Long phone;
+
+    private String address;
+
     @OneToMany(mappedBy = "client")
     private List<Event> event;
 
@@ -165,6 +171,31 @@ public class Client {
 
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
+    }
+
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
+
+    public Long getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Long phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public void addTicket(Ticket ticket) {

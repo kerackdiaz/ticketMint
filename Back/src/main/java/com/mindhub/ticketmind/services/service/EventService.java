@@ -188,7 +188,7 @@ public class EventService {
                     Event event = eventRepository.findById(notificationRecord.id()).get();
                     Notification notification = new Notification(notificationRecord.subjet(), event, new Date());
                     notificationRepository.save(notification);
-                    socketIOService.sendNotification(notification); // Aquí enviamos la notificación
+                    socketIOService.sendNotification(notification);
                     response.put("success", true);
                     response.put("message", "Notification sent correctly");
                 } catch (NoSuchElementException e) {
