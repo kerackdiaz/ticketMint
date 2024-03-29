@@ -112,6 +112,16 @@ export const postLogin = async (data, dispatch) => {
     }
   };
 
+  export const postAgency = async (data) => {
+    try {
+      const response = await axios.post(`${baseURL}auth/register/agency`, data);
+      return response.data;
+    } catch (error) {
+      console.error('Error during registration:', error);
+      return { success: false, message: error.message };
+    }
+  };
+
 
   export const loanApply = async (data, token) => {
     try {
