@@ -122,7 +122,19 @@ export const postLogin = async (data, dispatch) => {
     }
   };
 
-
+  export const postAlert = async (data, token) => {
+    try {
+      const response = await axios.post(`${baseURL}events/newalert`, data, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error during alert creation:', error);
+      return { success: false, message: error.message };
+    }
+  }
   
   export const changeAvatar = async (img, token) => {
     try {

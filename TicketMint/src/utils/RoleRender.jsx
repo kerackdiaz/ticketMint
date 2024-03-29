@@ -20,6 +20,7 @@ import Events from "../pages/agency/Events.jsx";
 import ToDo from "../pages/agency/ToDo.jsx";
 import NewEvent from "../pages/agency/NewEvent.jsx";
 import InBox from "../pages/agency/Inbox.jsx";
+import Profile from "../pages/agency/Profile.jsx";
 import Layout from '../components/Layout.jsx'
 import { useSelector } from 'react-redux'
 import { ClientProvider } from './Db.jsx'
@@ -81,10 +82,10 @@ const agency = () => {
     <Routes>
       <Route path="/" element={<Events />} />
       <Route path="/Report" element={<Report />} />
-      {/* <Route path="/Chat" element={<Chat />} /> */}
       <Route path="/ToDo" element={<ToDo />} />
       <Route path="/NewEvent" element={<NewEvent />} />
       <Route path="/Inbox" element={<InBox />} />
+      <Route path='/Profile' element={<Profile/>} />   
     </Routes>
   </>
 }

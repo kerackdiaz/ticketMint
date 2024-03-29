@@ -110,7 +110,7 @@ const Layout = () => {
                         </li>
                         <li>
                           <Link
-                            to={"/Events"}
+                            to={"/"}
                             class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                           >
                             All Events
@@ -447,13 +447,13 @@ const Layout = () => {
                       </a>
                     </li>
                     <li>
-                      <a
-                        href="#"
+                      <Link
+                        to={"/Profile"}
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         role="menuitem"
                       >
                         Settings
-                      </a>
+                      </Link>
                     </li>
                     <li>
                       <a
