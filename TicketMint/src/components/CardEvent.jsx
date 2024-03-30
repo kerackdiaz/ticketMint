@@ -9,11 +9,11 @@ function CardEvent({ handleFav, onFav, name, date, image, id }) {
 
 
     return (
-        <Link to={`/details/${id}`}>
+        <Link to={`/details/${id}`} >
             <div className={'relative w-80 h-64 bg-[url("' + image + '")] bg-top bg-local rounded-2xl flex flex-col justify-end items-end'}>
                 <div className='absolute top-0 right-0 mt-2 mr-2 z-50'>
                     {
-                        !onFav ? <CiStar className='text-4xl text-white cursor-pointer' onClick={handleFav} /> : <TiStarFullOutline className='cursor-pointer text-4xl text-white' onClick={handleFav} />
+                        !onFav ? <CiStar className='text-4xl text-white cursor-pointer z-50' onClick={handleFav}/> : <TiStarFullOutline className='cursor-pointer text-4xl text-white' onClick={handleFav} />
                     }
                 </div>
                 <div className='h-28 bg-[#523276] opacity-90 w-full rounded-b-2xl flex justify-between px-2 py-1'>

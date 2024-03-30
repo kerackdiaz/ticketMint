@@ -3,8 +3,6 @@ import {  useEffect } from "react";
 import { login,current, getEvents, getCategories, getCities } from "../redux/actions/auth.actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from 'react-router-dom';
-
-
 import { useNavigate } from 'react-router-dom';
 
 
