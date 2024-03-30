@@ -8,6 +8,7 @@ import Slider from 'react-slick';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import LoadingScreen from '../components/LoadingScreen';
 
 
 
@@ -25,6 +26,8 @@ const Login = ({ onLogin }) => {
     const [isChecked, setIsChecked] = useState(false);
     const [isRegistering, setIsRegistering] = useState(true);
     const [isAgency, setIsAgency] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
 
     useEffect(() => {
         setMenssageError("");
@@ -34,11 +37,15 @@ const Login = ({ onLogin }) => {
 
     const handleSignIn = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
 
         const response = await postLogin({ email, password }, dispatch);
         if (response.success === true) {
             const rememberUser = localStorage.setItem('userData', JSON.stringify({ email, password }));
-            onLogin();
+            setTimeout(() => {
+                onLogin();
+                setIsLoading(false);
+            }, 3000);
         }
         setMenssageError(response.message);
     };
@@ -88,7 +95,9 @@ const Login = ({ onLogin }) => {
     console.log(isAgency, isRegistering);
 
     return (
-        <>
+        <>  
+            {
+            isLoading ? (<LoadingScreen />) : (
             <div className="flex flex-row w-full min-h-screen bg-[#0B0B1C] justify-center">
                 <div className="laptop:w-1/2 movil:w-full flex flex-col justify-start h-screen bg-bg-login p-10">
                     <div className='flex justify-center'>
@@ -110,7 +119,7 @@ const Login = ({ onLogin }) => {
                             </div>
                         </div>
                         <div className='w-full h-full .test'>
-                            {
+                            {   
                                 !isRegistering ? (
                                     <SingUp handleSubmit={handleSignUp} setFirstName={setFirstName} setLastName={setLastName} setEmail={setEmail} setPassword={setPassword} setIsRegistering={setIsRegistering} message={menssageError} handleLogin={handleLogin} />
                                 ) : (
@@ -127,7 +136,8 @@ const Login = ({ onLogin }) => {
                     </div>
                 </div>
                 
-            </div>
+            </div>)
+            }
         </>
     )
 }

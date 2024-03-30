@@ -114,7 +114,7 @@ function DetailsEvent() {
           
         <div onSubmit={handleBuy} className='flex justify-center gap-2 p-3 w-full'>
           <button type="submit" className='text-white bg-[#8468fb] py-2 w-[50%]  rounded-xl'>Buy</button>
-          <Link to={'/event'} className='border-2 border-[#8468fb] py-2 w-[50%] rounded-xl text-center'>
+          <Link to={'/'} className='border-2 border-[#8468fb] py-2 w-[50%] rounded-xl text-center'>
           <button type="button" className='text-white'>Cancel</button>
           </Link>
         </div>
