@@ -1,5 +1,7 @@
 package com.mindhub.ticketmind.dtos;
 
 
-public record TransactionFormDTO(String description, Double amount) {
+import java.util.UUID;
+
+public record TransactionFormDTO(Double amount, String destinationEmail, UUID ticketID) {
 }

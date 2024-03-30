@@ -6,49 +6,39 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
-public class Ticket {
+public class TransitoryTicket {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long kei;
     private UUID id;
-
-    private String name;
     private double basePrice;
     private int availableQuantity;
     private double increasePercentage;
-
-    @Enumerated(EnumType.STRING)
-    private TicketType type;
-    @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
-
-    public Ticket() {
+    private String sourceEmail;
+    private String destinationEmail;
+    public TransitoryTicket() {
     }
 
-    public Ticket(String name, double basePrice, int availableQuantity, double increasePercentage, TicketType type, Event event) {
-        this.name = name;
+    public TransitoryTicket(UUID id, double basePrice, int availableQuantity, double increasePercentage, String sourceEmail, String destinationEmail) {
+        this.id = id;
         this.basePrice = basePrice;
         this.availableQuantity = availableQuantity;
         this.increasePercentage = increasePercentage;
-        this.type = type;
-        this.event = event;
+        this.sourceEmail = sourceEmail;
+        this.destinationEmail = destinationEmail;
     }
 
+    public Long getKei() {
+        return kei;
+    }
 
     public UUID getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public double getBasePrice() {
@@ -75,28 +65,19 @@ public class Ticket {
         this.increasePercentage = increasePercentage;
     }
 
-    public TicketType getType() {
-        return type;
+    public String getSourceEmail() {
+        return sourceEmail;
     }
 
-    public void setType(TicketType type) {
-        this.type = type;
+    public void setSourceEmail(String sourceEmail) {
+        this.sourceEmail = sourceEmail;
     }
 
-    public Event getEvent() {
-        return event;
+    public String getDestinationEmail() {
+        return destinationEmail;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setDestinationEmail(String destinationEmail) {
+        this.destinationEmail = destinationEmail;
     }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
 }

@@ -134,8 +134,10 @@ public class EventService {
         return ticketRepository.findByEventId(id);
     }
 
-
-
+    public List<TicketDTO> getAllTickets() {
+        List<Ticket> tickets = ticketRepository.findAll();
+        return  tickets.stream().map(TicketDTO::new).toList();
+    }
 
     public Map<String, Object> createTicket(UUID eventId, TicketFormDTO ticketFormDTO, String userMail) {
         Map<String, Object> response = new HashMap<>();
@@ -143,8 +145,10 @@ public class EventService {
         try {
             Optional<Event> optionalEvent = eventRepository.findById(eventId);
             if (optionalEvent.isPresent()) {
+
                 Event event = optionalEvent.get();
-                Ticket ticket = new Ticket(ticketFormDTO.name(), ticketFormDTO.basePrice(), ticketFormDTO.availableQuantity(), client.getCommission(), TicketType.valueOf(ticketFormDTO.type()),event);
+
+                Ticket ticket = new Ticket(ticketFormDTO.name(), ticketFormDTO.basePrice(), ticketFormDTO.availableQuantity(), client.getCommission(), TicketType.valueOf(ticketFormDTO.type()), event);
                 ticketRepository.save(ticket);
                 response.put("success", true);
                 response.put("message", "Ticket created successfully");

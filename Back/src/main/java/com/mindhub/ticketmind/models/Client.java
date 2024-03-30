@@ -50,6 +50,9 @@ public class Client {
     private List<Ticket> tickets;
 
     @OneToMany(mappedBy = "client")
+    private List<ClientTicket> clientTickets;
+
+    @OneToMany(mappedBy = "client")
     private List<Notification> notifications;
 
 
@@ -195,6 +198,14 @@ public class Client {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public List<ClientTicket> getClientTickets() {
+        return clientTickets;
+    }
+
+    public void setClientTickets(List<ClientTicket> clientTickets) {
+        this.clientTickets = clientTickets;
     }
 
     public void addTicket(Ticket ticket) {
