@@ -19,9 +19,7 @@ public class Event {
     @ManyToMany
     private List<CategoryEvent> categories;
     private String imageURL;
-
     private Date date;
-
     private String venueName;
     private String venueURL;
 

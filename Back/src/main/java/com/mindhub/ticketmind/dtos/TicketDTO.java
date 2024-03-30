@@ -13,6 +13,7 @@ public class TicketDTO {
     private int availableQuantity;
     private double increasePercentage;
     private TicketType type;
+    private TicketEventDTO event;
 
 
     public TicketDTO(Ticket ticket) {
@@ -22,6 +23,7 @@ public class TicketDTO {
         this.availableQuantity = ticket.getAvailableQuantity();
         this.increasePercentage = ticket.getIncreasePercentage();
         this.type = ticket.getType();
+        this.event = new TicketEventDTO(ticket.getEvent());
     }
 
 
@@ -47,5 +49,9 @@ public class TicketDTO {
 
     public TicketType getType() {
         return type;
+    }
+
+    public TicketEventDTO getEvent() {
+        return event;
     }
 }

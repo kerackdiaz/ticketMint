@@ -134,8 +134,10 @@ public class EventService {
         return ticketRepository.findByEventId(id);
     }
 
-
-
+    public List<TicketDTO> getAllTickets() {
+        List<Ticket> tickets = ticketRepository.findAll();
+        return  tickets.stream().map(TicketDTO::new).toList();
+    }
 
     public Map<String, Object> createTicket(UUID eventId, TicketFormDTO ticketFormDTO, String userMail) {
         Map<String, Object> response = new HashMap<>();

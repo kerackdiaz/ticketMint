@@ -1,6 +1,7 @@
 package com.mindhub.ticketmind.services.service;
 
 import com.mindhub.ticketmind.models.Client;
+import com.mindhub.ticketmind.models.Ticket;
 import com.mindhub.ticketmind.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,4 +44,19 @@ public class ClientService {
     public Client getClientByEmail(String email) {
         return clientRepository.findByEmail(email);
     }
+
+    public List<Ticket> getAllClientTickets(String email){
+            Client client = clientRepository.findByEmail(email);
+            return client.getTickets();
+    }
+
+//    public Map<String, Object> buyTicket(UUID ticketId, String email){
+//        Map<String, Object> response = new HashMap<>();
+//        Client client = clientRepository.findByEmail(email);
+//
+//
+//    }
+
+
+
 }

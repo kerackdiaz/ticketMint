@@ -11,6 +11,7 @@ public class TransactionDTO {
     private TransactionType type;
     private String description;
     private Date date;
+    private double amount;
 
 
     public TransactionDTO(Transaction transaction) {
@@ -18,6 +19,7 @@ public class TransactionDTO {
         this.type = transaction.getType();
         this.description = transaction.getDescription();
         this.date = transaction.getDate();
+        this.amount = transaction.getAmount();
     }
 
 
@@ -35,5 +37,9 @@ public class TransactionDTO {
 
     public Date getDate() {
         return date;
+    }
+
+    public double getAmount() {
+        return amount;
     }
 }

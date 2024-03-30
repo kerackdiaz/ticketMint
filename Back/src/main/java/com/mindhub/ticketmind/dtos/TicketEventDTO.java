@@ -8,38 +8,31 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class EventDTO {
+public class TicketEventDTO {
     private UUID id;
     private String name;
     private String description;
-    private List<CategoryEventDTO> categories;
     private String imageURL;
     private Date date;
+    private Date time;
     private String venueName;
     private String venueURL;
     private CityDTO city;
-    private List<NotificationDTO> notifications;
-    private List<TicketDTO> ticketTypes;
-    private String owner;
 
     private boolean status = false;
 
 
-    public EventDTO(Event event) {
+    public TicketEventDTO(Event event) {
         this.id = event.getId();
         this.name = event.getName();
         this.description = event.getDescription();
-        this.categories = event.getCategories().stream().map(CategoryEventDTO::new).collect(Collectors.toList());
         this.imageURL = event.getImageURL();
         this.date = event.getDate();
+        this.time = event.getDate();
         this.venueName = event.getVenueName();
         this.venueURL = event.getVenueURL();
         this.city = new CityDTO(event.getCity());
-        this.notifications = event.getNotifications().stream().map(NotificationDTO::new).collect(Collectors.toList());
-        this.ticketTypes = event.getTicketTypes().stream().map(TicketDTO::new).collect(Collectors.toList());
-        this.status = event.isStatus();
-        this.owner = event.getClient().getCompanyName();
-    }
+        this.status = event.isStatus();}
 
     public UUID getId() {
         return id;
@@ -53,44 +46,29 @@ public class EventDTO {
         return description;
     }
 
-    public List<CategoryEventDTO> getCategories() {
-        return categories;
-    }
-
     public String getImageURL() {
         return imageURL;
     }
 
     public String getDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm EEE dd MMM");
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE dd MMM");
+        return formatter.format(this.date);
+    }
+    public String getTime() {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
         return formatter.format(this.date);
     }
 
     public String getVenueName() {
         return venueName;
     }
-
     public String getVenueURL() {
         return venueURL;
     }
-
     public CityDTO getCity() {
         return city;
     }
-
-    public List<NotificationDTO> getNotifications() {
-        return notifications;
-    }
-
-    public List<TicketDTO> getTicketTypes() {
-        return ticketTypes;
-    }
-
     public boolean isStatus() {
         return status;
-    }
-
-    public String getOwner() {
-        return owner;
     }
 }
