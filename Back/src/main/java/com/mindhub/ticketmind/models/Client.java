@@ -173,7 +173,6 @@ public class Client {
         this.notifications = notifications;
     }
 
-
     public String getProfilePic() {
         return profilePic;
     }
