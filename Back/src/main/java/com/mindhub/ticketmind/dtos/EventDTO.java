@@ -15,6 +15,7 @@ public class EventDTO {
     private List<CategoryEventDTO> categories;
     private String imageURL;
     private Date date;
+    private Date time;
     private String venueName;
     private String venueURL;
     private CityDTO city;
@@ -32,6 +33,7 @@ public class EventDTO {
         this.categories = event.getCategories().stream().map(CategoryEventDTO::new).collect(Collectors.toList());
         this.imageURL = event.getImageURL();
         this.date = event.getDate();
+        this.time = event.getDate();
         this.venueName = event.getVenueName();
         this.venueURL = event.getVenueURL();
         this.city = new CityDTO(event.getCity());
@@ -62,7 +64,11 @@ public class EventDTO {
     }
 
     public String getDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm EEE dd MMM");
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE dd MMM");
+        return formatter.format(this.date);
+    }
+    public String getTime() {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
         return formatter.format(this.date);
     }
 

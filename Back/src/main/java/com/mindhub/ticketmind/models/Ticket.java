@@ -13,7 +13,7 @@ public class Ticket {
     private UUID id;
 
     private String name;
-    private BigDecimal basePrice;
+    private double basePrice;
     private int availableQuantity;
     private double increasePercentage;
 
@@ -29,7 +29,7 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(String name, BigDecimal basePrice, int availableQuantity, double increasePercentage, TicketType type, Event event) {
+    public Ticket(String name, double basePrice, int availableQuantity, double increasePercentage, TicketType type, Event event) {
         this.name = name;
         this.basePrice = basePrice;
         this.availableQuantity = availableQuantity;
@@ -51,11 +51,11 @@ public class Ticket {
         this.name = name;
     }
 
-    public BigDecimal getBasePrice() {
+    public double getBasePrice() {
         return basePrice;
     }
 
-    public void setBasePrice(BigDecimal basePrice) {
+    public void setBasePrice(double basePrice) {
         this.basePrice = basePrice;
     }
 

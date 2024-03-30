@@ -1,6 +1,7 @@
 package com.mindhub.ticketmind.dtos;
 
 import com.mindhub.ticketmind.models.Client;
+import com.mindhub.ticketmind.models.ClientTicket;
 import com.mindhub.ticketmind.models.UserRole;
 
 import java.util.List;
@@ -16,9 +17,8 @@ public class UserDTO {
     private UserRole role;
     private boolean status;
     private double balance;
-    private List<EventDTO> events;
     private List<TicketDTO> ticket;
-    private List<NotificationDTO> notifications;
+    private List<ClientTicketDTO> clientTicket;
 
     public UserDTO(Client client) {
         this.id = client.getId();
@@ -28,9 +28,8 @@ public class UserDTO {
         this.role = client.getRole();
         this.status = client.isStatus();
         this.balance = client.getBalance();
-        this.events = client.getEvent().stream().map(EventDTO::new).collect(Collectors.toList());
         this.ticket = client.getTickets().stream().map(TicketDTO::new).collect(Collectors.toList());
-        this.notifications = client.getNotifications().stream().map(NotificationDTO::new).collect(Collectors.toList());
+        this.clientTicket = client.getClientTickets().stream().map(ClientTicketDTO::new).collect(Collectors.toList());
     }
 
     public UUID getId() {
@@ -62,7 +61,13 @@ public class UserDTO {
     }
 
 
+
     public List<TicketDTO> getTicket() {
         return ticket;
     }
+
+    public List<ClientTicketDTO> getClientTicket() {
+        return clientTicket;
+    }
+
 }

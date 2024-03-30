@@ -20,8 +20,8 @@ public class ClientDTO {
     private double commission;
     private String companyName;
     private List<EventDTO> events;
-
     private List<TicketDTO> ticket;
+    private List<ClientTicketDTO> clientTicket;
 
     public ClientDTO(Client client) {
         this.id = client.getId();
@@ -35,6 +35,7 @@ public class ClientDTO {
         this.companyName = client.getCompanyName();
         this.events = client.getEvent().stream().map(EventDTO::new).collect(Collectors.toList());
         this.ticket = client.getTickets().stream().map(TicketDTO::new).collect(Collectors.toList());
+        this.clientTicket = client.getClientTickets().stream().map(ClientTicketDTO::new).collect(Collectors.toList());
     }
 
     public UUID getId() {
@@ -79,5 +80,9 @@ public class ClientDTO {
 
     public List<TicketDTO> getTicket() {
         return ticket;
+    }
+
+    public List<ClientTicketDTO> getClientTicket() {
+        return clientTicket;
     }
 }

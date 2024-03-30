@@ -9,7 +9,7 @@ import java.util.UUID;
 public class TicketDTO {
     private UUID id;
     private String name;
-    private BigDecimal basePrice;
+    private double basePrice;
     private int availableQuantity;
     private double increasePercentage;
     private TicketType type;
@@ -35,7 +35,7 @@ public class TicketDTO {
         return name;
     }
 
-    public BigDecimal getBasePrice() {
+    public double getBasePrice() {
         return basePrice;
     }
 

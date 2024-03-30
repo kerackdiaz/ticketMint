@@ -41,5 +41,13 @@ public class TransactionController {
     }
 
 
+    //redundant
+    @GetMapping("/client/all")
+    public ResponseEntity<?> getAllClientTransactions(){
+        String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
+        return  new ResponseEntity<>(transactionService.getAllClientTransactions(userMail), HttpStatus.OK);
+    }
+
+
 
 }

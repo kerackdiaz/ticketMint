@@ -145,8 +145,10 @@ public class EventService {
         try {
             Optional<Event> optionalEvent = eventRepository.findById(eventId);
             if (optionalEvent.isPresent()) {
+
                 Event event = optionalEvent.get();
-                Ticket ticket = new Ticket(ticketFormDTO.name(), ticketFormDTO.basePrice(), ticketFormDTO.availableQuantity(), client.getCommission(), TicketType.valueOf(ticketFormDTO.type()),event);
+
+                Ticket ticket = new Ticket(ticketFormDTO.name(), ticketFormDTO.basePrice(), ticketFormDTO.availableQuantity(), client.getCommission(), TicketType.valueOf(ticketFormDTO.type()), event);
                 ticketRepository.save(ticket);
                 response.put("success", true);
                 response.put("message", "Ticket created successfully");
