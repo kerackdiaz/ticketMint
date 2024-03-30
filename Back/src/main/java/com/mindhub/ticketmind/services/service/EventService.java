@@ -232,24 +232,5 @@ public class EventService {
         return response;
     }
 
-//    public Map<String, Object> sendNotification(NotificationRecord notificationRecord, String userMail) {
-//        Map<String,Object> response = new HashMap<>();
-//        Client client = clientRepository.findByEmail(userMail);
-//        if (client != null){
-//            if (eventRepository.existsById(notificationRecord.id())) {
-//                Event event = eventRepository.findById(notificationRecord.id()).get();
-//                Notification notification = new Notification(notificationRecord.subjet(), event);
-//                notificationRepository.save(notification);
-//                response.put("success", true);
-//                response.put("message", "Notification sent correctly");
-//            } else {
-//                response.put("error", true);
-//                response.put("message", "Event not found");
-//            }
-//        } else {
-//            response.put("error", true);
-//            response.put("message", "Client not found");
-//        }
-//        return response;
-//    }
+
 }
