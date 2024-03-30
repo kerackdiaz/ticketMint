@@ -138,7 +138,7 @@ export const postLogin = async (data, dispatch) => {
   
   export const changeAvatar = async (img, token) => {
     try {
-        const response = await axios.put(`${baseURL}clients/avatar`, {img}, {
+        const response = await axios.put(`${baseURL}clients/current/profilePic`, {img}, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -152,9 +152,10 @@ export const postLogin = async (data, dispatch) => {
   }
 
 
-  export const changePassword = async (data, token) => {
+  export const changeData = async (data, token) => {
     try {
-        const response = await axios.put(`${baseURL}clients/newpassword`, {data}, {
+      console.log(data)
+        const response = await axios.put(`${baseURL}client/current`, data, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

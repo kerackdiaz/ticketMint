@@ -5,6 +5,7 @@ import Event from '../pages/user/Event.jsx'
 import DetailsEvent from '../pages/user/DetailsEvent.jsx'
 import MyTickets from '../pages/user/MyTickets.jsx'
 import DetailTicket from '../pages/user/DetailTicket.jsx'
+import Notifications from '../pages/user/Notifications.jsx'
 import QrScan from '../pages/user/QrScan.jsx'
 import Collectibles from '../pages/user/Collectibles.jsx'
 import Market from '../pages/user/Market.jsx'
@@ -22,6 +23,9 @@ import NewEvent from "../pages/agency/NewEvent.jsx";
 import InBox from "../pages/agency/Inbox.jsx";
 import Profile from "../pages/agency/Profile.jsx";
 import Layout from '../components/Layout.jsx'
+import AllUser from '../pages/admin/AllUser.jsx'
+import AllEvent from '../pages/admin/AllEvent.jsx'
+import LayoutAdmin from '../components/LayoutAdmin.jsx'
 import { useSelector } from 'react-redux'
 import { ClientProvider } from './Db.jsx'
 import { useEffect } from 'react'
@@ -38,6 +42,9 @@ const RoleRender = () => {
         }
         case 'AGENCY': {
           return agency();
+          
+        }case 'ADMIN': {
+          return admin();
           
         }
         default: {
@@ -64,6 +71,7 @@ export default RoleRender
       <Route path='/market/:id' element={<Market />} />
       <Route path='/sell/:id' element={<SellTicket />} />
       <Route path='/favorites' element={<Favorites />} />
+      <Route path='notifications' element = {<Notifications/>}/>
       <Route path="/Configurations" element={<Configurations />} />
       <Route path="/Contact" element={<Contact />} />
       <Route path="/Help" element={<Help />} />
@@ -86,6 +94,17 @@ const agency = () => {
       <Route path="/NewEvent" element={<NewEvent />} />
       <Route path="/Inbox" element={<InBox />} />
       <Route path='/Profile' element={<Profile/>} />   
+    </Routes>
+  </>
+}
+
+const admin = () => {
+  return <>
+  <LayoutAdmin/>
+    <Routes>
+      <Route path="/" element={<Events />} />
+      <Route path="/AllUser" element={<AllUser />} />
+      <Route path="/AllEvent" element={<AllEvent />} /> 
     </Routes>
   </>
 }

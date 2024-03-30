@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import { TiArrowRightOutline } from "react-icons/ti";
 import { postAlert } from "../../utils/Db";
 import { io } from "socket.io-client";
+import { format } from 'date-fns';
+
 
 
 const Inbox = () => {
   const events = useSelector((state) => state.authReducer.user.events);
-  console.log(events);
   const token = useSelector((state) => state.authReducer.token.token);
   const [search, setSearch] = useState("");
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [message, setMessage] = useState("");
 
+  console.log(selectedEvent)
   useEffect(() => {
     const socket = io('http://localhost:9092');
 
@@ -22,6 +23,7 @@ const Inbox = () => {
       // Aquí actualizas el estado con la nueva notificación
       // Esto dependerá de cómo estés manejando el estado en tu aplicación
       // Por ejemplo, podrías tener una acción de Redux para hacer esto
+      alert('Nueva notificación: ' + newNotification);
     });
 
     return () => {
@@ -40,27 +42,30 @@ const Inbox = () => {
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
   };
-const handleNotify = async (e) => {
-  e.preventDefault();
-  const id = selectedEvent.id;
-  const subjet = message;
-  try {
-    const response = await postAlert({ subjet, id }, token);
-    if (response.success) {
-      console.log(response);
-      setMessage('');
-      const date = format(new Date(response.date), 'HH:mm eee dd MMM', { locale: es }); 
-      setSelectedEvent(currentEvent => ({
-        ...currentEvent,
-        notifications: currentEvent.notifications ? [...currentEvent.notifications, { message, id, date }] : [{ message, id, date }]
-      }));
-    } else {
-      console.log("Error sending notification: " + response.message);
+  const handleNotify = async (e) => {
+    e.preventDefault();
+    const id = selectedEvent.id;
+    const subjet = message;
+    try {
+      const response = await postAlert({ subjet, id }, token);
+      if (response.success) {
+        console.log(response);
+        setMessage('');
+        const date = format(new Date(), 'HH:mm eee dd MMM'); 
+        setSelectedEvent(currentEvent => {
+          const updatedEvent = {
+            ...currentEvent,
+            notifications: currentEvent.notifications ? [...currentEvent.notifications, { message, id, date }] : [{ message, id, date }]
+          };
+          return updatedEvent;
+        });
+      } else {
+        console.log("Error sending notification: " + response.message);
+      }
+    } catch (error) {
+      console.log("Error sending notification: " + error);
     }
-  } catch (error) {
-    console.log("Error sending notification: " + error);
-  }
-};
+  };
 
   const filteredEvents = events.filter((event) =>
     event.name.toLowerCase().includes(search.toLowerCase())

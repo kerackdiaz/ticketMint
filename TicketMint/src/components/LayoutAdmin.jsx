@@ -1,23 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
-const Layout = () => {
-  const userdata = useSelector((state) => state.authReducer.user);
-  console.log(userdata);
+const LayoutAdmin = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [showDropdownUser, setShowDropdownUser] = useState(false);
-
-  const [search, setSearch] = useState("");
-  const [selectedEvent, setSelectedEvent] = useState(null);
-
-
-  const handleSearchChange = (e) => {
-    setSearch(e.target.value);
-  };
-
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -37,21 +25,21 @@ const Layout = () => {
 
   return (
     <>
-      <nav className="fixed top-0 z-50 w-full bg-white border-b border-morado3 dark:bg-gray-800 dark:border-gray-700">
-        <div className="px-3 py-3 lg:px-5 lg:pl-3 ">
-          <div className="flex items-center justify-between h-[100px] ">
-            <div className="flex items-center justify-start rtl:justify-end">
+      <nav class="fixed top-0 z-50 w-full bg-white border-b border-morado3 dark:bg-[#556B2F] dark:border-gray-700">
+        <div class="px-3 py-3 lg:px-5 lg:pl-3">
+          <div class="flex items-center justify-between h-[100px] ">
+            <div class="flex items-center justify-start rtl:justify-end">
               <button
                 data-drawer-target="logo-sidebar"
                 data-drawer-toggle="logo-sidebar"
                 aria-controls="logo-sidebar"
                 type="button"
-                className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg movil:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg movil:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                 onClick={toggleMenu}
               >
-                <span className="sr-only">Open sidebar</span>
+                <span class="sr-only">Open sidebar</span>
                 <svg
-                  className="w-6 h-6"
+                  class="w-6 h-6"
                   aria-hidden="true"
                   fill="currentColor"
                   viewBox="0 0 20 20"
@@ -65,16 +53,16 @@ const Layout = () => {
                 </svg>
               </button>
               <div className={`${showMenu ? "block" : "hidden"}`}>
-                <ul className="space-y-2 font-medium absolute bg-white p-10 pr-20  top-[125px] left-1 border-2 ">
+                <ul class="space-y-2 font-medium absolute bg-white p-10 pr-20  top-[125px] left-1 border-2 ">
                   <li className="flex flex-col mb-5">
                     <button
                       type="button"
-                      className="flex items-center w-full p>-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      class="flex items-center w-full p>-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                       aria-controls="dropdown-example"
                       data-collapse-toggle="dropdown-example"
                     >
                       <svg
-                        className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                        class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor"
@@ -82,7 +70,7 @@ const Layout = () => {
                       >
                         <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
                       </svg>
-                      <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
+                      <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
                         Events
                       </span>
                     </button>
@@ -92,7 +80,7 @@ const Layout = () => {
                         className="relative left-28 top-[-23px]"
                       >
                         <svg
-                          className="w-3 h-3 "
+                          class="w-3 h-3 "
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -109,21 +97,21 @@ const Layout = () => {
                       </button>
                       <ul
                         id="dropdown-example"
-                        className="hidden py-2 space-y-2 relative "
-                        class={`${isMenuOpen ? "block" : "hidden"}`}
+                        class="hidden py-2 space-y-2 relative "
+                        className={`${isMenuOpen ? "block" : "hidden"}`}
                       >
                         <li>
                           <Link
                             to={"/NewEvent"}
-                            className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                           >
                             New Event
                           </Link>
                         </li>
                         <li>
                           <Link
-                            to={"/"}
-                            className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                            to={"/Events"}
+                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                           >
                             All Events
                           </Link>
@@ -134,12 +122,12 @@ const Layout = () => {
                   <li className="flex flex-col ">
                     <button
                       type="button"
-                      className="flex items-center w-full p>-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      class="flex items-center w-full p>-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                       aria-controls="dropdown-example"
                       data-collapse-toggle="dropdown-example"
                     >
                       <svg
-                        className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                        class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor"
@@ -148,7 +136,7 @@ const Layout = () => {
                         <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
                         <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
                       </svg>
-                      <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
+                      <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
                         Reports
                       </span>
                     </button>
@@ -158,7 +146,7 @@ const Layout = () => {
                         className=" relative left-28 bottom-[20px]"
                       >
                         <svg
-                          className="w-3 h-3"
+                          class="w-3 h-3"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -175,13 +163,13 @@ const Layout = () => {
                       </button>
                       <ul
                         id="dropdown-example"
-                        className="hidden py-2 space-y-2 relative "
-                        class={`${isOpen ? "block" : "hidden"}`}
+                        class="hidden py-2 space-y-2 relative "
+                        className={`${isOpen ? "block" : "hidden"}`}
                       >
                         <li>
                           <Link
                             to={"/Report"}
-                            className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                           >
                             Balance
                           </Link>
@@ -189,7 +177,7 @@ const Layout = () => {
                         <li>
                           <a
                             href="#"
-                            className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                           >
                             All Events
                           </a>
@@ -200,10 +188,10 @@ const Layout = () => {
                   <li>
                     <Link
                       to={"/Inbox"}
-                      className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                      class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                     >
                       <svg
-                        className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white relative right-2"
+                        class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white relative right-2"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor"
@@ -211,13 +199,13 @@ const Layout = () => {
                       >
                         <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
                       </svg>
-                      <span className="flex-1 ms-3 whitespace-nowrap">Inbox</span>
+                      <span class="flex-1 ms-3 whitespace-nowrap">Inbox</span>
                     </Link>
                   </li>
                   <li>
                     <Link
                       to={"/ToDo"}
-                      className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group mt-5 "
+                      class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group mt-5 "
                     >
                       <svg
                       className="relative right-2"
@@ -272,7 +260,7 @@ const Layout = () => {
                           ></path>{" "}
                         </g>
                       </svg>
-                      <span className="flex-1 ms-3 whitespace-nowrap "> To-Do</span>
+                      <span class="flex-1 ms-3 whitespace-nowrap "> To-Do</span>
                     </Link>
                   </li>
                 </ul>
@@ -280,7 +268,7 @@ const Layout = () => {
 
               <a
                 
-                className="flex ms-2 tablet:me-24 w-[100px]"
+                class="flex ms-2 tablet:me-24 w-[100px]"
               >
                 <svg
                   width="180"
@@ -333,17 +321,17 @@ const Layout = () => {
                 </svg>
               </a>
 
-              <form className="hidden lg:block lg:w-[400px] mx-auto lg:ml-[43px]">
+              <form class="hidden lg:block lg:w-[400px] mx-auto lg:ml-[43px]">
                 <label
                   for="default-search"
-                  className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+                  class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
                 >
                   Search
                 </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <div class="relative">
+                  <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                     <svg
-                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      class="w-4 h-4 text-gray-500 dark:text-gray-400"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -360,100 +348,130 @@ const Layout = () => {
                   </div>
                   <input
                     type="search"
-                    onChange={handleSearchChange}
-                    value={search}
                     id="default-search"
-                    className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search Events"
+                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search Mockups, Logos..."
                     required
                   />
                   <button
                     type="submit"
-                    className="text-white absolute end-2.5 bottom-2.5 bg-morado1 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    class="text-white absolute end-2.5 bottom-2.5 bg-morado1 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
                     Search
                   </button>
                 </div>
               </form>
+              <Link to="/Message">
+                <svg
+                  className="lg:ml-[600px] hidden lg:block tablet:block tablet:ml-[370px]"
+                  width="47px"
+                  height="47px"
+                  viewBox="-2.4 -2.4 28.80 28.80"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0">
+                    <rect
+                      x="-2.4"
+                      y="-2.4"
+                      width="28.80"
+                      height="28.80"
+                      rx="3.168"
+                      fill="#9747FF"
+                      strokewidth="0"
+                    ></rect>
+                  </g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    {" "}
+                    <path
+                      d="M8 11H8.01M12 11H12.01M16 11H16.01M21 20L17.6757 18.3378C17.4237 18.2118 17.2977 18.1488 17.1656 18.1044C17.0484 18.065 16.9277 18.0365 16.8052 18.0193C16.6672 18 16.5263 18 16.2446 18H6.2C5.07989 18 4.51984 18 4.09202 17.782C3.71569 17.5903 3.40973 17.2843 3.21799 16.908C3 16.4802 3 15.9201 3 14.8V7.2C3 6.07989 3 5.51984 3.21799 5.09202C3.40973 4.71569 3.71569 4.40973 4.09202 4.21799C4.51984 4 5.0799 4 6.2 4H17.8C18.9201 4 19.4802 4 19.908 4.21799C20.2843 4.40973 20.5903 4.71569 20.782 5.09202C21 5.51984 21 6.0799 21 7.2V20Z"
+                      stroke="#ffffff"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>{" "}
+                  </g>
+                </svg>{" "}
+              </Link>
             </div>
-              <div className="w-1/2">
-                <h2 className="text-white text-3xl text-center">
-                  {userdata.companyName}
-                </h2>
-              </div>
-            <div className="flex items-center">
-              <div className="flex items-center ms-3">
+            <div class="flex items-center">
+              <div class="flex items-center ms-3">
                 <div>
                   <button
                     type="button"
-                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                    class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                     aria-expanded="false"
                     onClick={toggleDropdownUser}
                   >
-                    <span className="sr-only">Open user menu</span>
+                    <span class="sr-only">Open user menu</span>
                     <img
-                      className="w-20 h-20 rounded-full"
-                      src={userdata.profilePic}
+                      class="w-20 h-20 rounded-full"
+                      src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                       alt="user photo"
                     />
                   </button>
                 </div>
                 <div
-                  className={`z-50 ${
+                  class={`z-50 ${
                     showDropdownUser ? "block" : "hidden"
                   } my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 absolute right-6 top-24`}
                   id="dropdown-user"
                 >
-                  <div className="px-4 py-3" role="none">
+                  <div class="px-4 py-3" role="none">
                     <p
-                      className="text-sm text-gray-900 dark:text-white"
+                      class="text-sm text-gray-900 dark:text-white"
                       role="none"
                     >
-                      {userdata.firstname} {userdata.lastname}
+                      Neil Sims
                     </p>
                     <p
-                      className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
+                      class="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
                       role="none"
                     >
-                      {userdata.email}
+                      neil.sims@flowbite.com
                     </p>
                   </div>
-                  <ul className="py-1" role="none">
+                  <ul class="py-1" role="none">
                     <li>
-                      <Link
-                        to={"/"}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                      <a
+                        href="#"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         role="menuitem"
                       >
                         Dashboard
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link
-                        to={"/Profile"}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                      <a
+                        href="#"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         role="menuitem"
                       >
-                        Profile
-                      </Link>
+                        Settings
+                      </a>
                     </li>
                     <li>
-                      <Link
-                        to={"/Report"}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                      <a
+                        href="#"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         role="menuitem"
                       >
                         Earnings
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link
-                        to={"/logout"}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                      <a
+                        href="#"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         role="menuitem"
                       >
                         Sign out
-                      </Link>
+                      </a>
                     </li>
                   </ul>
                 </div>
@@ -465,20 +483,20 @@ const Layout = () => {
       /*sidebar*/
       <aside
         id="logo-sidebar"
-        className="fixed  top-0 left-0 z-40 w-64 tablet:w-52 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-morado3 movil:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        class="fixed  top-0 left-0 z-40 w-64 tablet:w-52 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-morado3 movil:translate-x-0 dark:bg-[#46562b] dark:border-gray-700"
         aria-label="Sidebar"
       >
-        <div className="mt-[90px] bottom-64 px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-          <ul className="space-y-2 font-medium">
-            <li className="flex flex-col mb-5">
+        <div class="mt-[90px] bottom-64 px-3 pb-4 overflow-y-auto bg-white dark:bg-[#556B2F]">
+          <ul class="space-y-2 font-medium">
+            {/* <li className="flex flex-col mb-5">
               <button
                 type="button"
-                className="flex items-center w-full p>-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                class="flex items-center w-full p>-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 aria-controls="dropdown-example"
                 data-collapse-toggle="dropdown-example"
               >
                 <svg
-                  className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                  class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -486,7 +504,7 @@ const Layout = () => {
                 >
                   <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
                 </svg>
-                <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
+                <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
                   Events
                 </span>
               </button>
@@ -496,7 +514,7 @@ const Layout = () => {
                   className="relative left-28 top-[-23px]"
                 >
                   <svg
-                    className="w-3 h-3 "
+                    class="w-3 h-3 "
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -513,13 +531,13 @@ const Layout = () => {
                 </button>
                 <ul
                   id="dropdown-example"
-                  className="hidden py-2 space-y-2 relative "
-                  class={`${isMenuOpen ? "block" : "hidden"}`}
+                  class="hidden py-2 space-y-2 relative "
+                  className={`${isMenuOpen ? "block" : "hidden"}`}
                 >
                   <li>
                     <Link
                       to={"/NewEvent"}
-                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                     >
                       New Event
                     </Link>
@@ -527,23 +545,23 @@ const Layout = () => {
                   <li>
                     <Link
                       to={"/Events"}
-                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                     >
                       All Events
                     </Link>
                   </li>
                 </ul>
               </div>
-            </li>
-            <li className="flex flex-col ">
+            </li> */}
+            {/* <li className="flex flex-col ">
               <button
                 type="button"
-                className="flex items-center w-full p>-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                class="flex items-center w-full p>-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 aria-controls="dropdown-example"
                 data-collapse-toggle="dropdown-example"
               >
                 <svg
-                  className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                  class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -552,7 +570,7 @@ const Layout = () => {
                   <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
                   <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
                 </svg>
-                <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
+                <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
                   Reports
                 </span>
               </button>
@@ -562,7 +580,7 @@ const Layout = () => {
                   className=" relative left-28 bottom-[20px]"
                 >
                   <svg
-                    className="w-3 h-3"
+                    class="w-3 h-3"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -579,35 +597,35 @@ const Layout = () => {
                 </button>
                 <ul
                   id="dropdown-example"
-                  className="hidden py-2 space-y-2 relative "
-                  class={`${isOpen ? "block" : "hidden"}`}
+                  class="hidden py-2 space-y-2 relative "
+                  className={`${isOpen ? "block" : "hidden"}`}
                 >
                   <li>
                     <Link
                       to={"/Report"}
-                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                     >
                       Balance
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      to={"/Transactions"}
-                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                    <a
+                      href="#"
+                      class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                     >
-                      Transactions
-                    </Link>
+                      #
+                    </a>
                   </li>
                 </ul>
               </div>
-            </li>
+            </li> */}
             <li>
-              <Link
+              {/* <Link
                 to={"/Inbox"}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
-                  className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white relative right-2.5"
+                  class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white relative right-2.5"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -615,13 +633,13 @@ const Layout = () => {
                 >
                   <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
                 </svg>
-                <span className="flex-1 ms-3 whitespace-nowrap">Notifications</span>
-              </Link>
+                <span class="flex-1 ms-3 whitespace-nowrap">Inbox</span>
+              </Link> */}
             </li>
-            <li>
+            {/* <li>
               <Link
                 to={"/ToDo"}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group mt-5"
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group mt-5"
               >
                 <svg
                 className="relative right-2.5"
@@ -676,9 +694,134 @@ const Layout = () => {
                     ></path>{" "}
                   </g>
                 </svg>
-                <span className="flex-1 ms-3 whitespace-nowrap"> To-Do</span>
+                <span class="flex-1 ms-3 whitespace-nowrap"> To-Do</span>
+              </Link>
+            </li> */}
+            {/* pepe */}
+            <li>
+              <Link
+                to={"/AllUser"}
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group mt-5"
+              >
+                <svg
+                className="relative right-2.5"
+                  width="25px"
+                  height="25px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    {" "}
+                    <path
+                      d="M12.37 8.87988H17.62"
+                      stroke="#444444"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>{" "}
+                    <path
+                      d="M6.38 8.87988L7.13 9.62988L9.38 7.37988"
+                      stroke="#444444"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>{" "}
+                    <path
+                      d="M12.37 15.8799H17.62"
+                      stroke="#444444"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>{" "}
+                    <path
+                      d="M6.38 15.8799L7.13 16.6299L9.38 14.3799"
+                      stroke="#444444"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>{" "}
+                    <path
+                      d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
+                      stroke="#444444"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>{" "}
+                  </g>
+                </svg>
+                <span class="flex-1 ms-3 whitespace-nowrap"> Pepe</span>
               </Link>
             </li>
+
+            <li>
+              <Link
+                to={"/AllEvent"}
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group mt-5"
+              >
+                <svg
+                className="relative right-2.5"
+                  width="25px"
+                  height="25px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    {" "}
+                    <path
+                      d="M12.37 8.87988H17.62"
+                      stroke="#444444"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>{" "}
+                    <path
+                      d="M6.38 8.87988L7.13 9.62988L9.38 7.37988"
+                      stroke="#444444"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>{" "}
+                    <path
+                      d="M12.37 15.8799H17.62"
+                      stroke="#444444"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>{" "}
+                    <path
+                      d="M6.38 15.8799L7.13 16.6299L9.38 14.3799"
+                      stroke="#444444"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>{" "}
+                    <path
+                      d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
+                      stroke="#444444"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>{" "}
+                  </g>
+                </svg>
+                <span class="flex-1 ms-3 whitespace-nowrap"> eduardo</span>
+              </Link>
+            </li>
+            
           </ul>
         </div>
       </aside>
@@ -686,4 +829,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default LayoutAdmin;
