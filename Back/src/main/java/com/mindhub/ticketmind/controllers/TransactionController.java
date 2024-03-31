@@ -27,17 +27,17 @@ public class TransactionController {
     @PostMapping("/transferTicket")
     public ResponseEntity<?> newTransaction(@RequestBody TicketTransactionRecordDTO ticketTransactionRecordDTO){
         String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
-        return new ResponseEntity<>(transactionService.makeTicketTransaction(ticketTransactionRecordDTO, userMail), HttpStatus.OK);
+        return new ResponseEntity<>(transitoryTransactionService.makeTicketTransaction(ticketTransactionRecordDTO, userMail), HttpStatus.OK);
     }
 
     @GetMapping("/verifyTransaction")
     public ResponseEntity<?> verifyTransaction(@RequestParam("verifyTransaction") UUID id) {
-        return ResponseEntity.ok(transitoryTransactionService.verifyTransaction(id));
+        return new ResponseEntity<>(transitoryTransactionService.verifyTransaction(id), HttpStatus.OK);
     }
 
     @GetMapping("/denyTransaction")
     public ResponseEntity<?> denyTransaction(@RequestParam("denyTransaction") UUID id) {
-        return ResponseEntity.ok(transitoryTransactionService.deleteTransaction(id));
+        return new ResponseEntity<>(transitoryTransactionService.deleteTransaction(id), HttpStatus.OK);
     }
 
 

@@ -1,5 +1,6 @@
 package com.mindhub.ticketmind.services.service;
 
+import com.mindhub.ticketmind.dtos.TestRecordDTO;
 import com.mindhub.ticketmind.models.Client;
 import com.mindhub.ticketmind.models.Ticket;
 import com.mindhub.ticketmind.repositories.ClientRepository;
@@ -51,12 +52,34 @@ public class ClientService {
     }
 
 //    public Map<String, Object> buyTicket(UUID ticketId, String email){
+    //kjjj hecho verga el metodo este
 //        Map<String, Object> response = new HashMap<>();
 //        Client client = clientRepository.findByEmail(email);
 //
 //
 //    }
 
+
+    public Map<String, Object> clientLotteryDeposit(TestRecordDTO testRecordDTO, String userEmail){
+        Client client = clientRepository.findByEmail(userEmail);
+        Map<String, Object> response = new HashMap<>();
+        try {
+            if(client != null){
+                client.setBalance(testRecordDTO.platita());
+                clientRepository.save(client);
+                response.put("success", true);
+                response.put("message", "el quini6 sale bien");
+            } else {
+                response.put("error", true);
+                response.put("message", "el quini6 no sale bien ekisde");
+            }
+            return response;
+        } catch (Exception e) {
+            response.put("error", true);
+            response.put("message", "epa que salió mal che: " + e.getMessage());
+        }
+        return response;
+    }
 
 
 }

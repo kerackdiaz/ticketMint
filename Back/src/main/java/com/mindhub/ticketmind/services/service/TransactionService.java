@@ -6,6 +6,7 @@ import com.mindhub.ticketmind.dtos.TicketTransactionRecordDTO;
 import com.mindhub.ticketmind.dtos.TransactionDTO;
 import com.mindhub.ticketmind.models.*;
 import com.mindhub.ticketmind.repositories.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,7 @@ public class TransactionService {
     }
 
 
+    @Transactional
     public Map<String, Object> ticketPurchaseTransaction(TicketPurchaseRecordDTO ticketPurchaseRecordDTO, String userMail) {
 
         Map<String, Object> response = new HashMap<>();
@@ -104,6 +106,12 @@ public class TransactionService {
                     return response;
                 }
 
+                if (ticket.getAvailableQuantity() < ticketPurchaseRecordDTO.quantity()) {
+                    response.put("error", true);
+                    response.put("message", "Requested more tickets than available to purchase");
+                    return response;
+                }
+
                 double ticketPrice = ticketPurchaseRecordDTO.totalPrice();
                 double commissionFees = ticketPrice * 0.10;
                 double ticketPriceNet = ticketPrice * 0.90;
@@ -118,6 +126,7 @@ public class TransactionService {
             sourceClientTransaction.setDescription("Ticket purchase");
             sourceClientTransaction.setDate(new Date());
             sourceClientTransaction.setAmount(-ticketPrice);
+            sourceClientTransaction.setClient(sourceClient);
             transactionRepository.save(sourceClientTransaction);
 
             Transaction adminTransaction = new Transaction();
@@ -125,6 +134,7 @@ public class TransactionService {
             adminTransaction.setDescription("Ticket sale commission fees");
             adminTransaction.setDate(new Date());
             adminTransaction.setAmount(commissionFees);
+            adminTransaction.setClient(admin);
             transactionRepository.save(adminTransaction);
 
             Transaction agencyTransaction = new Transaction();
@@ -132,6 +142,7 @@ public class TransactionService {
             agencyTransaction.setDescription("Ticket sale");
             agencyTransaction.setDate(new Date());
             agencyTransaction.setAmount(ticketPriceNet);
+            agencyTransaction.setClient(agency);
             transactionRepository.save(agencyTransaction);
 
             try {
@@ -143,6 +154,9 @@ public class TransactionService {
                 ticketBought.setClient(sourceClient);
 
                 sourceClient.getClientTickets().add(ticketBought);
+
+                clientTicketRepository.save(ticketBought);
+                clientRepository.save(sourceClient);
 
             } catch(Exception e) {
                 response.put("error", true);
@@ -219,7 +233,7 @@ public class TransactionService {
             }
             ClientTicket ticket = ticketOptional.get();
 
-            if(!sourceClient.getClientTickets().contains(ticket)) {
+            if(!sourceClient.getClientTickets().stream().anyMatch(clientTicket -> clientTicket.getId() == ticketTransactionRecordDTO.ticketID())) {
                 response.put("error", true);
                 response.put("message", "The ticket exists but it doesn't belong to the client that requested the transfer");
                 return response;
@@ -243,20 +257,23 @@ public class TransactionService {
             sourceTransaction.setDescription(ticketTransactionRecordDTO.description());
             sourceTransaction.setDate(new Date());
             sourceTransaction.setAmount(ticketPriceNet);
+            sourceTransaction.setClient(sourceClient);
             transactionRepository.save(sourceTransaction);
 
             Transaction adminTransaction = new Transaction();
             adminTransaction.setType(TransactionType.CREDIT);
             adminTransaction.setDescription("Ticket Transaction Sale Commission Fees");
             adminTransaction.setDate(new Date());
-            adminTransaction.setAmount(ticketPriceNet);
+            adminTransaction.setAmount(commissionFees);
+            adminTransaction.setClient(admin);
             transactionRepository.save(adminTransaction);
 
             Transaction destinationTransaction = new Transaction();
             destinationTransaction.setType(TransactionType.DEBIT);
             destinationTransaction.setDescription(ticketTransactionRecordDTO.description());
             destinationTransaction.setDate(new Date());
-            sourceTransaction.setAmount(-ticketPrice);
+            destinationTransaction.setAmount(-ticketPrice);
+            destinationTransaction.setClient(destinationClient);
             transactionRepository.save(destinationTransaction);
 
             try {

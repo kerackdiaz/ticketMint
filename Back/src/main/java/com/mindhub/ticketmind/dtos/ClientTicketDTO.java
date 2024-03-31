@@ -14,9 +14,9 @@ public class ClientTicketDTO {
     private double price;
     private int quantity;
     private String ticketType;
-    private Client client;
 
     public ClientTicketDTO(ClientTicket clientTicket) {
+        this.id = clientTicket.getId();
         this.originalTicketId = clientTicket.getOriginalTicketId();
         this.eventId = clientTicket.getEventId();
         this.price = clientTicket.getPrice();
@@ -48,7 +48,4 @@ public class ClientTicketDTO {
         return ticketType;
     }
 
-    public Client getClient() {
-        return client;
-    }
 }

@@ -2,7 +2,6 @@ package com.mindhub.ticketmind.models;
 
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
@@ -11,7 +10,7 @@ public class TransitoryTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long kei;
-    private UUID id;
+    private UUID clientTicketId;
     private double basePrice;
     private int availableQuantity;
     private double increasePercentage;
@@ -20,8 +19,8 @@ public class TransitoryTicket {
     public TransitoryTicket() {
     }
 
-    public TransitoryTicket(UUID id, double basePrice, int availableQuantity, double increasePercentage, String sourceEmail, String destinationEmail) {
-        this.id = id;
+    public TransitoryTicket(UUID clientTicketId, double basePrice, int availableQuantity, double increasePercentage, String sourceEmail, String destinationEmail) {
+        this.clientTicketId = clientTicketId;
         this.basePrice = basePrice;
         this.availableQuantity = availableQuantity;
         this.increasePercentage = increasePercentage;
@@ -33,12 +32,12 @@ public class TransitoryTicket {
         return kei;
     }
 
-    public UUID getId() {
-        return id;
+    public UUID getClientTicketId() {
+        return clientTicketId;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setClientTicketId(UUID clientTicketId) {
+        this.clientTicketId = clientTicketId;
     }
 
     public double getBasePrice() {
