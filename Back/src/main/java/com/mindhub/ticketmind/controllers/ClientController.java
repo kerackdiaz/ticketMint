@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -39,12 +40,26 @@ public class ClientController {
     }
 
 
+
     @PostMapping("/loteria")
     public ResponseEntity<?> postLoteriaWinnings(@RequestBody TestRecordDTO testRecordDTO){
         String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
         return new ResponseEntity<>(clientService.clientLotteryDeposit(testRecordDTO, userMail), HttpStatus.OK);
     }
 
+
+
+    @PutMapping("/current")
+    public ResponseEntity<?> updateClient(@RequestBody ProfileFormDTO profileFormDTO) {
+        String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity<>(clientService.updateClient(profileFormDTO, userMail), HttpStatus.OK);
+    }
+
+    @PutMapping("/current/profilePic")
+    public ResponseEntity<?> updateProfilePic(@RequestBody String img) throws IOException {
+        String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
+        return ResponseEntity.ok(clientService.changeProfilePicture(userMail, img));
+    }
 
 
 }
