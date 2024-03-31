@@ -179,13 +179,21 @@ public class TransactionService {
         return response;
     }
 
+
+
+
+
+
+
+
+
     public Map<String, Object> makeTicketTransaction(TicketTransactionRecordDTO ticketTransactionRecordDTO, String userMail) {
 
         Map<String, Object> response = new HashMap<>();
 
-        if (ticketTransactionRecordDTO.ticketPrice() <= 0) {
+        if (ticketTransactionRecordDTO.ticketPrice() < 0) {
             response.put("error", true);
-            response.put("message", "The ticket price cannot neither be zero nor negative");
+            response.put("message", "The ticket price cannot nor negative");
             return response;
         }
         if (ticketTransactionRecordDTO.quantity() <= 0) {
@@ -205,8 +213,10 @@ public class TransactionService {
         }
 
         try {
+
             Client sourceClient = clientRepository.findByEmail(userMail);
             Client destinationClient = clientRepository.findByEmail(ticketTransactionRecordDTO.ticketDestinationEmail());
+
             Client admin = clientRepository.findByRole(UserRole.ADMIN);
             Optional<ClientTicket> ticketOptional = clientTicketRepository.findById(ticketTransactionRecordDTO.ticketID());
 
