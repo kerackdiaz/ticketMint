@@ -17,13 +17,13 @@ const Payment = () => {
     };
     return (
 
-        <main className='bg-white flex justify-center gap-20 w-full m-auto'>
-            <div className='min-w-1/2  bg-blue-500'>
-                <img src={Paymetbanner} alt="" />
+        <main className='bg-white flex flex-col-reverse lg:flex-row lg:gap-20 justify-center w-full min-h-screen m-auto'>
+            <div className='min-w-1/2 self-center pb-10 md:pb-5 lg:pb-0 bg-blue-500'>
+                <img src={Paymetbanner} className='w-full h-full' alt="" />
             </div>
 
-            <div className='w-1/3 self-center'>
-                <form className='bg-gray-100 flex flex-col px-10 gap-3 pb-8 m-auto rounded-xl'>
+            <div className='w-full lg:w-1/3 self-center py-1 bg-desactive-red-400'>
+                <form className='bg-gray-100 flex flex-col px-10 gap-3 pb-8 m-auto  rounded-xl'>
                     <h1 className=' text-3xl font-semibold border-b py-4'>Payment</h1>
                     <label className='bg--700 text-xl'>
                         <span className='font-semibold'>Pay With:</span>
@@ -87,7 +87,7 @@ const Payment = () => {
                         <span className='text-[#5c5b5b] text-lg relative bottom-[1px]'>save card details:</span>
                     </label>
                     {/* <p className='bg--700 text-red-500'>errorMessage</p> */}
-                    <input type="submit" value="Pay" className='w-full py-3 pl-3 text-white text-xl cursor-pointer rounded-md bg-green-500 hover:bg-[#28643e] duration-300' />
+                    <input type="submit" value="Pay" className='w-full py-3 pl-3 text-white text-xl cursor-pointer rounded-md bg-[#23b057] hover:bg-green-500 duration-300' />
                 </form>
             </div>
         </main>

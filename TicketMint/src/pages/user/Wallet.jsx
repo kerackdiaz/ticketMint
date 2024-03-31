@@ -45,7 +45,7 @@ const Wallet = () => {
             <div className='flex justify-between items-center w-[90%] px-3 py-1 border border-[#6651c3] rounded-lg'>
                 <div className="flex gap-2 w-full">
                     <IoSearchOutline className='text-xl' />
-                    <input type="text" className="w-full appearance-none border-none ** bgdesactive-transparent outline-none text-xs" placeholder=' Search currency' />
+                    <input type="text" className="w-full appearance-none border-none ** bg-transparent outline-none text-xs" placeholder=' Search currency' />
                 </div>
                 < IoMdCloseCircle className='text-lg text-[#e8635c]' />
             </div>
@@ -54,7 +54,7 @@ const Wallet = () => {
                 <div className='flex flex-col text-black gap-3 ** bgblue-500 flex-wrap w-full rounded-xl justify-around'>
                     {transactions?.length > 0 ? (
                         transactions.map((transaction) => (
-                            <div className='bg-white px-10 border rounded-lg py-5 flex justify-between items-center' >
+                            <div className='flex justify-between items-center px-10 py-5 border rounded-lg  text-white bg-gray-900' >
                                 <div className="flex gap-3 items-center">
                                     <div className="div p-2 bg-[#6651c3] rounded-full">
                                         <BiSolidStore className='text-3xl text-white' />
@@ -78,10 +78,6 @@ const Wallet = () => {
                         </div>
                     )}
                 </div>
-
-
-
-
             </section>
         </main>
     )
