@@ -40,6 +40,15 @@ public class ClientController {
     }
 
 
+
+    @PostMapping("/loteria")
+    public ResponseEntity<?> postLoteriaWinnings(@RequestBody TestRecordDTO testRecordDTO){
+        String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity<>(clientService.clientLotteryDeposit(testRecordDTO, userMail), HttpStatus.OK);
+    }
+
+
+
     @PutMapping("/current")
     public ResponseEntity<?> updateClient(@RequestBody ProfileFormDTO profileFormDTO) {
         String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -51,5 +60,6 @@ public class ClientController {
         String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(clientService.changeProfilePicture(userMail, img));
     }
+
 
 }
