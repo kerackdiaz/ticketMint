@@ -91,31 +91,39 @@ function Event() {
   },[])
 
   return (
-    <div className='bg-[#0b0b1c] flex flex-1 flex-col items-center'>
-      <h1 className='text-lg font-medium py-1 text-white '>Events</h1>
-      <div className='flex justify-between w-full px-5 md:w-96'>
+    <main className='bg-[#0b0b1c] flex flex-1 flex-col desktop:mt-20 desktop:flex-wrap items-center desktop:'>
+      <section className='flex flex-col gap-3 justify-around w-screen items-center desktop:self-start desktop:w-[30%]'>
+        <h1 className='text-lg md:text-5xl font-medium py-1 text-white desktop:fixed desktop:top-20 desktop:left-5'>Events</h1>
+        <Link to={'/favorites'}>
+        <button type="button" className='text-white desktop:fixed desktop:left-56 desktop:top-24 bg-[#8468fb] py-1 px-3 flex items-center gap-2 rounded-xl'>Favorites <TiStarFullOutline/></button>
+        </Link>
+        <div className='flex desktop:flex-col desktop:items-start desktop:fixed desktop:overflow-y-auto desktop:justify-start desktop:h-[80%] desktop:left-5 desktop:top-36 desktop:w-[20%]  md:justify-center gap-2 overflow-x-auto w-[80%] px-5 my-4'>
+        {getCategories()}
+        {getCategories()}
+        {getCategories()}
+        {getCategories()}
+        {getCategories()}
+        </div>
+      </section>
+      <div className='flex justify-center items-around w-full desktop:w-[70%] gap-4 mb-10 mt-3 desktop:ml-[30%] desktop:self-start px-5 md:w-[450px]'>
         <select name="location" onChange={handleLocation} className='bg-[#0b0b1c] text-white '>
             <option className='text-white' value={''}>Location</option>
             {
                 getCities()
             }
         </select>
-        <Link to={'/favorites'}>
-        <button type="button" className='text-white bg-[#8468fb] py-1 px-3 flex items-center gap-2 rounded-xl'>Favorites <TiStarFullOutline/></button>
-        </Link>
-      </div>
-      <label className='w-screen flex justify-center mt-5 px-5 md:w-96'>
+      <label className=' desktop:w-[70%] flex justify-center desktop:mt-0 md:w-[450px]'>
         <input onInput={handleSearch} type="search" placeholder='Search' className='bg-[#0b0b1c] text-white py-1 px-3 rounded-xl border-2 border-[#8468fb] w-full' />
       </label>
-      <div className='flex gap-2 my-4'>
-        {
-            getCategories()
-        }
       </div>
-      <div className='flex flex-wrap  gap-4 justify-center'>
+      
+      <div className='flex flex-wrap gap-4 mb-20 desktop:mb-3 desktop:ml-[30%] justify-center desktop:w-[70%] desktop:mt-10 desktop:self-start'>
+      {getEvents() }
+      {getEvents() }
+      {getEvents() }
       {getEvents() }
       </div>
-    </div>
+    </main>
   )
 }
 
