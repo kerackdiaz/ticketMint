@@ -25,6 +25,7 @@ import Profile from "../pages/agency/Profile.jsx";
 import Layout from '../components/Layout.jsx'
 import AllUser from '../pages/admin/AllUser.jsx'
 import AllEvent from '../pages/admin/AllEvent.jsx'
+import Payment from '../pages/gateway/Payment.jsx'
 import LayoutAdmin from '../components/LayoutAdmin.jsx'
 import { useSelector } from 'react-redux'
 import { ClientProvider } from './Db.jsx'
@@ -77,6 +78,7 @@ export default RoleRender
       <Route path="/Help" element={<Help />} />
       <Route path="/Privacity" element={<Privacity />} />
       <Route path="/Wallet" element={<Wallet />} />
+      <Route path="/Payment" element={<Payment />} />
     </Routes>
   </>
   )
