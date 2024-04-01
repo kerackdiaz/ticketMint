@@ -4,7 +4,10 @@ import { IoSearchOutline } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";
 
 const Notifications = () => {
-
+  const events = useSelector((state) => state.authReducer.user.events);
+  const myNotifications = useSelector((state) => state.authReducer.user.notifications);
+  const notify = useSelector((state) => state.authReducer.notify);
+  console.log(notify)
     const handleSearch = (e) => {
         setSearch(e.target.value)
       }

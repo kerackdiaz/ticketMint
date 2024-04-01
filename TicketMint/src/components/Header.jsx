@@ -1,4 +1,5 @@
-import React,{useState, useEffect} from 'react'
+import React, { useState, useEffect} from 'react'
+import { useLocation } from 'react-router-dom';
 import { LINKS_HEADER } from '../utils/links'
 import Anchor from './Anchor'
 import { useSelector, useDispatch } from 'react-redux'
@@ -6,39 +7,41 @@ import { getNotify } from "../redux/actions/auth.actions";
 
 const Header = () => {
     const notify = useSelector((state) => state.authReducer.user.notifications);
-    const [notifications, setNotifications] = useState([]);
+    const [notificationReceived, setNotificationReceived] = useState(false);
+    const location = useLocation();
     const dispatch = useDispatch();
-  
+
     useEffect(() => {
         const ws = new WebSocket('ws://localhost:8080/alert');
-    
-        ws.onopen = () => {
-        };
-    
+
+        ws.onopen = () => {};
+
         ws.onmessage = (event) => {
             const notification = JSON.parse(event.data);
-            const eventId = notification.event.id; 
-            if(!notify === undefined || !notify === undefined || !notify === null || !notify === null || notify.length != 0 ){
-                const events = notify 
-                ? Object.values(notify).filter(event => eventId === event.eventId)
-                : [];
-
-                if(events.length > 0){
+            const eventId = notification.event.id;
+            if (!notify === undefined || !notify === undefined || !notify === null || !notify === null || notify.length != 0) {
+                const events = notify ? Object.values(notify).filter(event => eventId === event.eventId) : [];
+                if (events.length > 0) {
                     dispatch(getNotify(events));
+                    setNotificationReceived(true);
+                    const notisElement = document.getElementById('Notis');
+                    notisElement.classList.add('notificationReceived');
                 }
-            }
-        };
-    
+            }};
         ws.onerror = (error) => {
         };
-    
-        ws.onclose = () => {
-        };
-    
-        return () => {
-            ws.close();
-        };
+
+        ws.onclose = () => {};
+
+        return () => { ws.close(); };
     }, []);
+
+    useEffect(() => {
+        if (location.pathname === '/notis' && notificationReceived) {
+                notisElement.classList.remove('notificationReceived');
+                setNotificationReceived(false);
+        }
+    }, [notificationReceived]);
 
 
     return (

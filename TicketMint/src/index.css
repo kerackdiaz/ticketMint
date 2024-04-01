@@ -44,3 +44,13 @@ ul.slick-dots li:last-child {
   span.apexcharts-legend-text {
     color: white!important;
 }
+
+.notificationReceived::after {
+    content: " ";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 50%;
+    transform: translateX(10px);
+}

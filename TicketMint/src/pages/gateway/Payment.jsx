@@ -3,11 +3,13 @@ import { FaCcVisa, FaCcMastercard } from "react-icons/fa6";
 import Paymetbanner from '../../../public/paymet-banner.png'
 import { walletCharger } from '../../utils/Db'
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';;
 
 const Payment = () => {
     const token = useSelector((state) => state.authReducer.token.token);
-
+    const [amount, setAmount] = useState(0);
     const [cardNumber, setCardNumber] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (event) => {
         let { value } = event.target;
@@ -17,13 +19,14 @@ const Payment = () => {
         setCardNumber(value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const response = walletCharger(amount, token)
-        console.log(response.message)
-    }
-
-
+        const response = await walletCharger(amount, token);
+        console.log(response);
+        if (response.success) {
+            navigate('/Wallet');
+        }
+    };
     return (
 
         <main className='bg-white flex flex-col-reverse lg:flex-row lg:gap-20 justify-center w-full min-h-screen m-auto'>
@@ -88,7 +91,7 @@ const Payment = () => {
                     <label className='bg--700 text-xl'>
                         <span className='font-medium text-lg'>Amount</span>
                         <div>
-                            <input type="number" name='' className='w-full p-1 pl-3 rounded-md' placeholder='' />
+                            <input type="number" name='' className='w-full p-1 pl-3 rounded-md' placeholder='' onChange={e => setAmount(e.target.value)} />
                         </div>
                     </label>
                     <label className='flex items-center gap-1 bg--700 text-xl'>
