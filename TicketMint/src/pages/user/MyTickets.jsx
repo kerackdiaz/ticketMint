@@ -36,8 +36,8 @@ function MyTickets() {
 
   
       let filterEvent = eventsWithTicketCounts
-      return filterEvent.length > 0 ? filterEvent.map((event, index) => (
-        <CardMyTickets key={index} name={event.name} date={event.date} image={event.imageURL} id={event.id} ticketCount={event.ticketCount}/>
+      return filterEvent.length > 0 ? filterEvent.map((event, index) => ( <Link to={`/detailTicket/${event.id}`}>
+        <CardMyTickets key={index} name={event.name} date={event.date} time={event.time} image={event.imageURL} id={event.id} ticketCount={event.ticketCount}/></Link>
       )) : <h1 className='text-white'>No events</h1> 
   }
 

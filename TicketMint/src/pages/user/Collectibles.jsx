@@ -1,4 +1,4 @@
-import React from 'react'
+import React  from 'react'
 import { Link } from 'react-router-dom'
 import CardCollectibles from '../../components/CardCollectibles'
 import { useSelector } from 'react-redux'
@@ -8,18 +8,26 @@ function Collectibles() {
   const UserData = useSelector((state) => state.authReducer.user)
   const MyTickets= Object.values(UserData.clientTicket)
   const eventsData = useSelector((state) => state.authReducer.events)
+  const nowDate = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate();
+  const nowTime = new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds();
+
   const events = Object.values(eventsData).filter(event => 
     MyTickets.some(ticket => ticket.eventId === event.id)
   );
+  const filteredEvents = events.filter((event) => event.date >= nowDate && event.time >= nowTime)
+
   const ticketCounts = MyTickets.reduce((counts, ticket) => {
     counts[ticket.eventId] = (counts[ticket.eventId] || 0) + ticket.quantity;
     return counts;
   }, {});
 
-  const eventsWithTicketCounts = events.map(event => ({
+  const eventsWithTicketCounts = filteredEvents.map(event => ({
     ...event,
     ticketCount: ticketCounts[event.id]
   }));
+
+
+  
 
   
   const getEvents = () => {
@@ -33,13 +41,10 @@ function Collectibles() {
           <span class="sr-only">Loading...</span>
         </div>
         )}
-
-  
       let filterEvent = eventsWithTicketCounts
       return filterEvent.length > 0 ? filterEvent.map((event, index) => {
         return <CardCollectibles key={index} name={event.name} date={event.date} image={event.imageURL} id={event.id } ticketCount={event.ticketCount}/>}) : <h1 className='text-white'>No collectibles</h1>
   }
-
   return (
     <div className='bg-[#0b0b1c] flex flex-1 gap-6 desktop:mt-20 flex-col items-center'>
     <h2 className='text-lg font-medium py-1 text-white desktop:text-5xl desktop:text-start desktop:w-[70%]'>My Collectibles</h2>

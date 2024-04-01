@@ -8,7 +8,6 @@ import DetailTicket from '../pages/user/DetailTicket.jsx'
 import Notifications from '../pages/user/Notifications.jsx'
 import QrScan from '../pages/user/QrScan.jsx'
 import Collectibles from '../pages/user/Collectibles.jsx'
-import Market from '../pages/user/Market.jsx'
 import SellTicket from '../pages/user/SellTicket.jsx'
 import Favorites from '../pages/user/Favorites.jsx'
 import Configurations from '../pages/user/Configurations'
@@ -68,7 +67,6 @@ export default RoleRender
       <Route path='/detailTicket/:id' element={<DetailTicket />} />
       <Route path='/scan/:id' element={<QrScan />} />
       <Route path='/collectibles' element={<Collectibles />} />
-      <Route path='/market/:id' element={<Market />} />
       <Route path='/sell/:id' element={<SellTicket />} />
       <Route path='/favorites' element={<Favorites />} />
       <Route path='notifications' element = {<Notifications/>}/>

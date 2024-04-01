@@ -15,7 +15,7 @@ function Event() {
   const events = useSelector((state) => state.authReducer.events)
   const cat = useSelector((state) => state.authReducer.categories)
   const city = useSelector((state) => state.authReducer.cities)
-
+console.log(events);
 
   const clientProvider = ClientProvider()
 
