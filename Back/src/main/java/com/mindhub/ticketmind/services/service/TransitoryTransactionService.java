@@ -5,6 +5,7 @@ import com.mindhub.ticketmind.dtos.TicketTransactionRecordDTO;
 import com.mindhub.ticketmind.models.*;
 import com.mindhub.ticketmind.repositories.*;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -27,6 +28,8 @@ public class TransitoryTransactionService {
 
     @Autowired
     private ClientTicketRepository clientTicketRepository;
+    @Autowired
+    private EventRepository eventRepository;
 
     @Autowired
     private TransitoryTicketRepository transitoryTicketRepository;
@@ -34,14 +37,14 @@ public class TransitoryTransactionService {
     private JavaMailSender javaMailSender;
 
 
-
+    @Transactional
     public Map<String, Object> makeTicketTransaction(TicketTransactionRecordDTO ticketTransactionRecordDTO, String userMail) {
 
         Map<String, Object> response = new HashMap<>();
 
         if (ticketTransactionRecordDTO.ticketPrice() < 0) {
             response.put("error", true);
-            response.put("message", "The ticket price cannot neither be zero nor negative");
+            response.put("message", "The ticket price cannot be negative");
             return response;
         }
         if (ticketTransactionRecordDTO.ticketDestinationEmail().isBlank() || ticketTransactionRecordDTO.ticketDestinationEmail() == null) {
@@ -83,13 +86,13 @@ public class TransitoryTransactionService {
             }
             ClientTicket ticket = ticketOptional.get();
 
-            if(!sourceClient.getClientTickets().stream().anyMatch(clientTicket -> clientTicket.getId() == ticketTransactionRecordDTO.ticketID())) {
+            if (!sourceClient.getClientTickets().stream().anyMatch(clientTicket -> clientTicket.getId() == ticketTransactionRecordDTO.ticketID())) {
                 response.put("error", true);
                 response.put("message", "The ticket exists but it doesn't belong to the client that requested the transfer");
                 return response;
             }
 
-            if(destinationClient.getClientTickets().contains(ticket)) {
+            if (destinationClient.getClientTickets().contains(ticket)) {
                 response.put("error", true);
                 response.put("message", "The destination client already has that ticket, contact support.");
                 return response;
@@ -128,8 +131,8 @@ public class TransitoryTransactionService {
                         "        <span style=\"font-family: tahoma, arial, helvetica, sans-serif; font-size: 18pt;\">Don't waste any more time! Activate your account right now and discover a world of possibilities waiting for you, click here to start enjoying all our exclusive services!\n" +
                         "          <br>\n" +
                         "          <br>\n" +
-                        "          <a href=\"http://localhost:5173/verifyTransaction?verifyTransaction=" + ticketie.getClientTicketId()  + "\"' target=\"_blank\" class=\"cloudHQ__gmail_elements_final_btn\" style=\"background-color: #55347b; color: #ffffff; border: 0px solid #000000; border-radius: 3px; box-sizing: border-box; font-size: 13px; font-weight: bold; line-height: 40px; padding: 12px 24px; text-align: center; text-decoration: none; text-transform: uppercase; vertical-align: middle;\" rel=\"noopener\">Accept</a>\n" +
-                        "          <a href=\"http://localhost:5173/denyTransaction?denyTransaction=" + ticketie.getClientTicketId() + "\"' target=\"_blank\" class=\"cloudHQ__gmail_elements_final_btn\" style=\"background-color: #55347b; color: #ffffff; border: 0px solid #000000; border-radius: 3px; box-sizing: border-box; font-size: 13px; font-weight: bold; line-height: 40px; padding: 12px 24px; text-align: center; text-decoration: none; text-transform: uppercase; vertical-align: middle;\" rel=\"noopener\">Deny</a>\n" +
+                        "          <a href=\"http://localhost:5173/verifyTransaction?verifyTransaction=" + ticketie.getKei() + "\"' target=\"_blank\" class=\"cloudHQ__gmail_elements_final_btn\" style=\"background-color: #55347b; color: #ffffff; border: 0px solid #000000; border-radius: 3px; box-sizing: border-box; font-size: 13px; font-weight: bold; line-height: 40px; padding: 12px 24px; text-align: center; text-decoration: none; text-transform: uppercase; vertical-align: middle;\" rel=\"noopener\">Accept</a>\n" +
+                        "          <a href=\"http://localhost:5173/denyTransaction?denyTransaction=" + ticketie.getKei() + "\"' target=\"_blank\" class=\"cloudHQ__gmail_elements_final_btn\" style=\"background-color: #55347b; color: #ffffff; border: 0px solid #000000; border-radius: 3px; box-sizing: border-box; font-size: 13px; font-weight: bold; line-height: 40px; padding: 12px 24px; text-align: center; text-decoration: none; text-transform: uppercase; vertical-align: middle;\" rel=\"noopener\">Deny</a>\n" +
                         "          <br>\n" +
                         "        </span>\n" +
                         "      </td>\n" +
@@ -153,109 +156,218 @@ public class TransitoryTransactionService {
             response.put("message", "An error occurred making the transaction: " + e.getMessage());
         }
         return response;
-
     }
 
-    public Map<String, Object> verifyTransaction(UUID id) {
-
+    @Transactional
+    public Map<String, Object> verifyTransaction(UUID kei) {
         Map<String, Object> response = new HashMap<>();
         try {
             Client admin = clientRepository.findByRole(UserRole.ADMIN);
-            Optional<TransitoryTicket> transitoryTicket = transitoryTicketRepository.findByClientTicketId(id);
 
-            if (transitoryTicket.isPresent()) {
-                TransitoryTicket transitoryTicket1 = transitoryTicket.get();
+            Optional<TransitoryTicket> optionalTransitoryTicket = transitoryTicketRepository.findById(kei);
 
-                Client sourceClient = clientRepository.findByEmail(transitoryTicket1.getSourceEmail());
-                Client destinationClient = clientRepository.findByEmail(transitoryTicket1.getDestinationEmail());
+            if (optionalTransitoryTicket.isPresent()) {
+                TransitoryTicket transitoryTicket = optionalTransitoryTicket.get();
 
-                Optional<ClientTicket> ticketOptional = clientTicketRepository.findById(transitoryTicket1.getClientTicketId());
+                Client sourceClient = clientRepository.findByEmail(transitoryTicket.getSourceEmail());
+                Client destinationClient = clientRepository.findByEmail(transitoryTicket.getDestinationEmail());
 
-                if(ticketOptional.isEmpty()){
+                Optional<ClientTicket> ticketOptional = clientTicketRepository.findById(transitoryTicket.getClientTicketId());
+
+                if (ticketOptional.isEmpty()) {
                     response.put("error", true);
                     response.put("message", "Client Ticket wasn't found!");
                     return response;
                 }
+                ClientTicket clientTicket = ticketOptional.get();
 
-                ClientTicket ticket = ticketOptional.get();
-
-                if(!sourceClient.getClientTickets().stream().anyMatch( clientTicket -> clientTicket.getId() == transitoryTicket1.getClientTicketId() )) {
+                if (sourceClient.getClientTickets().stream().noneMatch(ticket -> ticket.getId() == transitoryTicket.getClientTicketId())) {
                     response.put("error", true);
-                    response.put("message", "The ticket exists but it doesn't belong to the client that requested the transfer");
+                    response.put("message", "The clientTicket exists but it doesn't belong to the client that requested the transfer");
                     return response;
                 }
 
-                if(destinationClient.getClientTickets().contains(ticket)) {
+                if (destinationClient.getClientTickets().contains(clientTicket)) {
                     response.put("error", true);
-                    response.put("message", "The destination client already has that ticket, contact support.");
+                    response.put("message", "The destination client already has that clientTicket, contact support.");
                     return response;
                 }
 
-                double ticketPrice = transitoryTicket1.getBasePrice();
-                destinationClient.setBalance(destinationClient.getBalance() - ticketPrice);
-                double commissionFees = ticketPrice * 0.10;
-                double ticketPriceNet = ticketPrice * 0.90;
-                admin.setBalance(admin.getBalance() + commissionFees);
-                sourceClient.setBalance(sourceClient.getBalance() + ticketPriceNet );
+                if (transitoryTicket.getTicketTransactionPrice() > 0) {
 
-                Transaction sourceTransaction = new Transaction();
-                sourceTransaction.setType(TransactionType.CREDIT);
-                sourceTransaction.setDescription("Ticket sell transaction");
-                sourceTransaction.setDate(new Date());
-                sourceTransaction.setAmount(ticketPriceNet);
-                sourceTransaction.setClient(sourceClient);
-                transactionRepository.save(sourceTransaction);
+                    double ticketPrice = transitoryTicket.getTicketTransactionPrice();
+                    destinationClient.setBalance(destinationClient.getBalance() - ticketPrice);
+                    double commissionFees = ticketPrice * 0.10;
+                    double ticketPriceNet = ticketPrice * 0.90;
+                    admin.setBalance(admin.getBalance() + commissionFees);
+                    sourceClient.setBalance(sourceClient.getBalance() + ticketPriceNet);
 
-                Transaction adminTransaction = new Transaction();
-                adminTransaction.setType(TransactionType.CREDIT);
-                adminTransaction.setDescription("Ticket Transaction Sale Commission Fees");
-                adminTransaction.setDate(new Date());
-                adminTransaction.setAmount(commissionFees);
-                adminTransaction.setClient(admin);
-                transactionRepository.save(adminTransaction);
+                    Transaction sourceTransaction = new Transaction();
+                    sourceTransaction.setType(TransactionType.CREDIT);
+                    sourceTransaction.setDescription("Ticket sell transaction to: " + destinationClient.getFirstname() + " " + destinationClient.getLastname());
+                    sourceTransaction.setDate(new Date());
+                    sourceTransaction.setAmount(ticketPriceNet);
+                    sourceTransaction.setClient(sourceClient);
+                    transactionRepository.save(sourceTransaction);
 
-                Transaction destinationTransaction = new Transaction();
-                destinationTransaction.setType(TransactionType.DEBIT);
-                destinationTransaction.setDescription("Ticket purchase");
-                destinationTransaction.setDate(new Date());
-                destinationTransaction.setAmount(-ticketPrice);
-                destinationTransaction.setClient(destinationClient);
-                transactionRepository.save(destinationTransaction);
+                    Optional<Event> eventOptional = eventRepository.findById(clientTicket.getEventId());
+                    if (eventOptional.isEmpty()) {
+                        response.put("error", true);
+                        response.put("message", "The clientTicket's event wasn't found by the event id present on the clientTicket");
+                        return response;
+                    }
+                    Event event = eventOptional.get();
+
+                    Transaction adminTransaction = new Transaction();
+                    adminTransaction.setType(TransactionType.CREDIT);
+                    adminTransaction.setDescription("Ticket Transaction Sale Commission Fees | Event: " + event.getName());
+                    adminTransaction.setDate(new Date());
+                    adminTransaction.setAmount(commissionFees);
+                    adminTransaction.setClient(admin);
+                    transactionRepository.save(adminTransaction);
+
+                    Transaction destinationTransaction = new Transaction();
+                    destinationTransaction.setType(TransactionType.DEBIT);
+                    destinationTransaction.setDescription("Ticket purchase from: " + sourceClient.getFirstname() + " " + sourceClient.getLastname());
+                    destinationTransaction.setDate(new Date());
+                    destinationTransaction.setAmount(-ticketPrice);
+                    destinationTransaction.setClient(destinationClient);
+                    transactionRepository.save(destinationTransaction);
+
+                } else if (transitoryTicket.getTicketTransactionPrice() == 0) {
+
+                    Transaction sourceTransaction = new Transaction();
+                    sourceTransaction.setType(TransactionType.CREDIT);
+                    sourceTransaction.setDescription("Ticket gift for: " + destinationClient.getFirstname() + " " + destinationClient.getLastname());
+                    sourceTransaction.setDate(new Date());
+                    sourceTransaction.setAmount(0);
+                    sourceTransaction.setClient(sourceClient);
+                    transactionRepository.save(sourceTransaction);
+
+                    Transaction destinationTransaction = new Transaction();
+                    destinationTransaction.setType(TransactionType.DEBIT);
+                    destinationTransaction.setDescription("Ticket gift from: " + sourceClient.getFirstname() + " " + sourceClient.getLastname());
+                    destinationTransaction.setDate(new Date());
+                    destinationTransaction.setAmount(0);
+                    destinationTransaction.setClient(destinationClient);
+                    transactionRepository.save(destinationTransaction);
+
+                }
 
                 try {
+
+                    if (clientTicket.getQuantity() == transitoryTicket.getTicketQuantityToTransfer() &&
+                            destinationClient.getClientTickets().stream().noneMatch(ticket -> ticket.getOriginalTicketId() == clientTicket.getOriginalTicketId())) {
+
+
                     double check1 = ticket.getQuantity();
                     double check2 = ticketOptional.get().getQuantity();
                     if(ticket.getQuantity() == transitoryTicket1.getAvailableQuantity()) {
+
                         List<ClientTicket> sourceClientTickets = sourceClient.getClientTickets();
-                        sourceClientTickets.remove(ticket);
+                        sourceClientTickets.remove(clientTicket);
 
                         List<ClientTicket> destinationClientTickets = destinationClient.getClientTickets();
-                        destinationClientTickets.add(ticket);
+                        destinationClientTickets.add(clientTicket);
 
-                        ticket.setClient(destinationClient);
+                        clientTicket.setClient(destinationClient);
 
                         clientRepository.save(sourceClient);
                         clientRepository.save(destinationClient);
-                        clientTicketRepository.save(ticket);
-                    } else if (ticket.getQuantity() > transitoryTicket1.getAvailableQuantity()){
+                        clientTicketRepository.save(clientTicket);
 
-                        ticket.setQuantity(ticket.getQuantity() - transitoryTicket1.getAvailableQuantity());
-                        clientTicketRepository.save(ticket);
+                        transitoryTicketRepository.delete(transitoryTicket);
 
-                        ClientTicket transferredTicket = new ClientTicket(ticket.getOriginalTicketId(), ticket.getEventId(), ticket.getPrice(), transitoryTicket1.getAvailableQuantity(), ticket.getTicketType());
+                        response.put("success", true);
+                        response.put("message", "The clientTicket transfer was executed successfully!");
+
+                        return response;
+
+                    } else if (clientTicket.getQuantity() == transitoryTicket.getTicketQuantityToTransfer() &&
+                            destinationClient.getClientTickets().stream().anyMatch(ticket -> ticket.getOriginalTicketId() == clientTicket.getOriginalTicketId())) {
+
+                        List<ClientTicket> sourceClientTickets = sourceClient.getClientTickets();
+                        sourceClientTickets.remove(clientTicket);
+
+                        Optional<ClientTicket> destinationClientTicketOptional = destinationClient.getClientTickets().stream().filter(clientTicket1 -> clientTicket.getOriginalTicketId().equals(clientTicket1.getOriginalTicketId())).findFirst();
+
+                        if (destinationClientTicketOptional.isEmpty()) {
+                            response.put("error", true);
+                            response.put("message", "The ticket wasn't found within the tickets the destination client possesses");
+                            return response;
+                        }
+                        ClientTicket destinationClientTicket = destinationClientTicketOptional.get();
+
+                        destinationClientTicket.setQuantity(destinationClientTicket.getQuantity() + transitoryTicket.getTicketQuantityToTransfer());
+
+                        clientTicketRepository.delete(clientTicket);
+
+                        clientRepository.save(sourceClient);
+                        clientRepository.save(destinationClient);
+                        clientTicketRepository.save(destinationClientTicket);
+
+                        transitoryTicketRepository.delete(transitoryTicket);
+
+                        response.put("success", true);
+                        response.put("message", "The clientTicket transfer was executed successfully!");
+
+                        return response;
+
+                    } else if (clientTicket.getQuantity() > transitoryTicket.getTicketQuantityToTransfer() &&
+                            destinationClient.getClientTickets().stream().noneMatch(ticket -> ticket.getOriginalTicketId() == clientTicket.getOriginalTicketId())) {
+
+                        clientTicket.setQuantity(clientTicket.getQuantity() - transitoryTicket.getTicketQuantityToTransfer());
+                        clientTicketRepository.save(clientTicket);
+
+                        ClientTicket transferredTicket = new ClientTicket(clientTicket.getOriginalTicketId(), clientTicket.getEventId(), clientTicket.getPrice(), transitoryTicket.getTicketQuantityToTransfer(), clientTicket.getTicketType());
                         clientTicketRepository.save(transferredTicket);
+                        transferredTicket.setClient(destinationClient);
 
                         List<ClientTicket> destinationClientTickets = destinationClient.getClientTickets();
                         destinationClientTickets.add(transferredTicket);
-                        transferredTicket.setClient(destinationClient);
 
                         clientRepository.save(sourceClient);
                         clientRepository.save(destinationClient);
                         clientTicketRepository.save(transferredTicket);
+
+                        transitoryTicketRepository.delete(transitoryTicket);
+
+                        response.put("success", true);
+                        response.put("message", "The clientTicket transfer was executed successfully!");
+
+                        return response;
+                    }else if (clientTicket.getQuantity() > transitoryTicket.getTicketQuantityToTransfer() &&
+                            destinationClient.getClientTickets().stream().anyMatch(ticket -> ticket.getOriginalTicketId() == clientTicket.getOriginalTicketId())) {
+
+                        clientTicket.setQuantity(clientTicket.getQuantity() - transitoryTicket.getTicketQuantityToTransfer());
+                        clientTicketRepository.save(clientTicket);
+
+                        Optional<ClientTicket> destinationClientTicketOptional = destinationClient.getClientTickets().stream().filter(clientTicket1 -> clientTicket.getOriginalTicketId().equals(clientTicket1.getOriginalTicketId())).findFirst();
+
+                        if (destinationClientTicketOptional.isEmpty()) {
+                            response.put("error", true);
+                            response.put("message", "The ticket wasn't found within the tickets the destination client possesses");
+                            return response;
+                        }
+                        ClientTicket destinationClientTicket = destinationClientTicketOptional.get();
+
+                        destinationClientTicket.setQuantity(destinationClientTicket.getQuantity() + transitoryTicket.getTicketQuantityToTransfer());
+
+                        clientRepository.save(sourceClient);
+                        clientRepository.save(destinationClient);
+                        clientTicketRepository.save(destinationClientTicket);
+
+                        transitoryTicketRepository.delete(transitoryTicket);
+
+                        response.put("success", true);
+                        response.put("message", "The clientTicket transfer was executed successfully!");
+
+                        return response;
                     }
-                } catch (Exception e){
+                } catch (Exception e) {
+                    transitoryTicketRepository.delete(transitoryTicket);
                     response.put("error", true);
-                    response.put("message", "An error occurred transferring the ticket: " + e.getMessage());
+                    response.put("message", "An error occurred transferring the clientTicket: " + e.getMessage());
                 }
 
             } else {
@@ -263,17 +375,24 @@ public class TransitoryTransactionService {
                 response.put("message", "Transaction already cancelled!");
             }
 
-        }catch (Exception e){
-
+        } catch (Exception e) {
             response.put("error", false);
             response.put("message", "An error occurred while making the ticket transaction: " + e.getMessage());
         }
         return response;
     }
 
+
+
+
+
+
+
+    @Transactional
     public Map<String, Object> deleteTransaction(UUID id) {
         Map<String, Object> response = new HashMap<>();
-            Optional<TransitoryTicket> transitoryTicket = transitoryTicketRepository.findByClientTicketId(id);
+
+            Optional<TransitoryTicket> transitoryTicket = transitoryTicketRepository.findById(id);
         try {
             if (transitoryTicket.isPresent()) {
                 TransitoryTicket ticket = transitoryTicket.get();
@@ -288,6 +407,16 @@ public class TransitoryTransactionService {
             response.put("message", "An error occurred while denying the transaction: " + e.getMessage());
         }
         return response;
+    }
+
+    //debug
+    public List<TransitoryTicket> getAllTransitoryTickets(){
+        try {
+            List<TransitoryTicket> tickets = transitoryTicketRepository.findAll().stream().toList();
+            return tickets;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

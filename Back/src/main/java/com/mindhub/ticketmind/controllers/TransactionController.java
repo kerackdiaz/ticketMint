@@ -5,6 +5,8 @@ import com.mindhub.ticketmind.dtos.TicketTransactionRecordDTO;
 import com.mindhub.ticketmind.dtos.TransactionDTO;
 import com.mindhub.ticketmind.dtos.TransactionFormDTO;
 import com.mindhub.ticketmind.models.Transaction;
+import com.mindhub.ticketmind.models.TransitoryTicket;
+import com.mindhub.ticketmind.repositories.TransitoryTicketRepository;
 import com.mindhub.ticketmind.services.service.TransactionService;
 import com.mindhub.ticketmind.services.service.TransitoryTransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -23,6 +26,8 @@ public class TransactionController {
     private TransactionService transactionService;
     @Autowired
     private TransitoryTransactionService transitoryTransactionService;
+    @Autowired
+    private TransitoryTicketRepository transitoryTicketRepository;
 
     @PostMapping("/transferTicket")
     public ResponseEntity<?> newTransaction(@RequestBody TicketTransactionRecordDTO ticketTransactionRecordDTO){
@@ -31,8 +36,8 @@ public class TransactionController {
     }
 
     @GetMapping("/verifyTransaction")
-    public ResponseEntity<?> verifyTransaction(@RequestParam("verifyTransaction") UUID id) {
-        return new ResponseEntity<>(transitoryTransactionService.verifyTransaction(id), HttpStatus.OK);
+    public ResponseEntity<?> verifyTransaction(@RequestParam("verifyTransaction") UUID kei) {
+        return new ResponseEntity<>(transitoryTransactionService.verifyTransaction(kei), HttpStatus.OK);
     }
 
     @GetMapping("/denyTransaction")
@@ -48,6 +53,16 @@ public class TransactionController {
         return  new ResponseEntity<>(transactionService.getAllClientTransactions(userMail), HttpStatus.OK);
     }
 
+    @GetMapping("/transitoryTickets/all")
+    public ResponseEntity<?> getAllTransTickets() {
+        return new ResponseEntity<>(transitoryTransactionService.getAllTransitoryTickets(), HttpStatus.OK);
+    }
 
+    @DeleteMapping("/transitoryTickets/all")
+    public ResponseEntity<?> deleteAll() {
+        List<TransitoryTicket> allTickets = transitoryTicketRepository.findAll();
+        transitoryTicketRepository.deleteAll();
+        return new ResponseEntity<>(allTickets, HttpStatus.OK);
+    }
 
 }

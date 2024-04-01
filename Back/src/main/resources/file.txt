@@ -1,0 +1,10 @@
+Verificar si una vez evaluado como true que la cantidad disponible de ClientTickets es igual a la cantidad que se solicito transferir a destino,
+ademas de remover el ticket del cliente de origen, evaluar si en el cliente de destino ya existe un ClientTicket con el mismo id del Ticket que se está
+transfiriendo, y, en base a eso, actualizar la cantidad de tickets de ClientTicket en destino; no evaluado y verificado esto mismo, se van a repetir
+ClientTickets con el mismo Ticket original en el cliente.
+
+Pueden existir dos ClientTicket con el mismo en distintos clientes, pero no pueden existir dos mismos ClientTickets con el mismo Ticket id en uno,
+a menos que esto sea por el tipo de ticket (GENERAL, VIP, PLATINO).
+
+Ahora mismo en caso de que la cantidad de tickets a transfeir sea la misma que la cantidad de tickets que tiene ClientTicket en el cliente de origen,
+se elimina ese ClientTicket de cliente de origen, pero duplica la entrada en el cliente de destino.

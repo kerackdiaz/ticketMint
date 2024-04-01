@@ -11,7 +11,6 @@ import java.util.*;
 
 @Service
 public class EventService {
-
     @Autowired
     private EventRepository eventRepository;
 
@@ -89,7 +88,6 @@ public class EventService {
                 }
                 event.setCity(city);
             }
-
             event.setClient(client);
             eventRepository.save(event);
 
@@ -101,7 +99,6 @@ public class EventService {
         }
         return response;
     }
-
 
     public Map<String, Object> deleteEvent(UUID eventId, String userMail) {
         Map<String, Object> response = new HashMap<>();
