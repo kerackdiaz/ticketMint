@@ -5,7 +5,7 @@ import React from 'react'
 function UserLayout(props) {
   return (
     <>
-        <div className='flex flex-1 min-h-screen bg-[#0B0B1C]'>
+        <div className='flex flex-1 min-h-screen bg-white dark:bg-[#55347B]'>
             {props.children}
         </div>
     </>

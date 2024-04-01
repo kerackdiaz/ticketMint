@@ -5,8 +5,8 @@ function LoadingScreen() {
     return (
         <div className="flex flex-1 flex-col justify-center gap-2 items-center">
             <div>
-                <p className="text-white text-2xl text-center">Loading...</p>
-                <p className="text-white text-sm">You are being redirected </p>
+                <p className=" text-black dark:text-white text-2xl text-center">Loading...</p>
+                <p className=" text-black dark:text-white text-sm">You are being redirected </p>
             </div>
             <div className="flex gap-1">
                 <div role="status">

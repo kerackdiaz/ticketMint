@@ -1,43 +1,86 @@
-import React from "react";
-import img1 from "../assets/img/img1.png";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { EventProvider } from "../utils/Db";
+import { Link } from "react-router-dom";
+import { format } from "date-fns";
+import { FaLocationDot } from "react-icons/fa6";
+import { FaCalendarCheck } from "react-icons/fa6";
 
+const AllEvents = ({ clients }) => {
+  const events = EventProvider();
+  const event = useSelector((state) => state.authReducer.events);
+ 
 
-const AllEvents = () => {
+  const renderEvents = () => {
+    if (!event || event.length === 0 || event === undefined || event === null) {
+      return (
+        <tr>
+          <td colSpan="4" className="text-center text-white">
+            No events
+          </td>
+        </tr>
+      );
+    }
+
+    return Object.values(event)?.map((even, index) => (
+      <tr key={index}>
+        <td className="flex items-center py-5 border-b w-150">
+     
+          <span className="ml-1 pr-8" >{even.name}</span>
+        </td>
+        <td className="border-b "> 
+          <p className="text-sm font-medium text-gray-900"> {format(new Date(even.date), "dd/MM/yy")}</p>
+          
+        </td>
+        <td className="border-b ">
+            <p className="text-sm font-medium text-gray-900 ml-3.5">{even.venueName}</p>
+        </td>
+        <td className="border-b">
+          <button
+            className={`rounded-full py-1 px-2 ${
+              even.status ? "bg-green-500" : "bg-red-500"
+            }`}
+           
+          >
+            {even.status ? "Active" : "Inactive"}
+          </button>
+        </td>
+        <td className="border-b text-blue-500">
+          <Link to={`/EventDetails/${even.id}`} className="text-blue-500 ml-2 cursor-pointer">EDIT</Link>
+        </td>
+      </tr>
+    ));
+    F;
+  };
+
   return (
-    <div class=" h-screen flex flex-wrap items-center justify-center px-5 rounded-xl border border-gray-200 bg-morado3 opacity-85 w-[80%] tablet:w-[900px] latptop:w-[50%]">
-      <div class="flex flex-col w-full bg-white rounded shadow-lg movil:w-3/4 tablet:w-[85%] latptop:w-[90%]">
-        <div
-          class="w-full h-64 bg-top bg-cover rounded-t"
-          img src={img1} alt="img1" />
-        </div>
-        <div class="flex flex-col w-full tablet:flex-row">
-          <div class="flex flex-row justify-around p-4 font-bold leading-none text-gray-800 uppercase bg-morado4 rounded tablet:flex-col tablet:items-center tablet:justify-center tablet:w-1/4">
-            <div class="tablet:text-3xl">April</div>
-            <div class="tablet:text-6xl">13</div>
-            <div class="tablet:text-xl">7 pm</div>
-          </div>
-          <div class="p-4 font-normal text-white tablet:w-3/4">
-            <h1 class="mb-4 text-4xl font-bold leading-none tracking-tight text-white">
-              Arch Enemy  
-            </h1>
-            <p class="leading-normal">
-              Arch Enemy es una banda sueca de death metal melódico formada en
-              Halmstad en 1995. En sus inicios exploró el death metal original,
-              pero sufrió una transformación musical después del cambio de
-              integrantes que tuvo, y comenzó a hacer un death metal más
-              melódico, que sigue haciendo actualmente.
-            </p>
-            <div class="flex flex-row items-center mt-4 text-white">
-              <div class="w-1/2">Arch Enemy live     </div>
-              <div class="w-1/2 flex justify-end">
+    <main className=" relative h-full  w-full md:w-[150%]  right-8 rounded-xl   mt-10 flex flex-wrap gap-10 p-5 text-[#0B0B1C]">
+      <section className=" relative bg-white w-[120%] h-[100%] md:w-[467px] laptop:w-[700px] desktop:w-[1030px] laptop:left-[40px] shadow-lg rounded-md latptop:w-[55%] latptop:ml-44 p-2">
+        <h1 className="text-3xl font-thin">Events</h1>
+        <table className="font-medium border-1 w-full">
+          <thead>
+            <tr className="bg--green-500">
+              <th className="border-b py-5 border-gray-600 text-start bg--blue-500">
+                Name
+              </th>
+              <th className="border-b py-5 border-gray-600 text-start bg--blue-500 ">
+              <FaCalendarCheck  className="text-xl text-cyan-500 mr-1 inline "/>
+                Date
                
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-    
+              </th>
+              <th className="border-b py-5 border-gray-600 text-start bg--blue-500 ">
+              <FaLocationDot className="text-xl text-red-600 mr-1 inline ml-1" />
+                Location
+              
+              </th>
+              <th className="border-b border-gray-600 text-start">Status</th>
+              <th className="border-b border-gray-600 text-start">Actions</th>
+            </tr>
+          </thead>
+          <tbody>{renderEvents()}</tbody>
+        </table>
+      </section>
+    </main>
   );
 };
 
