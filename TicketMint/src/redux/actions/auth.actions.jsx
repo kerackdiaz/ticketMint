@@ -53,10 +53,25 @@ export const getCities = createAction('CITIES', (data) => {
     }
 });
 
-export const getNotify = createAction('NOTIFY', (data) => {
+
+export const getTicketTypes = createAction('TICKET_TYPES', (data) => {
     return {
         payload: {
             ...data
         }
     }
+
 });
+  
+  
+  
+export const getNotify = createAction('NOTIFY', (data) => {
+
+    return {
+        payload: {
+            ...data
+        }
+    }
+
+});
+

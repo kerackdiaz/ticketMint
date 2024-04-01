@@ -24,7 +24,11 @@ export default {
       'lg': '1024px', 
 
       'desktop': '1280px',
+
+      'sm': '640px'
+
       '2k': '1536px',
+
 
     },
   },

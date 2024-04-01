@@ -4,6 +4,7 @@ import { login,current, getEvents, getCategories, getCities } from "../redux/act
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { DataArrayRounded } from "@mui/icons-material";
 
 
 const baseURL = "http://localhost:8080/api/";
@@ -190,3 +191,31 @@ export const postLogin = async (data, dispatch) => {
         return { success: false, message: error.message };
     }
   }
+
+  export const createEvent = async (data, token) => {
+    try {
+        const response = await axios.post(`${baseURL}events/create/event`, data, {
+            headers: {
+              'Authorization': `Bearer ${token}`}
+        });
+        // console.log(response.data);
+        return response.data;
+    }
+    catch (error) {
+        console.error('Error during event creation:', error);
+        return { success: false, message: error.message };
+    } }
+
+    export const createTicket = async (eventId, token,data) => {
+      try {
+          const response = await axios.post(`${baseURL}tickets/create/${eventId}`, data, {
+              headers: {
+                'Authorization': `Bearer ${token}`}
+          });
+          // console.log(response.data);
+          return response.data;
+      }
+      catch (error) {
+          console.error('Error during ticket creation:', error);
+          return { success: false, message: error.message };
+      } }

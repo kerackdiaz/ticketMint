@@ -30,6 +30,8 @@ import LayoutAdmin from '../components/LayoutAdmin.jsx'
 import { useSelector } from 'react-redux'
 import { ClientProvider } from './Db.jsx'
 import { useEffect } from 'react'
+import EventDetails from '../pages/agency/EventDetails.jsx'
+import Transactions from '../pages/agency/Transactions.jsx'
 
 const RoleRender = () => {
   const userdata = ClientProvider();
@@ -90,11 +92,14 @@ const agency = () => {
   <Layout/>
     <Routes>
       <Route path="/" element={<Events />} />
+      <Route path="/Events" element={<Events />} />
       <Route path="/Report" element={<Report />} />
       <Route path="/ToDo" element={<ToDo />} />
       <Route path="/NewEvent" element={<NewEvent />} />
       <Route path="/Inbox" element={<InBox />} />
       <Route path='/Profile' element={<Profile/>} />   
+      <Route path='/EventDetails/:id' element = {<EventDetails/>}/>
+      <Route path='/Transactions' element = {<Transactions/>}/>
     </Routes>
   </>
 }
