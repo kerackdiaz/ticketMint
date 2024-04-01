@@ -3,6 +3,10 @@ package com.mindhub.ticketmind.dtos;
 import com.mindhub.ticketmind.models.Event;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -63,15 +67,19 @@ public class EventDTO {
         return imageURL;
     }
 
-    public String getDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("EEE dd MMM");
-        return formatter.format(this.date);
-    }
-    public String getTime() {
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-        return formatter.format(this.date);
+    public LocalDate getDate() {
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime()
+                .toLocalDate();
     }
 
+    public LocalTime getTime() {
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime()
+                .toLocalTime();
+    }
     public String getVenueName() {
         return venueName;
     }

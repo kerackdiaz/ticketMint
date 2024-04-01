@@ -259,6 +259,11 @@ public class TransitoryTransactionService {
                     if (clientTicket.getQuantity() == transitoryTicket.getTicketQuantityToTransfer() &&
                             destinationClient.getClientTickets().stream().noneMatch(ticket -> ticket.getOriginalTicketId() == clientTicket.getOriginalTicketId())) {
 
+
+                    double check1 = ticket.getQuantity();
+                    double check2 = ticketOptional.get().getQuantity();
+                    if(ticket.getQuantity() == transitoryTicket1.getAvailableQuantity()) {
+
                         List<ClientTicket> sourceClientTickets = sourceClient.getClientTickets();
                         sourceClientTickets.remove(clientTicket);
 

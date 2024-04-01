@@ -8,7 +8,7 @@ import java.util.UUID;
 public class NotificationDTO {
     private UUID id;
     private String message;
-    private EventDTO event;
+    private UUID eventId;
     private String date;
 
 
@@ -16,6 +16,10 @@ public class NotificationDTO {
         this.id = notification.getId();
         this.message = notification.getMessage();
         this.date = notification.getDate();
+        this.eventId = notification.getEvent().getId();
+    }
+
+    public NotificationDTO() {
     }
 
     public UUID getId() {
@@ -26,8 +30,8 @@ public class NotificationDTO {
         return message;
     }
 
-    public EventDTO getEvent() {
-        return event;
+    public UUID getEventId() {
+        return eventId;
     }
 
     public String getDate() { return date;}

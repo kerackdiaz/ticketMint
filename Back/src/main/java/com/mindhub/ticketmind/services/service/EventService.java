@@ -67,10 +67,10 @@ public class EventService {
             List<CategoryEvent> categories = new ArrayList<>();
             if (categoryNames != null && !categoryNames.isEmpty()) {
                 for (String categoryName : categoryNames) {
-                    String categoryNameUpper = categoryName.toUpperCase();
-                    CategoryEvent category = categoryEventRepository.findByName(categoryNameUpper);
+                    String categoryNameCapitalized = Character.toUpperCase(categoryName.charAt(0)) + categoryName.substring(1).toLowerCase();
+                    CategoryEvent category = categoryEventRepository.findByName(categoryNameCapitalized);
                     if (category == null) {
-                        category = new CategoryEvent(categoryNameUpper);
+                        category = new CategoryEvent(categoryNameCapitalized);
                         category = categoryEventRepository.save(category);
                     }
                     categories.add(category);
@@ -78,12 +78,12 @@ public class EventService {
             }
             event.setCategories(categories);
 
-            List<String> cities = Collections.singletonList(eventFormDTO.city());
-            if (cities != null && !cities.isEmpty()) {
-                String cityName = cities.get(0);
-                City city = cityRepository.findByName(cityName.toUpperCase());
+            String cityName = eventFormDTO.city();
+            if (cityName != null && !cityName.isEmpty()) {
+                cityName = cityName.toUpperCase();
+                City city = cityRepository.findByName(cityName);
                 if (city == null) {
-                    city = new City(cityName.toUpperCase());
+                    city = new City(cityName);
                     city = cityRepository.save(city);
                 }
                 event.setCity(city);
@@ -186,12 +186,22 @@ public class EventService {
         if (client != null){
             if (eventRepository.existsById(notificationRecord.id()) ) {
                 try {
-                    Event event = eventRepository.findById(notificationRecord.id()).get();
+                    Optional<Event> optionalEvent = eventRepository.findById(notificationRecord.id());
+                    if (optionalEvent.isPresent()) {
+
+                        Event event = optionalEvent.get();
+                        System.out.println(event.getName());
                     Notification notification = new Notification(notificationRecord.subjet(), event, new Date());
+                        System.out.println(notification.getEvent().getName());
                     notificationRepository.save(notification);
                     socketIOService.sendNotification(notification);
                     response.put("success", true);
                     response.put("message", "Notification sent correctly");
+                    } else {
+                        response.put("error", true);
+                        response.put("message", "Event not found");
+                    }
+
                 } catch (NoSuchElementException e) {
                     response.put("error", true);
                     response.put("message", "Event not found");

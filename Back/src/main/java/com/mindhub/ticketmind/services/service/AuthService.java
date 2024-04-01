@@ -56,11 +56,11 @@ public class AuthService {
             response.put("message", "the email are empty");
             return response;
         }
-        if( loginDTO.password().isBlank()){
-            response.put("error", false);
-            response.put("message", "the password are empty");
-            return response;
-        }
+//        if( loginDTO.password().isBlank()){
+//            response.put("error", false);
+//            response.put("message", "the password are empty");
+//            return response;
+//        }
         if (!clientRepository.existsByEmail(loginDTO.email())) {
             response.put("error", false);
             response.put("message", "User not found");
