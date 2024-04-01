@@ -11,9 +11,8 @@ import { Link } from 'react-router-dom';
 const Wallet = () => {
 
     const user = useSelector((state) => state.authReducer.user)
-
     const transactions = user.transactions
-
+    const balance = user.balance
     const getTextColor = (type) => {
         return type === 'CREDIT' ? 'text-green-600' : ' text-red-600';
     };
@@ -29,11 +28,11 @@ const Wallet = () => {
                     <div className='flex gap-5 items-center'>
                         <div>
                             <h2 className="** bgblue-500 text-base font-medium h2">Cantidad Total</h2>
-                            <p className="** bgred-900 text-xs">21 cuentas / 33 cryptos</p>
+                            <p className="** bgred-900 text-xs text-center">{transactions.length} / transactions</p>
                         </div>
                         <IoEyeOutline className='text-2xl' />
                     </div>
-                    <h3 className="** bgamber-900 text-4xl font-medium">$0.00</h3>
+                    <h3 className="** bgamber-900 text-4xl font-medium">{balance.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</h3>
                 </div>
                 <div className='bg-[#8468fb] w-[45%] py-2 flex flex-col justify-center items-center gap-1 rounded-xl'>
                     <GiDonkey className='w-8 ** bgorange-400 h-8' />

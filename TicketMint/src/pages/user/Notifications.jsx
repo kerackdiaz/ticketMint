@@ -5,12 +5,17 @@ import { IoMdCloseCircle } from "react-icons/io";
 import { Link } from 'react-router-dom';
 
 const Notifications = () => {
-  /* const notify = useSelector((state) => state.user.notify) */
   const notifications = useSelector((state) => state.authReducer.user.notifications)
   const events = useSelector((state) => state.authReducer.events)
   console.log(notifications);
 
     const [search, setSearch] = useState('')
+
+  const events = useSelector((state) => state.authReducer.user.events);
+  const myNotifications = useSelector((state) => state.authReducer.user.notifications);
+  const notify = useSelector((state) => state.authReducer.notify);
+  console.log(notify)
+
     const handleSearch = (e) => {
         setSearch(e.target.value)
       }
