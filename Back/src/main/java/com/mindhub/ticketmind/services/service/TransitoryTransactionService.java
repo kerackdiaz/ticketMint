@@ -62,6 +62,13 @@ public class TransitoryTransactionService {
             Client sourceClient = clientRepository.findByEmail(userMail);
             Client destinationClient = clientRepository.findByEmail(ticketTransactionRecordDTO.ticketDestinationEmail());
             Optional<ClientTicket> ticketOptional = clientTicketRepository.findById(ticketTransactionRecordDTO.ticketID());
+            if (ticketOptional.isEmpty()) {
+                response.put("error", true);
+                response.put("message", "Ticket requested to transfer not found");
+                return response;
+            }
+            ClientTicket ticket = ticketOptional.get();
+
 
             if (destinationClient.getBalance() < ticketTransactionRecordDTO.ticketPrice()) {
                 response.put("error", true);
@@ -79,12 +86,13 @@ public class TransitoryTransactionService {
                 return response;
             }
 
-            if (ticketOptional.isEmpty()) {
+            Optional<Event> eventOptional = eventRepository.findById(ticket.getEventId());
+            if (eventOptional.isEmpty()) {
                 response.put("error", true);
-                response.put("message", "Ticket requested to transfer not found");
+                response.put("message", "The clientTicket's event wasn't found by the event id present on the clientTicket");
                 return response;
             }
-            ClientTicket ticket = ticketOptional.get();
+            Event event = eventOptional.get();
 
             if (!sourceClient.getClientTickets().stream().anyMatch(clientTicket -> clientTicket.getId() == ticketTransactionRecordDTO.ticketID())) {
                 response.put("error", true);
@@ -102,19 +110,36 @@ public class TransitoryTransactionService {
                 TransitoryTicket ticketie = new TransitoryTicket(ticket.getId(), ticketTransactionRecordDTO.ticketPrice(), ticketTransactionRecordDTO.quantity(), 0.10, userMail, ticketTransactionRecordDTO.ticketDestinationEmail());
                 transitoryTicketRepository.save(ticketie);
 
+                String oneOrMoreTicketsText = getString(ticketTransactionRecordDTO);
+
                 MimeMessage mimeMessage = javaMailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
                 helper.setFrom("ticketMint@3mas1r.com");
                 helper.setTo(destinationClient.getEmail());
-                helper.setSubject("Account verification");
-                helper.setText("<html><body><table style=\"border-collapse: collapse; width: 100%; height: 58px;\" border=\"1\">\n" +
+                helper.setSubject("Tickets offer");
+                helper.setText("<html><body><table style=\"width: 100%; border-collapse: collapse; border-style: hidden; margin-left: auto; margin-right: auto;\" border=\"1\">\n" +
                         "  <tbody>\n" +
-                        "    <tr style=\"height: 58px;\">\n" +
-                        "      <td style=\"width: 72.3514%; height: 58px; border:none; text-align: center;\">\n" +
-                        "        <span style=\"font-size: 36pt; font-family: impact, sans-serif;\">Hi " + destinationClient.getFirstname() + ", Welcome to</span>\n" +
+                        "    <tr>\n" +
+                        "      <td style=\"width: 100%; text-align: center;\">\n" +
+                        "        <span style=\"font-size: 36pt;\">Welcome "+ destinationClient.getFirstname() +"\n" +
+                        "          <br>\n" +
+                        "          <br>\n" +
+                        "        </span>\n" +
                         "      </td>\n" +
-                        "      <td style=\"width: 27.6486%; height: 58px; border:none;\">\n" +
-                        "        <img src=\"https://firebasestorage.googleapis.com/v0/b/homebankingapp-4b70f.appspot.com/o/ticketmint%2Fmailassets%2FticketmintLogo.png?alt=media&amp;token=e1c414f3-41e6-4da1-a5b8-7b63e3013612\" alt=\"\" width=\"101\" height=\"101\">\n" +
+                        "    </tr>\n" +
+                        "  </tbody>\n" +
+                        "</table>\n" +
+                        "<table style=\"width: 100%; border-collapse: collapse; border-style: hidden; margin-left: auto; margin-right: auto;\" border=\"1\">\n" +
+                        "  <tbody>\n" +
+                        "    <tr>\n" +
+                        "      <td style=\"width: 59.1731%; text-align: center;\">\n" +
+                        "        <span style=\"font-size: 14pt;\"> " + sourceClient.getFirstname() + oneOrMoreTicketsText + event.getName() + ", you can accept or reject the transfer by clicking on one of the 2 buttons.</span>\n" +
+                        "      </td>\n" +
+                        "      <td style=\"width: 20.4135%; text-align: center;\">\n" +
+                        "        <a href=\"http://localhost:5173/verifyTransaction?verifyTransaction="+ ticketie.getKei()+ "\"' target=\"_blank\"  class=\"cloudHQ__gmail_elements_final_btn\" style=\"background-color: #00de16; color: #ffffff; border: 0px solid #000000; border-radius: 3px; box-sizing: border-box; font-size: 13px; font-weight: bold; line-height: 40px; padding: 12px 24px; text-align: center; text-decoration: none; text-transform: uppercase; vertical-align: middle;\" rel=\"noopener\">Accept!!!</a>\n" +
+                        "      </td>\n" +
+                        "      <td style=\"width: 20.4135%; text-align: center;\">\n" +
+                        "        <a href=\"http://localhost:5173/denyTransaction?denyTransaction="+ ticketie.getKei()+ "\"' target=\"_blank\"  class=\"cloudHQ__gmail_elements_final_btn\" style=\"background-color: #de0000; color: #ffffff; border: 0px solid #000000; border-radius: 3px; box-sizing: border-box; font-size: 13px; font-weight: bold; line-height: 40px; padding: 12px 24px; text-align: center; text-decoration: none; text-transform: uppercase; vertical-align: middle;\" rel=\"noopener\">Reject!!!</a>\n" +
                         "      </td>\n" +
                         "    </tr>\n" +
                         "  </tbody>\n" +
@@ -123,18 +148,8 @@ public class TransitoryTransactionService {
                         "<table style=\"border-collapse: collapse; width: 100%;\" border=\"1\">\n" +
                         "  <tbody>\n" +
                         "    <tr>\n" +
-                        "      <td style=\"width: 50%; border:none\">\n" +
-                        "        <img src=\"https://firebasestorage.googleapis.com/v0/b/homebankingapp-4b70f.appspot.com/o/ticketmint%2Fmailassets%2FbannerTicket.png?alt=media&amp;token=1f680708-41ec-4333-bdec-c8e5e3f56ca0\" alt=\"\" width=\"391\" height=\"418\">\n" +
-                        "        <br>\n" +
-                        "      </td>\n" +
-                        "      <td style=\"width: 50%; text-align: center;  border:none\">\n" +
-                        "        <span style=\"font-family: tahoma, arial, helvetica, sans-serif; font-size: 18pt;\">Don't waste any more time! Activate your account right now and discover a world of possibilities waiting for you, click here to start enjoying all our exclusive services!\n" +
-                        "          <br>\n" +
-                        "          <br>\n" +
-                        "          <a href=\"http://localhost:5173/verifyTransaction?verifyTransaction=" + ticketie.getKei() + "\"' target=\"_blank\" class=\"cloudHQ__gmail_elements_final_btn\" style=\"background-color: #55347b; color: #ffffff; border: 0px solid #000000; border-radius: 3px; box-sizing: border-box; font-size: 13px; font-weight: bold; line-height: 40px; padding: 12px 24px; text-align: center; text-decoration: none; text-transform: uppercase; vertical-align: middle;\" rel=\"noopener\">Accept</a>\n" +
-                        "          <a href=\"http://localhost:5173/denyTransaction?denyTransaction=" + ticketie.getKei() + "\"' target=\"_blank\" class=\"cloudHQ__gmail_elements_final_btn\" style=\"background-color: #55347b; color: #ffffff; border: 0px solid #000000; border-radius: 3px; box-sizing: border-box; font-size: 13px; font-weight: bold; line-height: 40px; padding: 12px 24px; text-align: center; text-decoration: none; text-transform: uppercase; vertical-align: middle;\" rel=\"noopener\">Deny</a>\n" +
-                        "          <br>\n" +
-                        "        </span>\n" +
+                        "      <td style=\"width: 100%;\">\n" +
+                        "        <img src=\"https://firebasestorage.googleapis.com/v0/b/homebankingapp-4b70f.appspot.com/o/ticketmint%2Fmailassets%2FbannerFooter.jpg?alt=media&token=86684bac-6fa0-4682-a9a6-9e520cccaf78\" alt=\"\" width=\"100%\" height=\"100%\">\n" +
                         "      </td>\n" +
                         "    </tr>\n" +
                         "  </tbody>\n" +
@@ -181,6 +196,14 @@ public class TransitoryTransactionService {
                 }
                 ClientTicket clientTicket = ticketOptional.get();
 
+                Optional<Event> eventOptional = eventRepository.findById(clientTicket.getEventId());
+                if (eventOptional.isEmpty()) {
+                    response.put("error", true);
+                    response.put("message", "The clientTicket's event wasn't found by the event id present on the clientTicket");
+                    return response;
+                }
+                Event event = eventOptional.get();
+
                 if (sourceClient.getClientTickets().stream().noneMatch(ticket -> ticket.getId() == transitoryTicket.getClientTicketId())) {
                     response.put("error", true);
                     response.put("message", "The clientTicket exists but it doesn't belong to the client that requested the transfer");
@@ -209,14 +232,6 @@ public class TransitoryTransactionService {
                     sourceTransaction.setAmount(ticketPriceNet);
                     sourceTransaction.setClient(sourceClient);
                     transactionRepository.save(sourceTransaction);
-
-                    Optional<Event> eventOptional = eventRepository.findById(clientTicket.getEventId());
-                    if (eventOptional.isEmpty()) {
-                        response.put("error", true);
-                        response.put("message", "The clientTicket's event wasn't found by the event id present on the clientTicket");
-                        return response;
-                    }
-                    Event event = eventOptional.get();
 
                     Transaction adminTransaction = new Transaction();
                     adminTransaction.setType(TransactionType.CREDIT);
@@ -257,11 +272,8 @@ public class TransitoryTransactionService {
                 try {
 
                     if (clientTicket.getQuantity() == transitoryTicket.getTicketQuantityToTransfer() &&
-                            destinationClient.getClientTickets().stream().noneMatch(ticket -> ticket.getOriginalTicketId() == clientTicket.getOriginalTicketId())) {
+                            destinationClient.getClientTickets().stream().noneMatch(ticket -> ticket.getOriginalTicketId().equals(clientTicket.getOriginalTicketId()) )) {
 
-
-                        double check1 = clientTicket.getQuantity();
-                        double check2 = ticketOptional.get().getQuantity();
                         if (clientTicket.getQuantity() == transitoryTicket.getTicketQuantityToTransfer()) {
 
                             List<ClientTicket> sourceClientTickets = sourceClient.getClientTickets();
@@ -280,11 +292,9 @@ public class TransitoryTransactionService {
 
                             response.put("success", true);
                             response.put("message", "The clientTicket transfer was executed successfully!");
-
-                            return response;
                         }
                         } else if (clientTicket.getQuantity() == transitoryTicket.getTicketQuantityToTransfer() &&
-                                destinationClient.getClientTickets().stream().anyMatch(ticket -> ticket.getOriginalTicketId() == clientTicket.getOriginalTicketId())) {
+                                destinationClient.getClientTickets().stream().anyMatch(ticket -> ticket.getOriginalTicketId().equals(clientTicket.getOriginalTicketId()))) {
 
                             List<ClientTicket> sourceClientTickets = sourceClient.getClientTickets();
                             sourceClientTickets.remove(clientTicket);
@@ -311,10 +321,8 @@ public class TransitoryTransactionService {
                             response.put("success", true);
                             response.put("message", "The clientTicket transfer was executed successfully!");
 
-                            return response;
-
                         } else if (clientTicket.getQuantity() > transitoryTicket.getTicketQuantityToTransfer() &&
-                                destinationClient.getClientTickets().stream().noneMatch(ticket -> ticket.getOriginalTicketId() == clientTicket.getOriginalTicketId())) {
+                                destinationClient.getClientTickets().stream().noneMatch(ticket -> ticket.getOriginalTicketId().equals(clientTicket.getOriginalTicketId()))) {
 
                             clientTicket.setQuantity(clientTicket.getQuantity() - transitoryTicket.getTicketQuantityToTransfer());
                             clientTicketRepository.save(clientTicket);
@@ -334,10 +342,8 @@ public class TransitoryTransactionService {
 
                             response.put("success", true);
                             response.put("message", "The clientTicket transfer was executed successfully!");
-
-                            return response;
                         } else if (clientTicket.getQuantity() > transitoryTicket.getTicketQuantityToTransfer() &&
-                                destinationClient.getClientTickets().stream().anyMatch(ticket -> ticket.getOriginalTicketId() == clientTicket.getOriginalTicketId())) {
+                                destinationClient.getClientTickets().stream().anyMatch(ticket -> ticket.getOriginalTicketId().equals(clientTicket.getOriginalTicketId()))) {
 
                             clientTicket.setQuantity(clientTicket.getQuantity() - transitoryTicket.getTicketQuantityToTransfer());
                             clientTicketRepository.save(clientTicket);
@@ -361,40 +367,146 @@ public class TransitoryTransactionService {
 
                             response.put("success", true);
                             response.put("message", "The clientTicket transfer was executed successfully!");
-
-                            return response;
                         }
+
+                    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+                    helper.setFrom("ticketMint@3mas1r.com");
+                    helper.setTo(sourceClient.getEmail());
+                    helper.setSubject("Transaction accepted");
+                    helper.setText("<html><body><table style=\"width: 100%; border-collapse: collapse; border-style: hidden; margin-left: auto; margin-right: auto;\" border=\"1\">\n" +
+                            "  <tbody>\n" +
+                            "    <tr>\n" +
+                            "      <td style=\"width: 100%; text-align: center;\">\n" +
+                            "        <span style=\"font-size: 36pt;\">Welcome "+ sourceClient.getFirstname() +"\n" +
+                            "          <br>\n" +
+                            "          <br>\n" +
+                            "        </span>\n" +
+                            "      </td>\n" +
+                            "    </tr>\n" +
+                            "  </tbody>\n" +
+                            "</table>\n" +
+                            "<table style=\"width: 100%; border-collapse: collapse; border-style: hidden; margin-left: auto; margin-right: auto;\" border=\"1\">\n" +
+                            "  <tbody>\n" +
+                            "    <tr>\n" +
+                            "      <td style=\"width: 59.1731%; text-align: center;\">\n" +
+                            "        <span style=\"font-size: 14pt;\"> " + sourceClient.getFirstname() + "Has accepted your offer of the ticket(s) for " + event.getName() +". The transaction was completed successfully.</span>\n" +
+                            "      </td>\n" +
+                            "    </tr>\n" +
+                            "  </tbody>\n" +
+                            "</table>\n" +
+                            "<br>\n" +
+                            "<table style=\"border-collapse: collapse; width: 100%;\" border=\"1\">\n" +
+                            "  <tbody>\n" +
+                            "    <tr>\n" +
+                            "      <td style=\"width: 100%;\">\n" +
+                            "        <img src=\"https://firebasestorage.googleapis.com/v0/b/homebankingapp-4b70f.appspot.com/o/ticketmint%2Fmailassets%2FbannerFooter.jpg?alt=media&token=86684bac-6fa0-4682-a9a6-9e520cccaf78\" alt=\"\" width=\"100%\" height=\"100%\">\n" +
+                            "      </td>\n" +
+                            "    </tr>\n" +
+                            "  </tbody>\n" +
+                            "</table></body></html>", true);
+
+                    javaMailSender.send(mimeMessage);
+
+
                     } catch(Exception e){
-                        transitoryTicketRepository.delete(transitoryTicket);
                         response.put("error", true);
                         response.put("message", "An error occurred transferring the clientTicket: " + e.getMessage());
                     }
 
                 } else{
+
                     response.put("error", true);
                     response.put("message", "Transaction already cancelled!");
                 }
 
             } catch(Exception e){
+
                 response.put("error", false);
                 response.put("message", "An error occurred while making the ticket transaction: " + e.getMessage());
             }
-            return response;
+
+        Optional<TransitoryTicket> optionalTransitoryTicket = transitoryTicketRepository.findById(kei);
+        if (optionalTransitoryTicket.isPresent()) {
+            TransitoryTicket transitoryTicket = optionalTransitoryTicket.get();
+            transitoryTicketRepository.delete(transitoryTicket);
+        }
+
+        return response;
         }
 
         @Transactional
         public Map<String, Object> deleteTransaction (UUID id){
             Map<String, Object> response = new HashMap<>();
 
-            Optional<TransitoryTicket> transitoryTicket = transitoryTicketRepository.findById(id);
+            Optional<TransitoryTicket> transitoryTicketOptional = transitoryTicketRepository.findById(id);
             try {
-                if (transitoryTicket.isPresent()) {
-                    TransitoryTicket ticket = transitoryTicket.get();
-                    transitoryTicketRepository.delete(ticket);
+                if (transitoryTicketOptional.isPresent()) {
+                    TransitoryTicket transitoryTicket = transitoryTicketOptional.get();
 
+                    Client sourceClient = clientRepository.findByEmail(transitoryTicket.getSourceEmail());
+                    Client destinationClient = clientRepository.findByEmail(transitoryTicket.getSourceEmail());
+
+                    Optional<ClientTicket> clientTicketOptional = clientTicketRepository.findById(transitoryTicket.getClientTicketId());
+                    if(clientTicketOptional.isEmpty()){
+                        response.put("error", true);
+                        response.put("message", "The clientTicket wasn't found by the clientTicketId present on the transitoryTicket");
+                        return response;
+                    }
+                    ClientTicket clientTicket = clientTicketOptional.get();
+                    Optional<Ticket> ticketOptional = ticketRepository.findById(clientTicket.getOriginalTicketId());
+                    if(ticketOptional.isEmpty()){
+                        response.put("error", true);
+                        response.put("message", "The original ticket wasn't found by the ticketId present on the clientTicket");
+                        return response;
+                    }
+                    Ticket ticket = ticketOptional.get();
+
+                    Event event = ticket.getEvent();
+
+                    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+                    helper.setFrom("ticketMint@3mas1r.com");
+                    helper.setTo(sourceClient.getEmail());
+                    helper.setSubject("Transaction rejected");
+                    helper.setText("<html><body><table style=\"width: 100%; border-collapse: collapse; border-style: hidden; margin-left: auto; margin-right: auto;\" border=\"1\">\n" +
+                            "  <tbody>\n" +
+                            "    <tr>\n" +
+                            "      <td style=\"width: 100%; text-align: center;\">\n" +
+                            "        <span style=\"font-size: 36pt;\">Welcome "+ sourceClient.getFirstname() +"\n" +
+                            "          <br>\n" +
+                            "          <br>\n" +
+                            "        </span>\n" +
+                            "      </td>\n" +
+                            "    </tr>\n" +
+                            "  </tbody>\n" +
+                            "</table>\n" +
+                            "<table style=\"width: 100%; border-collapse: collapse; border-style: hidden; margin-left: auto; margin-right: auto;\" border=\"1\">\n" +
+                            "  <tbody>\n" +
+                            "    <tr>\n" +
+                            "      <td style=\"width: 59.1731%; text-align: center;\">\n" +
+                            "        <span style=\"font-size: 14pt;\"> " + destinationClient.getFirstname() + "has rejected your offer of the ticket(s) for the event:  " + event.getName() + "</span>\n" +
+                            "      </td>\n" +
+                            "    </tr>\n" +
+                            "  </tbody>\n" +
+                            "</table>\n" +
+                            "<br>\n" +
+                            "<table style=\"border-collapse: collapse; width: 100%;\" border=\"1\">\n" +
+                            "  <tbody>\n" +
+                            "    <tr>\n" +
+                            "      <td style=\"width: 100%;\">\n" +
+                            "        <img src=\"https://firebasestorage.googleapis.com/v0/b/homebankingapp-4b70f.appspot.com/o/ticketmint%2Fmailassets%2FbannerFooter.jpg?alt=media&token=86684bac-6fa0-4682-a9a6-9e520cccaf78\" alt=\"\" width=\"100%\" height=\"100%\">\n" +
+                            "      </td>\n" +
+                            "    </tr>\n" +
+                            "  </tbody>\n" +
+                            "</table></body></html>", true);
+                    javaMailSender.send(mimeMessage);
+                    transitoryTicketRepository.delete(transitoryTicket);
                     response.put("success", true);
                     response.put("message", "Transaction denied!");
                 }
+
+
 
             } catch (Exception e) {
                 response.put("error", false);
@@ -403,16 +515,22 @@ public class TransitoryTransactionService {
             return response;
         }
 
-
-        //debug
-        public List<TransitoryTicket> getAllTransitoryTickets () {
-            try {
-                List<TransitoryTicket> tickets = transitoryTicketRepository.findAll().stream().toList();
-                return tickets;
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+    private String getString(TicketTransactionRecordDTO ticketTransactionRecordDTO) {
+        String oneOrMoreTicketsText;
+        if (ticketTransactionRecordDTO.ticketPrice() == 0) {
+            if (ticketTransactionRecordDTO.quantity() == 1) {
+                oneOrMoreTicketsText = " is gifting you a ticket for the event: ";
+            } else {
+                oneOrMoreTicketsText = " is gifting you " + ticketTransactionRecordDTO.quantity() + " tickets for the event: ";
+            }
+        } else {
+            if (ticketTransactionRecordDTO.quantity() == 1) {
+                oneOrMoreTicketsText = " wants to sell you a ticket at U$D"+ ticketTransactionRecordDTO.ticketPrice() + "for the event: ";
+            } else {
+                oneOrMoreTicketsText = " wants to sell you " + ticketTransactionRecordDTO.quantity() + "tickets at U$D" + ticketTransactionRecordDTO.ticketPrice() + " for the event: ";
             }
         }
-
-
+        return oneOrMoreTicketsText;
     }
+
+}

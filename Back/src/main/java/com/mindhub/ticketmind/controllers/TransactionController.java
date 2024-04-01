@@ -23,8 +23,6 @@ import java.util.UUID;
 @RequestMapping("/api/transactions")
 public class TransactionController {
     @Autowired
-    private TransactionService transactionService;
-    @Autowired
     private TransitoryTransactionService transitoryTransactionService;
     @Autowired
     private TransitoryTicketRepository transitoryTicketRepository;
@@ -43,26 +41,6 @@ public class TransactionController {
     @GetMapping("/denyTransaction")
     public ResponseEntity<?> denyTransaction(@RequestParam("denyTransaction") UUID id) {
         return new ResponseEntity<>(transitoryTransactionService.deleteTransaction(id), HttpStatus.OK);
-    }
-
-
-    //redundant
-    @GetMapping("/client/all")
-    public ResponseEntity<?> getAllClientTransactions(){
-        String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
-        return  new ResponseEntity<>(transactionService.getAllClientTransactions(userMail), HttpStatus.OK);
-    }
-
-    @GetMapping("/transitoryTickets/all")
-    public ResponseEntity<?> getAllTransTickets() {
-        return new ResponseEntity<>(transitoryTransactionService.getAllTransitoryTickets(), HttpStatus.OK);
-    }
-
-    @DeleteMapping("/transitoryTickets/all")
-    public ResponseEntity<?> deleteAll() {
-        List<TransitoryTicket> allTickets = transitoryTicketRepository.findAll();
-        transitoryTicketRepository.deleteAll();
-        return new ResponseEntity<>(allTickets, HttpStatus.OK);
     }
 
 }
