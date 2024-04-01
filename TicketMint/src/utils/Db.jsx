@@ -130,10 +130,25 @@ export const postLogin = async (data, dispatch) => {
       return { success: false, message: error.message };
     }
   }
+
+  export const walletCharger = async (amount, token) => {
+    try {
+        const response = await axios.put(`${baseURL}client/wallet/deposit`, {amount}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error during image upload:', error);
+        return { success: false, message: error.message };
+    }
+  }
   
   export const changeAvatar = async (img, token) => {
     try {
-        const response = await axios.put(`${baseURL}clients/current/profilePic`, {img}, {
+        const response = await axios.put(`${baseURL}client/current/profilePic`, {img}, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

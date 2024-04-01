@@ -1,20 +1,29 @@
 import React, { useState } from 'react'
 import { FaCcVisa, FaCcMastercard } from "react-icons/fa6";
 import Paymetbanner from '../../../public/paymet-banner.png'
+import { walletCharger } from '../../utils/Db'
+import { useSelector } from 'react-redux';
 
 const Payment = () => {
+    const token = useSelector((state) => state.authReducer.token.token);
+
     const [cardNumber, setCardNumber] = useState('');
 
     const handleChange = (event) => {
         let { value } = event.target;
-        // Eliminar cualquier carácter que no sea un número
         value = value.replace(/\D/g, '');
-        // Formatear el número en grupos de cuatro dígitos separados por espacios
         value = value.replace(/(.{4})/g, '$1 ').trim();
-        // Limitar la longitud máxima a 16 dígitos
-        value = value.slice(0, 19); // Permitir un máximo de 19 caracteres (16 dígitos + 3 espacios)
+        value = value.slice(0, 19); 
         setCardNumber(value);
     };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const response = walletCharger(amount, token)
+        console.log(response.message)
+    }
+
+
     return (
 
         <main className='bg-white flex flex-col-reverse lg:flex-row lg:gap-20 justify-center w-full min-h-screen m-auto'>
@@ -23,7 +32,7 @@ const Payment = () => {
             </div>
 
             <div className='w-full lg:w-1/3 self-center py-1 bg-desactive-red-400'>
-                <form className='bg-gray-100 flex flex-col px-10 gap-3 pb-8 m-auto  rounded-xl'>
+                <form onSubmit={handleSubmit} className='bg-gray-100 flex flex-col px-10 gap-3 pb-8 m-auto  rounded-xl'>
                     <h1 className=' text-3xl font-semibold border-b py-4'>Payment</h1>
                     <label className='bg--700 text-xl'>
                         <span className='font-semibold'>Pay With:</span>
@@ -79,11 +88,11 @@ const Payment = () => {
                     <label className='bg--700 text-xl'>
                         <span className='font-medium text-lg'>Amount</span>
                         <div>
-                            <input type="number" onChange name='' className='w-full p-1 pl-3 rounded-md' placeholder='' />
+                            <input type="number" name='' className='w-full p-1 pl-3 rounded-md' placeholder='' />
                         </div>
                     </label>
                     <label className='flex items-center gap-1 bg--700 text-xl'>
-                        <input type="checkbox" onChange name='' className='w-[18px] h-[18px] rounded-md' placeholder='' />
+                        <input type="checkbox" name='' className='w-[18px] h-[18px] rounded-md' placeholder='' />
                         <span className='text-[#5c5b5b] text-lg relative bottom-[1px]'>save card details:</span>
                     </label>
                     {/* <p className='bg--700 text-red-500'>errorMessage</p> */}
