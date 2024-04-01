@@ -10,12 +10,13 @@ import { format } from 'date-fns';
 
 const Inbox = () => {
   const events = useSelector((state) => state.authReducer.user.events);
+  console.log(events);
   const token = useSelector((state) => state.authReducer.token.token);
   const [search, setSearch] = useState("");
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [message, setMessage] = useState("");
 
-  console.log(selectedEvent)
+
   useEffect(() => {
     const socket = io('http://localhost:9092');
 
@@ -47,7 +48,6 @@ const Inbox = () => {
     try {
       const response = await postAlert({ subjet, id }, token);
       if (response.success) {
-        console.log(response);
         setMessage('');
         const date = format(new Date(), 'HH:mm eee dd MMM'); 
         setSelectedEvent(currentEvent => {
@@ -58,10 +58,9 @@ const Inbox = () => {
           return updatedEvent;
         });
       } else {
-        console.log("Error sending notification: " + response.message);
+
       }
     } catch (error) {
-      console.log("Error sending notification: " + error);
     }
   };
 

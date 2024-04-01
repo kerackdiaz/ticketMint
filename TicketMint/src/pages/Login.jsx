@@ -37,11 +37,12 @@ const Login = ({ onLogin }) => {
 
     const handleSignIn = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
-
+        
         const response = await postLogin({ email, password }, dispatch);
         if (response.success === true) {
-            const rememberUser = localStorage.setItem('userData', JSON.stringify({ email, password }));
+            setIsLoading(true);
+            // const rememberUser = localStorage.setItem('userData', JSON.stringify({ email, password }));
+            
             setTimeout(() => {
                 onLogin();
                 setIsLoading(false);
@@ -92,7 +93,7 @@ const Login = ({ onLogin }) => {
         slidesToShow: 1,
         slidesToScroll: 1,
     };
-    console.log(isAgency, isRegistering);
+
 
     return (
         <>  
