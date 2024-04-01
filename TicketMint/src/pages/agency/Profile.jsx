@@ -5,7 +5,6 @@ import { uploadFile } from '../../utils/Firebase';
 import { changeData, changeAvatar, ClientProvider } from '../../utils/Db';
 
 const Profile = () => {
-  const reloadData = ClientProvider();
   const user = useSelector((state) => state.authReducer.user);
   const token = useSelector((state) => state.authReducer.token.token);
   const [agencyName, setAgencyName] = useState(user.agencyName || "");
@@ -22,26 +21,22 @@ const Profile = () => {
     e.preventDefault();
     const response = await changeData({ agencyName, password, phoneNumber, address} , token);
     if (response.success) {
-      reloadData();
     }
   }
 
   const handleImageUpload = async (e) => {
     e.preventDefault
     const file = e.target.files[0];
-    try{
-      const newId = client.id + "_" +client.firstName
+    console.log(file)
+   
+      const newId = "/agency/" + user.agencyName+"/" +user.id + "_" +user.firstName
       const url = await uploadFile(file,newId)
       const res = await changeAvatar(url, token);
+      console.log(res)
       if (res.success === true) {
         // Swal.fire('Profile picture updated', '', 'success');
-        navigate('/profile')
+        // navigate('/profile')
       }
-
-  }catch{
-    // Swal.fire('Error uploading profile picture', '', 'error');
-    navigate('/profile')
-    }
   };
 
   return (
@@ -55,7 +50,7 @@ const Profile = () => {
                   src={user.profilePic}
                   className="shadow-xl group-hover:opacity-0 rounded-full object-center object-cover align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]"
                 />
-                <label form="changepic" className="cursor-pointer hover:opacity-100 opacity-0 absolute flex justify-center items-center w-[150px] h-[150px] top-[-61px] right-[-86px] bg-[#80808073] text-5xl" >
+                <label form="changepic" className="cursor-pointer hover:opacity-100 opacity-0 absolute flex justify-center items-center w-[150px] h-[150px] top-[-61px] right-[-86px] bg-[#80808073] text-5xl rounded-full" >
                   <div>
                   <IoCameraReverse />
                   </div>

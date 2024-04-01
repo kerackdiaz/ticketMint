@@ -1,17 +1,15 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import { useSelector } from 'react-redux';
 import { IoSearchOutline } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";
 
 const Notifications = () => {
-    const notify = useSelector((state) => state.authReducer.user.notifications);
-    console.log(notify)
-    const [search, setSearch] = useState("");
-    const [selectedEvent, setSelectedEvent] = useState(null);
+
     const handleSearch = (e) => {
         setSearch(e.target.value)
       }
 
+      
       const viewNotifications = () => {
         if(!notify || notify==null || notify == undefined|| notify.length === 0 ){
 
