@@ -189,12 +189,22 @@ public class EventService {
         if (client != null){
             if (eventRepository.existsById(notificationRecord.id()) ) {
                 try {
-                    Event event = eventRepository.findById(notificationRecord.id()).get();
+                    Optional<Event> optionalEvent = eventRepository.findById(notificationRecord.id());
+                    if (optionalEvent.isPresent()) {
+
+                        Event event = optionalEvent.get();
+                        System.out.println(event.getName());
                     Notification notification = new Notification(notificationRecord.subjet(), event, new Date());
+                        System.out.println(notification.getEvent().getName());
                     notificationRepository.save(notification);
                     socketIOService.sendNotification(notification);
                     response.put("success", true);
                     response.put("message", "Notification sent correctly");
+                    } else {
+                        response.put("error", true);
+                        response.put("message", "Event not found");
+                    }
+
                 } catch (NoSuchElementException e) {
                     response.put("error", true);
                     response.put("message", "Event not found");
@@ -231,6 +241,5 @@ public class EventService {
         }
         return response;
     }
-
 
 }

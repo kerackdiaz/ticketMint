@@ -39,7 +39,7 @@ public class TransitoryTransactionService {
 
         Map<String, Object> response = new HashMap<>();
 
-        if (ticketTransactionRecordDTO.ticketPrice() <= 0) {
+        if (ticketTransactionRecordDTO.ticketPrice() < 0) {
             response.put("error", true);
             response.put("message", "The ticket price cannot neither be zero nor negative");
             return response;
@@ -96,7 +96,7 @@ public class TransitoryTransactionService {
             }
 
             try {
-                TransitoryTicket ticketie = new TransitoryTicket(ticket.getId(), ticketTransactionRecordDTO.ticketPrice(), ticket.getQuantity(), 0.10, userMail, ticketTransactionRecordDTO.ticketDestinationEmail());
+                TransitoryTicket ticketie = new TransitoryTicket(ticket.getId(), ticketTransactionRecordDTO.ticketPrice(), ticketTransactionRecordDTO.quantity(), 0.10, userMail, ticketTransactionRecordDTO.ticketDestinationEmail());
                 transitoryTicketRepository.save(ticketie);
 
                 MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -225,8 +225,7 @@ public class TransitoryTransactionService {
                 try {
                     double check1 = ticket.getQuantity();
                     double check2 = ticketOptional.get().getQuantity();
-
-                    if(ticket.getQuantity() == ticketOptional.get().getQuantity()) {
+                    if(ticket.getQuantity() == transitoryTicket1.getAvailableQuantity()) {
                         List<ClientTicket> sourceClientTickets = sourceClient.getClientTickets();
                         sourceClientTickets.remove(ticket);
 
