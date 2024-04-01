@@ -8,8 +8,8 @@ import java.util.UUID;
 public class TransitoryTicket {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long kei;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID kei;
     private UUID clientTicketId;
     private double basePrice;
     private int availableQuantity;
@@ -28,7 +28,7 @@ public class TransitoryTicket {
         this.destinationEmail = destinationEmail;
     }
 
-    public Long getKei() {
+    public UUID getKei() {
         return kei;
     }
 

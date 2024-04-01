@@ -50,7 +50,7 @@ public class ClientController {
 
 
 
-    @PostMapping("/loteria")
+    @PostMapping("/wallet/deposit")
     public ResponseEntity<?> postLoteriaWinnings(@RequestBody TestRecordDTO testRecordDTO){
         String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
         return new ResponseEntity<>(clientService.clientLotteryDeposit(testRecordDTO, userMail), HttpStatus.OK);

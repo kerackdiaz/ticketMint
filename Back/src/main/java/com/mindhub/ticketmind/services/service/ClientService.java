@@ -10,6 +10,7 @@ import com.mindhub.ticketmind.models.Client;
 import com.mindhub.ticketmind.models.Ticket;
 import com.mindhub.ticketmind.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -19,6 +20,9 @@ public class ClientService {
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     public Map<String, Object> activateAccount(UUID id) {
@@ -121,7 +125,7 @@ public class ClientService {
                     response.put("message", "Password must contain at least one uppercase letter");
                     return response;
                 }
-                client.setPassword(profileFormDTO.password());
+                client.setPassword(passwordEncoder.encode(profileFormDTO.password()));
             }
             if (profileFormDTO.phoneNumber() != 0 ) {
                 client.setPhone(profileFormDTO.phoneNumber());
