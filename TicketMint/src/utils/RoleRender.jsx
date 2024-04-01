@@ -6,6 +6,7 @@ import DetailsEvent from '../pages/user/DetailsEvent.jsx'
 import MyTickets from '../pages/user/MyTickets.jsx'
 import DetailTicket from '../pages/user/DetailTicket.jsx'
 import Notifications from '../pages/user/Notifications.jsx'
+import MessageEvent from '../pages/user/MessageEvent.jsx'
 import QrScan from '../pages/user/QrScan.jsx'
 import Collectibles from '../pages/user/Collectibles.jsx'
 import SellTicket from '../pages/user/SellTicket.jsx'
@@ -70,6 +71,7 @@ export default RoleRender
       <Route path='/sell/:id' element={<SellTicket />} />
       <Route path='/favorites' element={<Favorites />} />
       <Route path='notifications' element = {<Notifications/>}/>
+      <Route path='messages/:id' element = {<MessageEvent/>}/>
       <Route path="/Configurations" element={<Configurations />} />
       <Route path="/Contact" element={<Contact />} />
       <Route path="/Help" element={<Help />} />
