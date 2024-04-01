@@ -8,27 +8,27 @@ import java.util.UUID;
 public class TransitoryTicket {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long kei;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID kei;
     private UUID clientTicketId;
-    private double basePrice;
-    private int availableQuantity;
+    private double ticketTransactionPrice;
+    private int ticketQuantityToTransfer;
     private double increasePercentage;
     private String sourceEmail;
     private String destinationEmail;
     public TransitoryTicket() {
     }
 
-    public TransitoryTicket(UUID clientTicketId, double basePrice, int availableQuantity, double increasePercentage, String sourceEmail, String destinationEmail) {
+    public TransitoryTicket(UUID clientTicketId, double ticketTransactionPrice, int ticketQuantityToTransfer, double increasePercentage, String sourceEmail, String destinationEmail) {
         this.clientTicketId = clientTicketId;
-        this.basePrice = basePrice;
-        this.availableQuantity = availableQuantity;
+        this.ticketTransactionPrice = ticketTransactionPrice;
+        this.ticketQuantityToTransfer = ticketQuantityToTransfer;
         this.increasePercentage = increasePercentage;
         this.sourceEmail = sourceEmail;
         this.destinationEmail = destinationEmail;
     }
 
-    public Long getKei() {
+    public UUID getKei() {
         return kei;
     }
 
@@ -40,20 +40,20 @@ public class TransitoryTicket {
         this.clientTicketId = clientTicketId;
     }
 
-    public double getBasePrice() {
-        return basePrice;
+    public double getTicketTransactionPrice() {
+        return ticketTransactionPrice;
     }
 
-    public void setBasePrice(double basePrice) {
-        this.basePrice = basePrice;
+    public void setTicketTransactionPrice(double ticketTransactionPrice) {
+        this.ticketTransactionPrice = ticketTransactionPrice;
     }
 
-    public int getAvailableQuantity() {
-        return availableQuantity;
+    public int getTicketQuantityToTransfer() {
+        return ticketQuantityToTransfer;
     }
 
-    public void setAvailableQuantity(int availableQuantity) {
-        this.availableQuantity = availableQuantity;
+    public void setTicketQuantityToTransfer(int ticketQuantityToTransfer) {
+        this.ticketQuantityToTransfer = ticketQuantityToTransfer;
     }
 
     public double getIncreasePercentage() {
