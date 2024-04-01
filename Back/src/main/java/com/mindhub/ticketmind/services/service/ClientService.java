@@ -74,7 +74,7 @@ public class ClientService {
         Map<String, Object> response = new HashMap<>();
         try {
             if(client != null){
-                client.setBalance(testRecordDTO.platita());
+                client.setBalance(client.getBalance() + testRecordDTO.amount());
                 clientRepository.save(client);
                 response.put("success", true);
                 response.put("message", "el quini6 sale bien");

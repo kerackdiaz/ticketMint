@@ -6,6 +6,7 @@ import com.mindhub.ticketmind.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -31,6 +32,10 @@ public class EventService {
 
     @Autowired
     private SocketIOService socketIOService;
+
+    @Autowired
+    private NotificationService notificationService;
+
     public List<EventDTO> getAllEvents(){
         List<Event> events = eventRepository.findAll();
         return  events.stream().map(EventDTO::new).toList();
@@ -93,6 +98,7 @@ public class EventService {
 
             response.put("success", true);
             response.put("message", "Event created successfully");
+            response.put("event", event.getId());
         } catch (Exception e) {
             response.put("error", true);
             response.put("message", "An error occurred while creating event: " + e.getMessage());
@@ -188,13 +194,12 @@ public class EventService {
                 try {
                     Optional<Event> optionalEvent = eventRepository.findById(notificationRecord.id());
                     if (optionalEvent.isPresent()) {
-
                         Event event = optionalEvent.get();
-                        System.out.println(event.getName());
+
                     Notification notification = new Notification(notificationRecord.subjet(), event, new Date());
-                        System.out.println(notification.getEvent().getName());
                     notificationRepository.save(notification);
-                    socketIOService.sendNotification(notification);
+                    notificationService.sendNotification(notification);
+//                    socketIOService.sendNotification(notification);
                     response.put("success", true);
                     response.put("message", "Notification sent correctly");
                     } else {
@@ -205,6 +210,8 @@ public class EventService {
                 } catch (NoSuchElementException e) {
                     response.put("error", true);
                     response.put("message", "Event not found");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             } else {
                 response.put("error", true);
