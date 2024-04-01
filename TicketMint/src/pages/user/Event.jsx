@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import { IoSearchOutline } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";
 
+
 function Event() {
   const [location, setLocation] = useState('')
   const [search, setSearch] = useState('')
@@ -45,7 +46,15 @@ console.log(events);
           .filter(event => location ? event.city.name === location : true)
           .filter(event => genre ? event.categories.some(category => category.name === genre) : true)
           .filter(event => search ? event.name.toLowerCase().includes(search.toLowerCase()) : true);
+
+          let quantity = 0
+          let price = 0
+
         return filterEvent.length > 0 ? filterEvent.map((even, index) => (
+          even.ticketTypes.map(ticket =>{
+            quantity = ticket.availableQuantity + quantity
+            price = even.ticketTypes.reduce((min, ticket) => ticket.basePrice < min ? ticket.basePrice : min, ticket.basePrice);
+          return(
           <CardEvent 
             handleFav={handleFav} 
             onFav={onFav} 
@@ -54,8 +63,26 @@ console.log(events);
             name={even.name} 
             id={even.id} 
             key={even.id} 
-          />
+            time = {even.time}
+            price={price}
+            quantity={quantity}
+            location={even.venueName}
+            />
+            )
+          })
         )) : <h1 className='text-white'>No events</h1> 
+    }
+/* 
+    const nextEvent =Object.values(events)?.reduce((min, event) => event.date < min ? event.date : min, new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()); */
+    const getNextEvent = () => {
+      if(!events || events.length === 0 || events === undefined || events === null){
+        return
+      }
+      const nowDate = new Date().getFullYear() + '-' + (new Date().getMonth()) + '-' + new Date().getDate()
+      const dateNextEvent = Object.values(events).reduce((min, event) => event.date < min ? event.date : min,  nowDate);
+      const nextEvent = Object.values(events).find((event) => event.date === dateNextEvent);
+      console.log(nextEvent);
+      return <CardEvent idProx={"ProxEvent"} date={nextEvent.date} image={nextEvent.imageURL} name={nextEvent.name} id={nextEvent.id} />
     }
 
     const getCategories = () => {
@@ -97,11 +124,34 @@ console.log(events);
       <section className='flex flex-col gap-3 justify-around w-screen items-center desktop:self-start desktop:w-[30%]'>
         <h1 className='text-lg md:text-5xl font-medium py-1 text-white desktop:fixed desktop:top-20 desktop:left-5'>Events</h1>
         <Link to={'/favorites'}>
-        <button type="button" className='text-white desktop:fixed desktop:left-56 desktop:top-24 bg-[#8468fb] py-1 px-3 flex items-center gap-2 rounded-xl'>Favorites <TiStarFullOutline/></button>
+        <button type="button" className='text-white desktop:fixed desktop:left-64 desktop:top-24 bg-[#8468fb] py-1 px-3 flex items-center gap-2 rounded-xl'>Favorites <TiStarFullOutline/></button>
         </Link>
-        <div className='flex desktop:flex-col desktop:items-start desktop:fixed desktop:overflow-y-auto desktop:justify-start desktop:h-[80%] desktop:left-5 desktop:top-36 desktop:w-[20%]  md:justify-center gap-2 overflow-x-auto w-[80%] px-5 my-4'>
-        {getCategories()}
+        <div className='flex desktop:flex-wrap desktop:items-start desktop:fixed desktop:overflow-y-auto desktop:justify-start desktop:left-5 desktop:top-36 desktop:w-[25%] desktop:h-[25%] 2k:h-[40%] md:justify-center gap-2 overflow-x-auto w-[80%] px-5 desktop:px-0 my-4'>
+        {
+        getCategories()
+        }
+        {
+        getCategories()
+        }
+        {
+        getCategories()
+        }
+        {
+        getCategories()
+        }
+        {
+        getCategories()
+        }
+        {
+        getCategories()
+        }
         </div>
+        <section className='desktop:fixed desktop:flex desktop:gap-4 desktop:items-center desktop:flex-col hidden desktop:left-0 desktop:bottom-2 desktop:w-[28%]'>
+          <h2 className='text-white desktop:text-4xl'>Upcoming event</h2>
+          {
+            getNextEvent()
+          }
+        </section>
       </section>
       <div className='flex justify-center items-around w-full desktop:w-[70%] gap-4 mb-10 mt-3 desktop:ml-[30%] desktop:self-start px-5 md:w-[450px]'>
         <select name="location" onChange={handleLocation} className='bg-[#0b0b1c] text-white '>
@@ -112,17 +162,15 @@ console.log(events);
         </select>
       <label className=' desktop:w-[70%] flex justify-center desktop:mt-0 md:w-[450px]'>
       <div className='flex justify-between items-center w-[90%] px-3 py-1 border border-[#6651c3] rounded-lg'>
-                <div className="flex gap-2">
                     <IoSearchOutline className='text-xl text-white'/>
-                    <input onInput={handleSearch} type="search" className="appearance-none border-none bg-transparent outline-none text-xs" placeholder=' Search currency' />
-                </div>
-                < IoMdCloseCircle className='text-lg text-[#e8635c]'/>
+                    <input onInput={handleSearch} type="search" className="appearance-none text-white placeholder:text-start w-full px-1 border-none bg-transparent outline-none text-xs" placeholder=' Search currency' />
             </div>
-        {/* <input onInput={handleSearch} type="search" placeholder='Search' className='bg-[#0b0b1c] text-white py-1 px-3 rounded-xl border-2 border-[#8468fb] w-full' /> */}
       </label>
       </div>
       
-      <div className='flex flex-wrap gap-4 mb-20 desktop:mb-3 desktop:ml-[30%] justify-center desktop:w-[70%] desktop:mt-10 desktop:self-start'>
+      <div className='flex flex-wrap gap-4 mb-20 desktop:mb-3 desktop:ml-[29%] justify-center desktop:w-[70%] desktop:mt-10 desktop:self-start'>
+      {getEvents() }
+      {getEvents() }
       {getEvents() }
       </div>
     </main>

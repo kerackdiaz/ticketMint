@@ -45,6 +45,25 @@ ul.slick-dots li:last-child {
     color: white!important;
 }
 
+
+@media screen and ( min-width:800px){
+    
+    #ProxEvent{
+        width: 350px;
+    }
+    #ProxEvent h2{
+        width: 200px;
+    }
+}
+@media screen and ( min-width:1536px){
+    #ProxEvent{
+        width: 430px;
+    }
+    #ProxEvent h2{
+        width: 300px;
+    }
+    
+
 .notificationReceived::after {
     content: " ";
     position: absolute;
@@ -53,4 +72,5 @@ ul.slick-dots li:last-child {
     background: red;
     border-radius: 50%;
     transform: translateX(10px);
+
 }
