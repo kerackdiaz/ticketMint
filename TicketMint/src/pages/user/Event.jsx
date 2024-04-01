@@ -4,6 +4,8 @@ import { TiStarFullOutline } from 'react-icons/ti'
 import { Link } from 'react-router-dom'
 import { CategortiesProvider, CitiesProvider, ClientProvider, EventProvider } from '../../utils/Db'
 import { useSelector } from 'react-redux'
+import { IoSearchOutline } from "react-icons/io5";
+import { IoMdCloseCircle } from "react-icons/io";
 
 function Event() {
   const [location, setLocation] = useState('')
@@ -18,6 +20,7 @@ function Event() {
   const clientProvider = ClientProvider()
 
   const eventsProvider = EventProvider()
+  
   
   const categoriesProvider = CategortiesProvider()
 
@@ -42,7 +45,6 @@ function Event() {
           .filter(event => location ? event.city.name === location : true)
           .filter(event => genre ? event.categories.some(category => category.name === genre) : true)
           .filter(event => search ? event.name.toLowerCase().includes(search.toLowerCase()) : true);
-      
         return filterEvent.length > 0 ? filterEvent.map((even, index) => (
           <CardEvent 
             handleFav={handleFav} 
@@ -99,10 +101,6 @@ function Event() {
         </Link>
         <div className='flex desktop:flex-col desktop:items-start desktop:fixed desktop:overflow-y-auto desktop:justify-start desktop:h-[80%] desktop:left-5 desktop:top-36 desktop:w-[20%]  md:justify-center gap-2 overflow-x-auto w-[80%] px-5 my-4'>
         {getCategories()}
-        {getCategories()}
-        {getCategories()}
-        {getCategories()}
-        {getCategories()}
         </div>
       </section>
       <div className='flex justify-center items-around w-full desktop:w-[70%] gap-4 mb-10 mt-3 desktop:ml-[30%] desktop:self-start px-5 md:w-[450px]'>
@@ -113,14 +111,18 @@ function Event() {
             }
         </select>
       <label className=' desktop:w-[70%] flex justify-center desktop:mt-0 md:w-[450px]'>
-        <input onInput={handleSearch} type="search" placeholder='Search' className='bg-[#0b0b1c] text-white py-1 px-3 rounded-xl border-2 border-[#8468fb] w-full' />
+      <div className='flex justify-between items-center w-[90%] px-3 py-1 border border-[#6651c3] rounded-lg'>
+                <div className="flex gap-2">
+                    <IoSearchOutline className='text-xl text-white'/>
+                    <input onInput={handleSearch} type="search" className="appearance-none border-none bg-transparent outline-none text-xs" placeholder=' Search currency' />
+                </div>
+                < IoMdCloseCircle className='text-lg text-[#e8635c]'/>
+            </div>
+        {/* <input onInput={handleSearch} type="search" placeholder='Search' className='bg-[#0b0b1c] text-white py-1 px-3 rounded-xl border-2 border-[#8468fb] w-full' /> */}
       </label>
       </div>
       
       <div className='flex flex-wrap gap-4 mb-20 desktop:mb-3 desktop:ml-[30%] justify-center desktop:w-[70%] desktop:mt-10 desktop:self-start'>
-      {getEvents() }
-      {getEvents() }
-      {getEvents() }
       {getEvents() }
       </div>
     </main>

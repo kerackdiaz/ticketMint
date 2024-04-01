@@ -43,7 +43,6 @@ export const EventProvider = () => {
                 'Authorization': `Bearer ${token}`,
               }
             });
-            console.log(response.data)
             dispatch(getEvents(response.data))
         } catch (error) {
             console.error('Error fetching client:', error);
@@ -62,7 +61,6 @@ export const CategortiesProvider = () => {
                 'Authorization': `Bearer ${token}`,
               }
             });
-            console.log(response.data)
             dispatch(getCategories(response.data))
         } catch (error) {
             console.error('Error fetching client:', error);
@@ -81,7 +79,6 @@ export const CitiesProvider = () => {
                 'Authorization': `Bearer ${token}`,
               }
             });
-            console.log(response.data)
             dispatch(getCities(response.data))
         } catch (error) {
             console.error('Error fetching client:', error);
@@ -141,7 +138,7 @@ export const postLogin = async (data, dispatch) => {
                 'Authorization': `Bearer ${token}`
             }
         });
-        console.log(response.data)
+
         return response.data;
     } catch (error) {
         console.error('Error during image upload:', error);
@@ -152,7 +149,6 @@ export const postLogin = async (data, dispatch) => {
 
   export const changeData = async (data, token) => {
     try {
-      console.log(data)
         const response = await axios.put(`${baseURL}client/current`, data, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -173,7 +169,6 @@ export const postLogin = async (data, dispatch) => {
                 'Authorization': `Bearer ${token}`
             }
         });
-        console.log(response.data)
         return response.data;
     } catch (error) {
         console.error('Error during password change:', error);

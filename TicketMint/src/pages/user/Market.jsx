@@ -8,7 +8,6 @@ function Market() {
   const {id} = useParams()
 
   const ticket = Object.values(tickets)?.find((ticket) => ticket.id === id)
-  console.log(ticket);
 
   return (
     <div className='bg-[#0b0b1c] desktop:mt-20 flex flex-1 gap-5 flex-col items-center p-4'>

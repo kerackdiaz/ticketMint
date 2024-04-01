@@ -16,6 +16,7 @@ import Contact from '../pages/user/Contact'
 import Help from '../pages/user/Help'
 import Privacity from '../pages/user/Privacity'
 import Wallet from '../pages/user/Wallet'
+import Payment from '../pages/gateway/Payment'
 import Report from "../pages/agency/Report.jsx";
 import Events from "../pages/agency/Events.jsx";
 import ToDo from "../pages/agency/ToDo.jsx";
@@ -33,7 +34,6 @@ import { useEffect } from 'react'
 const RoleRender = () => {
   const userdata = ClientProvider();
   const role = useSelector((state) => state.authReducer.user.role);
-  console.log(role);
 
       switch (role) {
 
@@ -77,6 +77,7 @@ export default RoleRender
       <Route path="/Help" element={<Help />} />
       <Route path="/Privacity" element={<Privacity />} />
       <Route path="/Wallet" element={<Wallet />} />
+      <Route path="/Payment" element={<Payment />} />
     </Routes>
   </>
   )

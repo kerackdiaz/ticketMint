@@ -11,7 +11,7 @@ function CardEvent({ handleFav, onFav, name, date, image, id }) {
     return (
         /* bg-[url("' + image + '")] reemplazar al tener img*/
         <Link to={`/details/${id}`} >
-            <div className={'relative w-80 h-64 bg-[url(/prueba.png)] desktop:bg-no-repeat desktop:bg-cover desktop:w-[430px] bg-top bg-local rounded-2xl flex flex-col justify-end items-end'}>
+            <div className={'relative w-80 h-64 bg-[url("' + image + '")] desktop:bg-no-repeat desktop:bg-cover desktop:w-[430px] bg-top bg-local rounded-2xl flex flex-col justify-end items-end'}>
                 <div className='absolute top-2 right-2'>
                     {
                         !onFav ? <CiStar className='text-4xl text-white cursor-pointer ' onClick={handleFav}/> : <TiStarFullOutline className='cursor-pointer text-4xl text-white' onClick={handleFav} />

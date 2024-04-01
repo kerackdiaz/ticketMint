@@ -4,12 +4,26 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 function MyTickets() {
-  const user = useSelector((state) => state.authReducer.user)
-  const events = useSelector((state) => state.authReducer.events)
-  console.log(events);
+  const UserData = useSelector((state) => state.authReducer.user)
+  const MyTickets= Object.values(UserData.clientTicket)
+  const eventsData = useSelector((state) => state.authReducer.events)
+  const events = Object.values(eventsData).filter(event => 
+    MyTickets.some(ticket => ticket.eventId === event.id)
+  );
+  const ticketCounts = MyTickets.reduce((counts, ticket) => {
+    counts[ticket.eventId] = (counts[ticket.eventId] || 0) + ticket.quantity;
+    return counts;
+  }, {});
+
+  const eventsWithTicketCounts = events.map(event => ({
+    ...event,
+    ticketCount: ticketCounts[event.id]
+  }));
+
+
   
   const getEvents = () => {
-    if(!events || events.length === 0 || events === undefined || events === null){
+    if(!eventsWithTicketCounts || eventsWithTicketCounts.length === 0 || eventsWithTicketCounts === undefined || eventsWithTicketCounts === null){
       return (
         <div role="status">
           <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -21,9 +35,9 @@ function MyTickets() {
         )}
 
   
-      let filterEvent = Object.values(events)
+      let filterEvent = eventsWithTicketCounts
       return filterEvent.length > 0 ? filterEvent.map((event, index) => (
-        <CardMyTickets key={index} name={event.name} date={event.date} image={event.imageURL} id={event.id}/>
+        <CardMyTickets key={index} name={event.name} date={event.date} image={event.imageURL} id={event.id} ticketCount={event.ticketCount}/>
       )) : <h1 className='text-white'>No events</h1> 
   }
 
@@ -38,8 +52,6 @@ function MyTickets() {
           </Link>
         </div>
         <div className='flex flex-wrap gap-5 justify-center'>
-          {getEvents()}
-          {getEvents()}
           {getEvents()}
           {
             /* user.tickets?.length > 0 ? user.tickets?.map((ticket, index) => {

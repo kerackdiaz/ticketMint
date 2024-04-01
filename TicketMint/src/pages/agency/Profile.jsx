@@ -7,7 +7,6 @@ import { changeData, changeAvatar, ClientProvider } from '../../utils/Db';
 const Profile = () => {
   const reloadData = ClientProvider();
   const user = useSelector((state) => state.authReducer.user);
-  console.log(user);
   const token = useSelector((state) => state.authReducer.token.token);
   const [agencyName, setAgencyName] = useState(user.agencyName || "");
   const [password, setPassword] = useState("");
@@ -21,7 +20,6 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(agencyName, password, phoneNumber, address);
     const response = await changeData({ agencyName, password, phoneNumber, address} , token);
     if (response.success) {
       reloadData();
@@ -35,7 +33,6 @@ const Profile = () => {
       const newId = client.id + "_" +client.firstName
       const url = await uploadFile(file,newId)
       const res = await changeAvatar(url, token);
-      console.log(res.success)
       if (res.success === true) {
         // Swal.fire('Profile picture updated', '', 'success');
         navigate('/profile')

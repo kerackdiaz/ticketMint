@@ -1,7 +1,7 @@
 import React from "react";
 
 function LoadingScreen() {
-    console.log("Rendering LoadingScreen");
+
     return (
         <div className="flex flex-1 flex-col justify-center gap-2 items-center">
             <div>
