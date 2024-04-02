@@ -1,16 +1,37 @@
-import React from 'react'
+import React  from 'react'
 import { Link } from 'react-router-dom'
 import CardCollectibles from '../../components/CardCollectibles'
 import { useSelector } from 'react-redux'
 
 
 function Collectibles() {
-  const eventsUser = useSelector((state) => state.authReducer.user.events)
-  const events = useSelector((state) => state.authReducer.events)
-  console.log(events);
+  const UserData = useSelector((state) => state.authReducer.user)
+  const MyTickets= Object.values(UserData.clientTicket)
+  const eventsData = useSelector((state) => state.authReducer.events)
+  const nowDate = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate();
+  const nowTime = new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds();
+
+  const events = Object.values(eventsData).filter(event => 
+    MyTickets.some(ticket => ticket.eventId === event.id)
+  );
+  const filteredEvents = events.filter((event) => event.date >= nowDate && event.time >= nowTime)
+
+  const ticketCounts = MyTickets.reduce((counts, ticket) => {
+    counts[ticket.eventId] = (counts[ticket.eventId] || 0) + ticket.quantity;
+    return counts;
+  }, {});
+
+  const eventsWithTicketCounts = filteredEvents.map(event => ({
+    ...event,
+    ticketCount: ticketCounts[event.id]
+  }));
+
+
+  
+
   
   const getEvents = () => {
-    if(!events || events.length === 0 || events === undefined || events === null){
+    if(!eventsWithTicketCounts || events.length === 0 || events === undefined || events === null){
       return (
         <div role="status">
           <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,13 +41,10 @@ function Collectibles() {
           <span class="sr-only">Loading...</span>
         </div>
         )}
-
-  
-      let filterEvent = Object.values(events)
+      let filterEvent = eventsWithTicketCounts
       return filterEvent.length > 0 ? filterEvent.map((event, index) => {
-        return <CardCollectibles key={index} name={event.name} date={event.date} image={event.imageURL} id={event.id}/>}) : <h1 className='text-white'>No collectibles</h1>
+        return <CardCollectibles key={index} name={event.name} date={event.date} image={event.imageURL} id={event.id } ticketCount={event.ticketCount}/>}) : <h1 className='text-white'>No collectibles</h1>
   }
-
   return (
     <div className='bg-[#0b0b1c] flex flex-1 gap-6 desktop:mt-20 flex-col items-center'>
     <h2 className='text-lg font-medium py-1 text-white desktop:text-5xl desktop:text-start desktop:w-[70%]'>My Collectibles</h2>
@@ -37,9 +55,6 @@ function Collectibles() {
         <button className='text-white border  bg-[#8468fb] w-1/2 md:py-1 border-[#bbabff] rounded-lg' type="button">Collectibles</button>
       </div>
       <div className='flex flex-wrap gap-5 justify-center'>
-        {getEvents()}
-        {getEvents()}
-        {getEvents()}
         {getEvents()}
       </div>
   </div>

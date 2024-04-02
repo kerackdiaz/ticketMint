@@ -6,8 +6,8 @@ import { BsCalendar2Check } from "react-icons/bs";
 import { LuCalendarDays } from "react-icons/lu";
 
 const Balance = () => {
-  const sales = useSelector((state) => state.authReducer.user);
-  console.log(sales);
+  const sales= useSelector((state) => state.authReducer.user)
+
 
   return (
     <>
