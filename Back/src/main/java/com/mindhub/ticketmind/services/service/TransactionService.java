@@ -88,9 +88,9 @@ public class TransactionService {
 
                 Client agency = event.getClient();
 
-                if (ticket.getBasePrice() * ticketPurchaseRecordDTO.quantity() != ticketPurchaseRecordDTO.totalPrice()) {
+                if (ticket.getBasePrice() * ticketPurchaseRecordDTO.quantity() > ticketPurchaseRecordDTO.totalPrice()) {
                     response.put("error", true);
-                    response.put("message", "The requested ticket's quantity to be purchased does not match the total price amount sent");
+                    response.put("message", "The total price sent is not enough to cover the cost of the requested quantity of tickets");
                     return response;
                 }
 
@@ -101,8 +101,8 @@ public class TransactionService {
                 }
 
                 double ticketPrice = ticketPurchaseRecordDTO.totalPrice();
-                double commissionFees = ticketPrice * 0.10;
-                double ticketPriceNet = ticketPrice * 0.90;
+                double commissionFees = ticketPrice * admin.getCommission();
+                double ticketPriceNet = ticketPrice * 1 - (admin.getCommission() / 100);
 
             sourceClient.setBalance(sourceClient.getBalance() - ticketPrice);
 
