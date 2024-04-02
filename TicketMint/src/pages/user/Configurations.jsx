@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Switch from '../../utils/Switch.jsx';
 import { Link } from 'react-router-dom'
 import { MdOutlineDarkMode, MdOutlinePrivacyTip, MdOutlineLightMode } from "react-icons/md";
@@ -9,6 +9,11 @@ import { IoIosQrScanner, IoIosHelpCircleOutline, IoIosArrowForward } from "react
 const Configurations = () => {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [isBiometry, setIsBiometry] = useState(false);
+    const [currency, setCurrency] = useState(localStorage.getItem('currency') || 'USD');
+
+    useEffect(() => {
+        localStorage.setItem('currency', currency);
+    }, [currency]);
 
     const toggleDarkMode = () => {
         setIsDarkMode(!isDarkMode);
@@ -38,31 +43,15 @@ const Configurations = () => {
                             <PiCurrencyCircleDollarLight className='text-2xl' />
                             <span>Currency</span>
                         </Link>
-                        <div className='flex items-center gap-1'>
-                            <span className=' text-[#6d6d77] font-semibold'>ARS</span> <IoIosArrowForward className='text-2xl'/>
-                        </div>
-                    </li>
-                </ul>
-
-            </section>
-
-            <section className='w-[86%] desktop:w-[60%] py-4 border-t bg-desactive-slate-600 '>
-                <h3 className='text-start font-medium text-lg desktop:text-2xl py-3'>Security</h3>
-
-                <ul className='text-sm font-medium'>
-                    <li className='bg-desactive-blue-500 flex justify-between items-center gap-3 py-3'>
-                        <Link to='/Wallet' className='flex items-center gap-3'>
-                            <IoWalletOutline className='text-2xl' />
-                            <span>Wallet</span>
-                        </Link>
-                        <IoIosArrowForward className='text-2xl' />
-                    </li>
-                    <li className='bg-desactive-emerald-950 flex justify-between items-center gap-3 py-3'>
-                        <div className="flex items-center gap-3">
-                            <IoIosQrScanner className='text-2xl' />
-                            <span>biomagnetic verification</span>
-                        </div>
-                        <Switch isToggle={isBiometry} onToggle={setIsBiometry} />
+                        <select
+                            className='flex items-center gap-1 bg-transparent px-5'
+                            value={currency}
+                            onChange={(e) => setCurrency(e.target.value)}
+                        >
+                            <option value='USD' className=' text-[#6d6d77] font-semibold'>USD</option>
+                            <option value='ARS' className=' text-[#6d6d77] font-semibold'>ARS</option>
+                            <option value='COP' className=' text-[#6d6d77] font-semibold'>COP</option>
+                        </select>
                     </li>
                 </ul>
 

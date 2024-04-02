@@ -130,21 +130,7 @@ console.log(events);
         {
         getCategories()
         }
-        {
-        getCategories()
-        }
-        {
-        getCategories()
-        }
-        {
-        getCategories()
-        }
-        {
-        getCategories()
-        }
-        {
-        getCategories()
-        }
+        
         </div>
         <section className='desktop:fixed desktop:flex desktop:gap-4 desktop:items-center desktop:flex-col hidden desktop:left-0 desktop:bottom-2 desktop:w-[28%]'>
           <h2 className='text-white desktop:text-4xl'>Upcoming event</h2>
@@ -170,8 +156,7 @@ console.log(events);
       
       <div className='flex flex-wrap gap-4 mb-20 desktop:mb-3 desktop:ml-[29%] justify-center desktop:w-[70%] desktop:mt-10 desktop:self-start'>
       {getEvents() }
-      {getEvents() }
-      {getEvents() }
+
       </div>
     </main>
   )

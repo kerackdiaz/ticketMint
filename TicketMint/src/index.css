@@ -62,7 +62,7 @@ ul.slick-dots li:last-child {
     #ProxEvent h2{
         width: 300px;
     }
-    
+}
 
 .notificationReceived::after {
     content: " ";
@@ -72,5 +72,4 @@ ul.slick-dots li:last-child {
     background: red;
     border-radius: 50%;
     transform: translateX(10px);
-
 }

@@ -6,13 +6,11 @@ import { Link } from 'react-router-dom';
 
 const Notifications = () => {
   const notifications = useSelector((state) => state.authReducer.user.notifications)
-  const events = useSelector((state) => state.authReducer.events)
   console.log(notifications);
 
     const [search, setSearch] = useState('')
 
   const events = useSelector((state) => state.authReducer.user.events);
-  const myNotifications = useSelector((state) => state.authReducer.user.notifications);
   const notify = useSelector((state) => state.authReducer.notify);
   console.log(notify)
 
