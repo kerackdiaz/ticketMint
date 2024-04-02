@@ -26,10 +26,7 @@ function MyTickets() {
 
   const changePage = (newPage) => {
     setCurrentPage(newPage);
-  };
-
-  const eventsToShow = eventsWithTicketCounts?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-  
+  };  
   
   const getEvents = () => {
     if(!eventsWithTicketCounts || eventsWithTicketCounts.length === 0 || eventsWithTicketCounts === undefined || eventsWithTicketCounts === null){
@@ -70,7 +67,7 @@ function MyTickets() {
           </div>
           <div>
               {Array.from({ length: totalPages }, (_, index) => (
-                  totalPages <= 1 ? "" :  <button className='text-white px-3 py-2 bg-[#0B0B1C] dark:bg-[#6651c3] hover:scale-95 hover:bg-[#6651c3] dark:hover:bg-[#6651c3]' onClick={() => changePage(index + 1)}>{index + 1}</button>
+                  totalPages <= 1 ? "" :  <button key={index} className='text-white px-3 py-2 bg-[#0B0B1C] dark:bg-[#6651c3] hover:scale-95 hover:bg-[#6651c3] dark:hover:bg-[#6651c3]' onClick={() => changePage(index + 1)}>{index + 1}</button>
               ))}
           </div>
       </main>

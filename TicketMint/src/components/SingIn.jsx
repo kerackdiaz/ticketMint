@@ -53,7 +53,7 @@ const SingIn = ({ handleSubmit, setEmail, setPassword, setIsRegistering, message
           </div>
           <a href="#" className="text-sm font-medium text-gray-400 hover:underline dark:text-primary-500">Forgot password?</a>
         </div>
-        <button type="submit" className="movil:w-3/4 tablet:w-1/5 self-center text-gray-800  bg-white border focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-gray-800  hover:border hover:scale-90 ease-in-out duration-300 dark:focus:ring-primary-800">Sign in</button>
+        <button type="submit" className="movil:w-3/4 tablet:w-1/5 self-center text-gray-800  bg-white border focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600   hover:border hover:scale-90 ease-in-out duration-300 dark:focus:ring-primary-800">Sign in</button>
         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
           Don’t have an account yet?
           <a href="#" className="font-medium  hover:underline dark:text-primary-500" onClick={handleRegister}> Sign up </a>

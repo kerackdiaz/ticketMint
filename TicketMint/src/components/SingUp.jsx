@@ -33,7 +33,7 @@ const SingUp = ({ handleSubmit, setFirstName, setLastName, setEmail, setPassword
             {showPassword ? hide : show}
           </button>
     </div>
-    <button type="submit" className="movil:w-3/4 tablet:w-1/5 self-center text-gray-800  bg-white border focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-gray-800  hover:border hover:scale-90 ease-in-out duration-300 dark:focus:ring-primary-800">Sign up</button>
+    <button type="submit" className="movil:w-3/4 tablet:w-1/5 self-center text-gray-800  bg-white border focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600   hover:border hover:scale-90 ease-in-out duration-300 dark:focus:ring-primary-800">Sign up</button>
     <p className="text-sm font-light  text-gray-400"> Already have an account? 
         <a href="#" className="font-medium  hover:underline text-primary-500" onClick={handleLogin}> Sign in </a>
     </p>

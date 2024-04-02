@@ -191,8 +191,7 @@ const LayoutAdmin = () => {
             </div>
             <div className="w-1/2 relative md:left-[150px] laptop:left-[90px] desktop:left-[230px]">
               <h2 className="text-black dark:text-white text-3xl text-center flex flex-col laptop:relative laptop:right-10 desktop:right-2">
-                <span className="border-b border-1 border-gray-800 w-36 relative left-10 tablet:left-32 laptop:left-[90px] desktop:left-[290px]">ADMIN </span>
-                <span className="text-sm text-gray-500 relative left-5 laptop:left-2 ">Balance: ${userdata.balance.toLocaleString('en-US')}</span>
+                <span className="text-xl text-gray-500 relative left-5 laptop:left-2 font-bold">Balance: ${userdata.balance.toLocaleString('en-US')}</span>
               </h2>
             </div>
             <div className="flex items-center">
