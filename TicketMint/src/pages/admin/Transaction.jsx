@@ -9,15 +9,14 @@ const Transactions = () => {
 
     const transactions = user.transactions
 
-    const getTextColor = (type) => {
-        return type === 'CREDIT' ? 'text-green-600' : ' text-red-600';
-    };
+    console.log(transactions);
+
 
   return (
     <div className="laptop:w-[77%] relative laptop:left-[14%] tablet:left-[25%] tablet:w-1/2 w-[80%] h-[80%] md:w-[490px] top-32 right-8 py-6 px-6 rounded-xl border border-gray-200 bg-[#DBC1FA] mt-10 flex flex-wrap gap-10 dark:bg-[#0B0B1C]">
 
     <section className='flex flex-col ** bgred-500 gap-5 w-[90%] py-4'>
-                <h1 className='text-3xl font-bold text-black dark:text-white'>Transactions</h1>
+                <h1 className='text-3xl font-bold '>Transactions</h1>
                 <div className='flex flex-col text-black gap-3 ** bgblue-500 flex-wrap w-full rounded-xl justify-around'>
                     {transactions?.length > 0 ? (
                         transactions.map((transaction) => (
