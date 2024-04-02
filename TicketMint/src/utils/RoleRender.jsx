@@ -33,6 +33,7 @@ import EventDetails from '../pages/agency/EventDetails.jsx'
 import Transactions from '../pages/agency/Transactions.jsx'
 import OldEvents from '../pages/agency/OldEvents.jsx'
 
+
 const RoleRender = () => {
   const userdata = ClientProvider();
   const role = useSelector((state) => state.authReducer.user.role);
@@ -108,9 +109,9 @@ const admin = () => {
   return <>
   <LayoutAdmin/>
     <Routes>
-      <Route path="/" element={<Events />} />
       <Route path="/AllUser" element={<AllUser />} />
-      <Route path="/AllEvent" element={<AllEvent />} /> 
+      <Route path="/" element={<AllEvent />} /> 
+      <Route path='/Transaction' element = {<Transaction/>}/>
     </Routes>
   </>
 }

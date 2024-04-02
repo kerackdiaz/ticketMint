@@ -75,3 +75,11 @@ export const getNotify = createAction('NOTIFY', (data) => {
 
 });
 
+
+export const getCurrency = createAction('CURRENCY', (data) => {
+    return {
+        payload: {
+            ...data
+        }
+    }
+});
