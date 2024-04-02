@@ -12,7 +12,7 @@ function Event() {
   const [location, setLocation] = useState('')
   const [search, setSearch] = useState('')
   const [genre, setGenre] = useState('')
-  const [onFav, setOnFav] = useState(false)
+  const [onFav, setOnFav] = useState(localStorage.getItem('Favorites') || [])
   const events = useSelector((state) => state.authReducer.events)
   const cat = useSelector((state) => state.authReducer.categories)
   const city = useSelector((state) => state.authReducer.cities)
@@ -24,11 +24,14 @@ function Event() {
   const isEmpty = useCallback((data) => !data || data.length === 0 || data === undefined || data === null, []);
   
   const handleFav = useCallback((id) => {
-    setOnFav(prevOnFav => ({
-      ...prevOnFav,
-      [id]: !prevOnFav[id]
-    }));
-  }, []);
+    console.log(onFav.includes(id));
+    if (onFav.includes(id)) {
+      setOnFav(onFav.filter(item => item !== id))
+    }
+    setOnFav(prevOnFav => ([...prevOnFav, id]))
+    }, [onFav]);
+    console.log(onFav);
+  
     
     const getEvents = useMemo(() => {
       if(isEmpty(events)){
@@ -58,7 +61,7 @@ function Event() {
               quantity += ticket.availableQuantity;
               price = ticket.basePrice < price ? ticket.basePrice : price;
             });
-          
+            
             return (
               <CardEvent 
                 handleFav={() => handleFav(even.id)}
