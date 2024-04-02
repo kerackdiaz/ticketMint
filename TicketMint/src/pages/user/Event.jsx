@@ -81,8 +81,7 @@ console.log(events);
       const nowDate = new Date().getFullYear() + '-' + (new Date().getMonth()) + '-' + new Date().getDate()
       const dateNextEvent = Object.values(events).reduce((min, event) => event.date < min ? event.date : min,  nowDate);
       const nextEvent = Object.values(events).find((event) => event.date === dateNextEvent);
-      console.log(nextEvent);
-      return <CardEvent idProx={"ProxEvent"} date={nextEvent.date} image={nextEvent.imageURL} name={nextEvent.name} id={nextEvent.id} />
+      return <CardEvent idProx={"ProxEvent"} date={nextEvent.date} image={nextEvent.imageURL} name={nextEvent.name} id={nextEvent.id} price={nextEvent.basePrice} />
     }
 
     const getCategories = () => {
@@ -90,13 +89,13 @@ console.log(events);
         return 
       }
       return Object.values(cat).map((category, index) => {
-          return <button onClick={handleGenre} value={category.name} key={index} className={genre === category.name ? 'text-white py-1 px-3 rounded-xl bg-[#8468fb]':'text-white py-1 px-3 rounded-xl bg-[#bbabff]'}>{category.name}</button>
+          return <button onClick={handleGenre} value={category.name} key={index} className={genre === category.name ? 'text-white py-1 px-3 rounded-xl bg-[#0B0B1C]':'text-white py-1 px-3 rounded-xl dark:bg-[#bbabff] bg-[#0B0B1C]'}>{category.name}</button>
         })
     }
 
     const getCities = () => {
       if(!city || city.length === 0 || city === undefined || city === null){
-        return <option className='text-white'>Location</option>
+        return <option className='text-white '>Location</option>
       }
       return Object.values(city).map((cit, index) => {
           return <option value={cit.name} key={index}>{cit.name}</option>
@@ -120,36 +119,36 @@ console.log(events);
   },[])
 
   return (
-    <main className='bg-[#0b0b1c] flex flex-1 flex-col desktop:mt-20 desktop:flex-wrap items-center desktop:'>
+    <main className='flex flex-1 flex-col desktop:mt-20 desktop:flex-wrap items-center desktop:'>
       <section className='flex flex-col gap-3 justify-around w-screen items-center desktop:self-start desktop:w-[30%]'>
-        <h1 className='text-lg md:text-5xl font-medium py-1 text-white desktop:fixed desktop:top-20 desktop:left-5'>Events</h1>
+        <h1 className='text-lg md:text-5xl py-1 dark:text-white text-[#0b0b1c] font-bold  desktop:fixed desktop:top-20 desktop:left-5'>Events</h1>
         <Link to={'/favorites'}>
-        <button type="button" className='text-white desktop:fixed desktop:left-64 desktop:top-24 bg-[#8468fb] py-1 px-3 flex items-center gap-2 rounded-xl'>Favorites <TiStarFullOutline/></button>
+        <button type="button" className='text-white  font-medium desktop:fixed desktop:left-64 desktop:top-24 dark:bg-[#8468fb] bg-[#0B0B1C] py-1 px-3 flex items-center gap-2 rounded-xl'>Favorites <TiStarFullOutline/></button>
         </Link>
-        <div className='flex desktop:flex-wrap desktop:items-start desktop:fixed desktop:overflow-y-auto desktop:justify-start desktop:left-5 desktop:top-36 desktop:w-[25%] desktop:h-[25%] 2k:h-[40%] md:justify-center gap-2 overflow-x-auto w-[80%] px-5 desktop:px-0 my-4'>
+        <div className='flex desktop:flex-wrap desktop:items-start desktop:fixed desktop:overflow-y-auto desktop:justify-start desktop:left-5 desktop:top-36 desktop:w-[25%] desktop:min-h-[12%]  md:justify-center gap-2 overflow-x-auto w-[80%] px-5 desktop:px-0 my-4'>
         {
         getCategories()
         }
         
         </div>
-        <section className='desktop:fixed desktop:flex desktop:gap-4 desktop:items-center desktop:flex-col hidden desktop:left-0 desktop:bottom-2 desktop:w-[28%]'>
-          <h2 className='text-white desktop:text-4xl'>Upcoming event</h2>
+        <section className='desktop:fixed desktop:flex desktop:gap-4 desktop:items-center  desktop:flex-col hidden desktop:left-0 desktop:bottom-2 desktop:w-[28%]'>
+          <h2 className='dark:text-white text-[#0b0b1c]  desktop:text-4xl'>Upcoming event</h2>
           {
             getNextEvent()
           }
         </section>
       </section>
       <div className='flex justify-center items-around w-full desktop:w-[70%] gap-4 mb-10 mt-3 desktop:ml-[30%] desktop:self-start px-5 md:w-[450px]'>
-        <select name="location" onChange={handleLocation} className='bg-[#0b0b1c] text-white '>
-            <option className='text-white' value={''}>Location</option>
+        <select name="location" onChange={handleLocation} className='bg-[#0B0B1C] text-white py-2 px-4 flex '>
+            <option className='text-white ' value={''} disabled>Location</option>
             {
                 getCities()
             }
         </select>
       <label className=' desktop:w-[70%] flex justify-center desktop:mt-0 md:w-[450px]'>
-      <div className='flex justify-between items-center w-[90%] px-3 py-1 border border-[#6651c3] rounded-lg'>
-                    <IoSearchOutline className='text-xl text-white'/>
-                    <input onInput={handleSearch} type="search" className="appearance-none text-white placeholder:text-start w-full px-1 border-none bg-transparent outline-none text-xs" placeholder=' Search currency' />
+      <div className='flex justify-between items-center w-[90%] px-3 py-1 border dark:border-[#6651c3] border-[#0b0b1c] rounded-lg'>
+                    <IoSearchOutline className='text-xl dark:text-white text-[#0b0b1c]'/>
+                    <input onInput={handleSearch} type="search" className="appearance-none text-white placeholder:text-start w-full px-1 border-none bg-transparent  outline-none text-xs placeholder:text-[#0B0B1C]" placeholder=' Search currency' />
             </div>
       </label>
       </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react';
 import CardMyTickets from '../../components/CardMyTickets'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
@@ -20,7 +20,16 @@ function MyTickets() {
     ticketCount: ticketCounts[event.id]
   }));
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(eventsWithTicketCounts?.length / itemsPerPage);
 
+  const changePage = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const eventsToShow = eventsWithTicketCounts?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  
   
   const getEvents = () => {
     if(!eventsWithTicketCounts || eventsWithTicketCounts.length === 0 || eventsWithTicketCounts === undefined || eventsWithTicketCounts === null){
@@ -35,31 +44,37 @@ function MyTickets() {
         )}
 
   
-      let filterEvent = eventsWithTicketCounts
-      return filterEvent.length > 0 ? filterEvent.map((event, index) => ( <Link to={`/detailTicket/${event.id}`}>
-        <CardMyTickets key={index} name={event.name} date={event.date} time={event.time} image={event.imageURL} id={event.id} ticketCount={event.ticketCount}/></Link>
-      )) : <h1 className='text-white'>No events</h1> 
-  }
+        let filterEvent = eventsWithTicketCounts;
+        const totalPages = Math.ceil(filterEvent.length / itemsPerPage);
+        const eventsToShow = filterEvent.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    
+        return eventsToShow.length > 0 ? eventsToShow.map((event, index) => (
+            <Link to={`/detailTicket/${event.id}`}>
+                <CardMyTickets key={index} name={event.name} date={event.date} time={event.time} image={event.imageURL} id={event.id} ticketCount={event.ticketCount}/>
+            </Link>
+        )) : <h1 className='dark:text-white text-[0b0b1c]'>No events</h1> 
+    }
 
 
-  return (
-    <main className='bg-[#0b0b1c] flex flex-1 gap-6 flex-col desktop:mt-20 items-center mb-20'>
-      <h2 className='text-lg font-medium py-1 desktop:text-start desktop:w-[70%] text-white desktop:text-5xl'>My Tickets</h2>
-        <div className='flex  justify-center  bg-[#bbabff] w-3/4 rounded-lg md:w-1/2 '>
-          <button className='bg text-white bg-[#8468fb] w-1/2 border md:py-1 border-[#bbabff] rounded-lg' type="button">Tickets</button>
-          <Link to={'/collectibles'} className='w-1/2 text-center flex justify-center'>
-          <button className='text-white' type="button">Collectibles</button>
-          </Link>
-        </div>
-        <div className='flex flex-wrap gap-5 justify-center'>
-          {getEvents()}
-          {
-            /* user.tickets?.length > 0 ? user.tickets?.map((ticket, index) => {
-              return <CardMyTickets key={index} name={ticket.name} date={ticket.date} image={ticket.image} id={ticket.id}/>}) : <h1 className='text-white'>No tickets</h1> */
-          }
-        </div>
-    </main>
-  )
+    return (
+      <main className=' flex flex-1 gap-6 flex-col desktop:mt-20 items-center mb-20'>
+          <h2 className='text-lg dark:text-white text-[#0b0b1c]  font-medium py-1 desktop:text-start desktop:w-[70%] desktop:text-5xl'>My Tickets</h2>
+          <div className='flex  justify-center  bg-[#bbabff] w-3/4 rounded-lg md:w-1/2 '>
+              <button className='bg text-white bg-[#8468fb] w-1/2 border md:py-1 border-[#bbabff] rounded-lg' type="button">Tickets</button>
+              <Link to={'/collectibles'} className='w-1/2 text-center flex justify-center'>
+                  <button className='text-white' type="button">Collectibles</button>
+              </Link>
+          </div>
+          <div className='flex flex-wrap gap-5 justify-center'>
+              {getEvents()}
+          </div>
+          <div>
+              {Array.from({ length: totalPages }, (_, index) => (
+                  totalPages <= 1 ? "" :  <button className='text-white px-3 py-2 bg-[#0B0B1C] dark:bg-[#6651c3] hover:scale-95 hover:bg-[#6651c3] dark:hover:bg-[#6651c3]' onClick={() => changePage(index + 1)}>{index + 1}</button>
+              ))}
+          </div>
+      </main>
+  );
 }
 
-export default MyTickets
+export default MyTickets;

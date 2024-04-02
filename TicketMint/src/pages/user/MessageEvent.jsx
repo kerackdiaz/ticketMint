@@ -14,17 +14,17 @@ function MessageEvent() {
             <div  className=' rounded-lg bg-[#6651c3] '>
                 <p className='text-white p-1 px-3'>{notification.message}</p>
             </div>
-                <p className='text-white text-sm'>{notification.date}</p>
+                <p className='dark:text-white text-[#0b0b1c] text-sm'>{notification.date}</p>
         </div>
         )
         )
     }
 
   return (
-    <main  className='bg-[#0b0b1c] flex flex-1 desktop:mt-20 flex-col items-center'>
+    <main  className=' flex flex-1 desktop:mt-20 flex-col items-center'>
         <div className='flex justify-center gap-2 desktop:justify-start w-[90%] desktop:w-[90%] tablet:w-96 mt-2 items-center pb-4 border-b-2 border-[#6651c3]'>
-            <img className='w-16 h-16 object-cover object-center rounded-full bg-black' /* src={event.imageURL} */ src='/prueba.png' />
-            <h1 className='text-lg font-medium py-1 text-white text-center desktop:text-5xl'>{event.name}</h1>
+            <img className='w-16 h-16 object-cover object-center rounded-full bg-black'  src={event.imageURL}/>
+            <h1 className='text-lg font-medium py-1 dark:text-white text-[#0b0b1c] text-center desktop:text-5xl'>{event.name}</h1>
         </div>
         <div className=' w-[90%] desktop:w-[90%] tablet:w-96 mt-2 desktop:mb-0 mb-20  py-1 desktop:pt-3 overflow-y-auto h-[400px] rounded-lg h-max-[80%]'>
             {
