@@ -20,8 +20,9 @@ export const storage = getStorage(appFirebase)
 
 
 export async function uploadFile(file, src){
- const storageRef=ref(storage, "avatar/"+src)
- await uploadBytes(storageRef, file)
+ const storageRef=ref(storage, "ticketmint/"+src)
+ const response = await uploadBytes(storageRef, file)
+ console.log(response)
 const url = await getDownloadURL(storageRef)
 return url
 

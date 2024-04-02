@@ -25,6 +25,11 @@ export default {
 
       'desktop': '1280px',
 
+      'sm': '640px'
+
+      '2k': '1536px',
+
+
     },
   },
   plugins: [

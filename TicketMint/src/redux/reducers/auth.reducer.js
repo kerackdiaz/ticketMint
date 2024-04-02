@@ -1,5 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { login,current, logout, getEvents, getCategories, getCities } from '../actions/auth.actions';
+import { login,current, logout, getEvents, getCategories, getCities,getTicketTypes,  getNotify } from '../actions/auth.actions';
+
+
 
 const initialState = {
     user:{
@@ -9,7 +11,8 @@ const initialState = {
 
     },
     token: null,
-    timestamps: null
+    timestamps: null,
+  
     }
 
 
@@ -52,6 +55,21 @@ const authReducer = createReducer(initialState, (builder) => {
                 cities:action.payload
                }
         })
+
+        .addCase(getTicketTypes, (state, action) => {
+            return {
+                ...state,
+                ticketTypes:action.payload
+               }
+        })
+       
+        .addCase(getNotify, (state, action) => {
+            return {
+                ...state,
+                notify:action.payload
+               }
+        })
+
 });
 
 

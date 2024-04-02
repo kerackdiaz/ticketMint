@@ -5,9 +5,7 @@ import { uploadFile } from '../../utils/Firebase';
 import { changeData, changeAvatar, ClientProvider } from '../../utils/Db';
 
 const Profile = () => {
-  const reloadData = ClientProvider();
   const user = useSelector((state) => state.authReducer.user);
-  console.log(user);
   const token = useSelector((state) => state.authReducer.token.token);
   const [agencyName, setAgencyName] = useState(user.agencyName || "");
   const [password, setPassword] = useState("");
@@ -21,34 +19,28 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(agencyName, password, phoneNumber, address);
     const response = await changeData({ agencyName, password, phoneNumber, address} , token);
     if (response.success) {
-      reloadData();
     }
   }
 
   const handleImageUpload = async (e) => {
     e.preventDefault
     const file = e.target.files[0];
-    try{
-      const newId = client.id + "_" +client.firstName
+    console.log(file)
+   
+      const newId = "/agency/" + user.agencyName+"/" +user.id + "_" +user.firstName
       const url = await uploadFile(file,newId)
       const res = await changeAvatar(url, token);
-      console.log(res.success)
+      console.log(res)
       if (res.success === true) {
         // Swal.fire('Profile picture updated', '', 'success');
-        navigate('/profile')
+        // navigate('/profile')
       }
-
-  }catch{
-    // Swal.fire('Error uploading profile picture', '', 'error');
-    navigate('/profile')
-    }
   };
 
   return (
-    <div className="laptop:w-[65%] relative laptop:left-[15%] tablet:left-[25%] tablet:w-1/2 w-[80%] h-[80%] top-32 right-8 py-6 px-6 rounded-xl border border-gray-200 bg-white mt-10 flex flex-wrap gap-10">
+    <div className="laptop:w-[78%] relative laptop:left-[14%] tablet:left-[25%] tablet:w-1/2 w-[80%] h-[80%] md:w-[490px] top-32 right-8 py-6 px-6 rounded-xl border border-gray-200 bg-[#DBC1FA] mt-10 flex flex-wrap gap-10 dark:bg-[#0B0B1C]">
       <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl">
         <div class="px-6">
           <div class="flex flex-wrap justify-center">
@@ -58,7 +50,7 @@ const Profile = () => {
                   src={user.profilePic}
                   className="shadow-xl group-hover:opacity-0 rounded-full object-center object-cover align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]"
                 />
-                <label form="changepic" className="cursor-pointer hover:opacity-100 opacity-0 absolute flex justify-center items-center w-[150px] h-[150px] top-[-61px] right-[-86px] bg-[#80808073] text-5xl" >
+                <label form="changepic" className="cursor-pointer hover:opacity-100 opacity-0 absolute flex justify-center items-center w-[150px] h-[150px] top-[-61px] right-[-86px] bg-[#80808073] text-5xl rounded-full" >
                   <div>
                   <IoCameraReverse />
                   </div>
@@ -154,7 +146,7 @@ const Profile = () => {
                       </div>
                     </dl>
                     <div>
-                      <button type="submit" class="w-1/2 mt-6 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                      <button type="submit" class="w-1/2 mt-6 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#CA67F5] hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                         Save 
                       </button>
                     </div>
