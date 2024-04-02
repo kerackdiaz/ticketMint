@@ -32,6 +32,7 @@ const Inbox = () => {
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
+
   };
 
   const handleEventSelect = (event) => {
@@ -69,26 +70,28 @@ const Inbox = () => {
   );
 
   return (
-    <div className="laptop:w-[78%] relative laptop:left-[14%] tablet:left-[25%] tablet:w-1/2 w-[90%] h-[80%] md:w-[490px] top-32 right-12 py-6 px-6 rounded-xl border border-[#55347B] bg-[#DBC1FA] mt-10 flex flex-wrap gap-10 dark:bg-[#0B0B1C]">
-        <div class="flex flex-col h-full w-full overflow-x-hidden ">
-          <div className="w-1/5 flex flex-col gap-4 ">
-            <input type="text" value={search} onChange={handleSearchChange} placeholder="Search event" className="w-[150px] rounded-lg border border-[#55347B]" />
-            {filteredEvents.map((event) => (<div key={event.id} className="flex items-center justify-start gap-5 border-b border-[#55347B] w-[300px] py-3 px-5 lg:w-[800px] desktop:w-[1073px]" onClick={() => handleEventSelect(event)} >
+    <div className="laptop:w-[78%] relative laptop:left-[14%] tablet:left-[25%] tablet:w-1/2 w-[90%] h-[80%] md:w-[490px] top-32 right-12 py-6 px-6 rounded-xl border border-[#55347B] bg-[#DBC1FA] mt-10 flex flex-wrap gap-10 dark:bg-[#0B0B1C] opacity-80">
+        <div class="flex flex-col h-full w-full  overflow-x-hidden ">
+          <label className="mb-5">
+            <input type="text" value={search} onChange={handleSearchChange} placeholder="Search event" className="w-full laptop:w-1/2 py-1 rounded-lg border border-[#55347B]" />
+          </label>
+          <div className="w-full items-start flex flex-col gap-4 h-[191px] overflow-y-scroll ">
+            {filteredEvents.map((event) => (<div key={event.id} className="flex cursor-pointer items-center justify-start gap-5 border-b border-[#55347B] w-[300px] tablet:w-full py-3 px-5 lg:w-[800px] desktop:w-[1073px]" onClick={() => handleEventSelect(event)} >
               <img className="object-cover w-7 h-7 rounded-full " src="https://firebasestorage.googleapis.com/v0/b/homebankingapp-4b70f.appspot.com/o/AssetsHomebanking%2Fpp-ulver-bank.jpg?alt=media&token=3ce9d213-9ef4-488f-845a-cdbeea119785" alt="" />
-              <h2 className="line-clamp-1 font-bold">{event.name}</h2>
+              <h2 className="line-clamp-1 font-bold text-white self-start">{event.name}</h2>
             </div>
             ))}
           </div>
-          <div className="w-[100%]  py-3 px-5 border border-[#55347B] flex flex-col justify-between">
+          <div className="w-[100%] mt-5 py-3 px-5 border rounded-xl border-[#55347B] flex flex-col justify-between">
             {selectedEvent && (
               <>
                 <div>
-                  <h2 className="font-bold text-xl mb-3">{selectedEvent.name}</h2>
-                  <ul className="px-10 flex flex-col gap-2 h-[57vh] overflow-y-scroll">
+                  <h2 className="font-bold text-white text-xl border-b border-[#55347B] py-3 mb-3">{selectedEvent.name}</h2>
+                  <ul className=" flex flex-col gap-2 items-end h-[30vh] overflow-y-scroll">
                     {selectedEvent.notifications && selectedEvent.notifications.map((notification, i) => (
                       <>
-                      <li className="w-full bg-gray-200 px-5 py-2 rounded-md" key={i}>{notification.message}</li>
-                      <p className="w-full text-right text-xs">{notification.date}</p>
+                      <li className="text-white bg-[#6651c3] px-5 py-2 rounded-md" key={i}>{notification.message}</li>
+                      <p className=" text-right text-white text-xs">{notification.date}</p>
                       </>
                     ))}
                   </ul>

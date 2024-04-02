@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { EventProvider } from "../../utils/Db";
 import { useSelector } from "react-redux";
-import { EventProvider } from "../utils/Db";
-import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCalendarCheck } from "react-icons/fa6";
 
-const AllEvents = () => {
+
+const OldEvents = () => {
   const events = EventProvider();
   const event = useSelector((state) => state.authReducer.events);
- 
+  console.log(event);
 
   const renderEvents = () => {
     if (!event || event.length === 0 || event === undefined || event === null) {
@@ -40,13 +40,10 @@ const AllEvents = () => {
             className={`rounded-full py-1 px-2 text-xs laptop:text-sm ${
               even.status ? "bg-green-500" : "bg-red-500"
             }`}
-           
+          
           >
             {even.status ? "Active" : "Inactive"}
           </button>
-        </td>
-        <td className=" text-blue-500 flex justify-center items-center">
-          <Link to={`/EventDetails/${even.id}`} className="text-blue-500 ml-2 cursor-pointer">EDIT</Link>
         </td>
       </tr>
     ));
@@ -54,8 +51,9 @@ const AllEvents = () => {
   };
 
   return (
-    <main className=" relative h-full  w-full md:w-[150%]  right-8 rounded-xl   mt-10 flex flex-wrap gap-10 p-5 text-[#0B0B1C]">
-      <section className=" relative bg-white w-[120%] 2k:left-28 left-3 h-[100%] md:w-[467px] laptop:w-[700px] desktop:w-[1030px] md:left-0 laptop:left-[40px] shadow-lg rounded-md latptop:w-[55%]  p-2">
+    <div className="laptop:w-[78%] 2k:w-[50%] 2k:left-[30%] relative laptop:left-[14%] tablet:left-[25%] tablet:w-[490px] w-[93%] h-[80%] top-32 right-12 pb-6 px-6 rounded-xl border border-gray-200 mt-10 flex flex-wrap gap-10 bg-[#DBC1FA] dark:bg-[#0B0B1C] ">
+    <main className=" relative h-full w-full md:w-[150%]  right-8 rounded-xl mt-10 flex flex-wrap gap-10 p-5 text-[#0B0B1C]">
+      <section className=" relative bg-white w-[120%] 2k:left-28 left-7 h-[100%] md:w-[467px] laptop:w-[700px] desktop:w-[1030px] md:left-0 laptop:left-[40px] shadow-lg rounded-md latptop:w-[55%]  p-2">
         <h1 className="text-3xl font-thin">Events</h1>
         <table className="font-medium border-1 w-full">
           <thead className="w-full">
@@ -74,14 +72,14 @@ const AllEvents = () => {
               
               </th>
               <th className="py-5 flex justify-center items-center laptop:w-[60px] text-start">Status</th>
-              <th className="py-5 flex justify-center items-center text-start laptop:w-[45px]">Actions</th>
             </tr>
           </thead>
           <tbody>{renderEvents()}</tbody>
         </table>
       </section>
     </main>
+    </div>
   );
 };
 
-export default AllEvents;
+export default OldEvents;

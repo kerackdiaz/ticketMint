@@ -151,7 +151,7 @@ const EventDetails = () => {
                         <dt class="text-sm font-medium text-gray-500">Date</dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                           <input
-                            type="text"
+                            type="date"
                             placeholder={even.date == null ? "Date" : even.date}
                             className=" text-center  py-2.5 px-0 w-[50%] text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700"
                             value={date}
