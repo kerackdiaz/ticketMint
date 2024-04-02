@@ -52,3 +52,11 @@ export const getCities = createAction('CITIES', (data) => {
         }
     }
 });
+
+export const getNotify = createAction('NOTIFY', (data) => {
+    return {
+        payload: {
+            ...data
+        }
+    }
+});

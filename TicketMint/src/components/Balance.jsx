@@ -8,7 +8,7 @@ import { LuCalendarDays } from "react-icons/lu";
 const Balance = () => {
 
   const sales= useSelector((state) => state.authReducer.user)
-console.log(sales)
+
 
 
   return (

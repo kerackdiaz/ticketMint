@@ -8,7 +8,6 @@ import DetailTicket from '../pages/user/DetailTicket.jsx'
 import Notifications from '../pages/user/Notifications.jsx'
 import QrScan from '../pages/user/QrScan.jsx'
 import Collectibles from '../pages/user/Collectibles.jsx'
-import Market from '../pages/user/Market.jsx'
 import SellTicket from '../pages/user/SellTicket.jsx'
 import Favorites from '../pages/user/Favorites.jsx'
 import Configurations from '../pages/user/Configurations'
@@ -16,6 +15,7 @@ import Contact from '../pages/user/Contact'
 import Help from '../pages/user/Help'
 import Privacity from '../pages/user/Privacity'
 import Wallet from '../pages/user/Wallet'
+import Payment from '../pages/gateway/Payment'
 import Report from "../pages/agency/Report.jsx";
 import Events from "../pages/agency/Events.jsx";
 import ToDo from "../pages/agency/ToDo.jsx";
@@ -25,7 +25,6 @@ import Profile from "../pages/agency/Profile.jsx";
 import Layout from '../components/Layout.jsx'
 import AllUser from '../pages/admin/AllUser.jsx'
 import AllEvent from '../pages/admin/AllEvent.jsx'
-import Payment from '../pages/gateway/Payment.jsx'
 import LayoutAdmin from '../components/LayoutAdmin.jsx'
 import { useSelector } from 'react-redux'
 import { ClientProvider } from './Db.jsx'
@@ -34,7 +33,6 @@ import { useEffect } from 'react'
 const RoleRender = () => {
   const userdata = ClientProvider();
   const role = useSelector((state) => state.authReducer.user.role);
-  console.log(role);
 
       switch (role) {
 
@@ -69,7 +67,6 @@ export default RoleRender
       <Route path='/detailTicket/:id' element={<DetailTicket />} />
       <Route path='/scan/:id' element={<QrScan />} />
       <Route path='/collectibles' element={<Collectibles />} />
-      <Route path='/market/:id' element={<Market />} />
       <Route path='/sell/:id' element={<SellTicket />} />
       <Route path='/favorites' element={<Favorites />} />
       <Route path='notifications' element = {<Notifications/>}/>

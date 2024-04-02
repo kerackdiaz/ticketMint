@@ -37,11 +37,12 @@ const Login = ({ onLogin }) => {
 
     const handleSignIn = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
-
+        
         const response = await postLogin({ email, password }, dispatch);
         if (response.success === true) {
-            const rememberUser = localStorage.setItem('userData', JSON.stringify({ email, password }));
+            setIsLoading(true);
+            // const rememberUser = localStorage.setItem('userData', JSON.stringify({ email, password }));
+            
             setTimeout(() => {
                 onLogin();
                 setIsLoading(false);
@@ -92,7 +93,7 @@ const Login = ({ onLogin }) => {
         slidesToShow: 1,
         slidesToScroll: 1,
     };
-    console.log(isAgency, isRegistering);
+
 
     return (
         <>  
@@ -101,19 +102,19 @@ const Login = ({ onLogin }) => {
             <div className="flex flex-row w-full min-h-screen bg-[#0B0B1C] justify-center">
                 <div className="laptop:w-1/2 movil:w-full flex flex-col justify-start h-screen bg-bg-login p-10">
                     <div className='flex justify-center'>
-                        <img className="w-48 mb-20" src="../../public/logo.png" alt="Logo TicketMint" />
+                        <img className="w-48 mb-20" src="/logo.png" alt="Logo TicketMint" />
                     </div>
                     <Slider {...settings}>
                         <div className='w-full h-full'>
                             <div className='flex flex-col items-center laptop:text-2xl movil:text-xl text-center'>
-                                <img className='w-48 mb-10' src="../../public/pana.png" alt="" />
+                                <img className='w-48 mb-10' src="/pana.png" alt="" />
                                 <p className='text-white'>Buy your tickets with TickMint</p>
                                 <p className='text-[#CA67F5]'>paying with your favorite payment method or cashbank</p>
                             </div>
                         </div>
                         <div className='w-full h-full'>
                             <div className='flex flex-col items-center text-2xl'>
-                                <img className='w-48 mb-10' src="../../public/cuate.png" alt="" />
+                                <img className='w-48 mb-10' src="/cuate.png" alt="" />
                                 <p className='text-white '>Transfer or sell your tickets</p>
                                 <p className='text-[#CA67F5]'>easily and safely</p>
                             </div>

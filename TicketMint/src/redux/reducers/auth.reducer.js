@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { login,current, logout, getEvents, getCategories, getCities } from '../actions/auth.actions';
+import { login,current, logout, getEvents, getCategories, getCities, getNotify } from '../actions/auth.actions';
 
 const initialState = {
     user:{
@@ -50,6 +50,12 @@ const authReducer = createReducer(initialState, (builder) => {
             return {
                 ...state,
                 cities:action.payload
+               }
+        })
+        .addCase(getNotify, (state, action) => {
+            return {
+                ...state,
+                notify:action.payload
                }
         })
 });

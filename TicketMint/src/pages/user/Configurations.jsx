@@ -20,10 +20,10 @@ const Configurations = () => {
 
 
     return (
-        <main className='flex text-white flex-col items-center w-full m-auto min-h-screen bg-[#0B0B1C]'>
-            <h1 className='text-lg font-medium py-1 text-center'>Configurations</h1>
-            <section className='w-[86%] py-5 bg-desactive-slate-600'>
-                <h3 className='text-start font-medium text-lg py-3'>Principal</h3>
+        <main className='flex text-white flex-col desktop:mt-20 items-center w-full m-auto min-h-screen bg-[#0B0B1C]'>
+            <h1 className='text-lg font-medium py-1 text-center md:text-3xl desktop:text-5xl'>Configurations</h1>
+            <section className='w-[86%] desktop:w-[60%] py-5 bg-desactive-slate-600'>
+                <h3 className='text-start font-medium text-lg desktop:text-2xl py-3'>Principal</h3>
 
                 <ul className='text-sm font-medium'>
                     <li className='bg-desactive-red-500 flex justify-between items-center gap-3 py-3'>
@@ -46,8 +46,8 @@ const Configurations = () => {
 
             </section>
 
-            <section className='w-[86%] pt-4 border-t bg-desactive-slate-600'>
-                <h3 className='text-start font-medium text-lg py-3'>Security</h3>
+            <section className='w-[86%] desktop:w-[60%] py-4 border-t bg-desactive-slate-600 '>
+                <h3 className='text-start font-medium text-lg desktop:text-2xl py-3'>Security</h3>
 
                 <ul className='text-sm font-medium'>
                     <li className='bg-desactive-blue-500 flex justify-between items-center gap-3 py-3'>
@@ -67,8 +67,8 @@ const Configurations = () => {
                 </ul>
 
             </section>
-            <section className='w-[86%] py-3 bg-desactive-slate-600' >
-                <h3 className='text-start font-medium text-lg py-3'>Support</h3>
+            <section className='w-[86%] desktop:w-[60%] py-3 border-t bg-desactive-slate-600' >
+                <h3 className='text-start font-medium text-lg desktop:text-2xl py-3'>Support</h3>
 
                 <ul className='text-sm font-medium'>
                     <li className='bg-desactive-red-950 flex justify-between items-center gap-3 py-3'>

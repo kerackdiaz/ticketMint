@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 const Layout = () => {
   const userdata = useSelector((state) => state.authReducer.user);
-  console.log(userdata);
+
   const [showMenu, setShowMenu] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
