@@ -19,7 +19,6 @@ import Wallet from '../pages/user/Wallet'
 import Payment from '../pages/gateway/Payment'
 import Report from "../pages/agency/Report.jsx";
 import Events from "../pages/agency/Events.jsx";
-import ToDo from "../pages/agency/ToDo.jsx";
 import NewEvent from "../pages/agency/NewEvent.jsx";
 import InBox from "../pages/agency/Inbox.jsx";
 import Profile from "../pages/agency/Profile.jsx";
@@ -32,6 +31,7 @@ import { ClientProvider } from './Db.jsx'
 import { useEffect } from 'react'
 import EventDetails from '../pages/agency/EventDetails.jsx'
 import Transactions from '../pages/agency/Transactions.jsx'
+import OldEvents from '../pages/agency/OldEvents.jsx'
 
 const RoleRender = () => {
   const userdata = ClientProvider();
@@ -93,8 +93,8 @@ const agency = () => {
     <Routes>
       <Route path="/" element={<Events />} />
       <Route path="/Events" element={<Events />} />
+      <Route path="/OldEvents" element={<OldEvents/>} />
       <Route path="/Report" element={<Report />} />
-      <Route path="/ToDo" element={<ToDo />} />
       <Route path="/NewEvent" element={<NewEvent />} />
       <Route path="/Inbox" element={<InBox />} />
       <Route path='/Profile' element={<Profile/>} />   
