@@ -8,48 +8,144 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { BsTicketPerforated } from "react-icons/bs";
 import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
+import axios from "axios";
 
 function DetailsEvent() {
+  const { id } = useParams()
+  const EVENTS = useSelector((state) => state.authReducer.events)
+  const token = useSelector((state) => state.authReducer.token.token)
   const [onFav, setOnFav] = useState(false)
   const [quantity, setQuantity] = useState(1)
-  const event = useSelector((state) => state.authReducer.events)
-  const {id} = useParams()
+  const event = Object.values(EVENTS).find(event => event.id === id);
+  const [ticketTypeSelected, setTicketTypeSelected] = useState(event?.ticketTypes ? event.ticketTypes[0] : {});
+  const [purchaseData, setPurchaseData] = useState({
+    ticketId: "",
+    quantity: 0,
+    totalPrice: 0
+  })
+  const [ticketId, setTicketId] = useState("");
+  const [numericPrice, setNumericPrice] = useState(null);
+  const [formatOption, setFormatOption] = useState({
+    country: 'en-US',
+    currency: 'USD',
+    currencyFactor: 1
+  })
+  const taxFee = 1.15; //15%
+  const COPToUSD = 3860;
+  const ARSToUSD = 1010;
 
-    const handleFav = () => {
-        setOnFav(!onFav)
-        if (!onFav) {
-          localStorage.setItem('favorite', id)
-        }
+  useEffect(() => {
+    if (ticketTypeSelected) {
+      setNumericPrice(Math.round(ticketTypeSelected?.basePrice * taxFee));
+      setTicketId(ticketTypeSelected?.id);
     }
+  }, [ticketTypeSelected])
 
-    const handleBuy = (e) => {
-      e.preventDefault()
-      alert('Compraste ' + quantity + ' tickets')
-    /*axios.post('https://ticket-mint-api.herokuapp.com/buy',(datos), { 
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-    }) */
+  const handleFav = () => {
+    setOnFav(!onFav)
+    if (!onFav) {
+      localStorage.setItem('favorite', id)
+    }
   }
 
-    const handleQuantity = (e) => {
-      setQuantity(e.target.value)
-    }
+  const handleBuy = (e) => {
+    e.preventDefault()
 
-    const handleAdd = () => {
-      if (quantity < 10){
-        setQuantity(quantity + 1)
+    setPurchaseData({
+      ticketId: ticketId,
+      quantity: quantity,
+      totalPrice: Math.floor(parseFloat(numericPrice) * 0.85)
+    })
+    axios.post('http://localhost:8080/api/tickets/buy', purchaseData, {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
+    })
+      .then(res => console.log(res.data))
+      .catch(err => console.error(err))
+  }
+
+  useEffect(() => {
+    console.log(purchaseData);
+  }, [purchaseData]);
+
+
+  const handleQuantity = (e) => {
+  }
+
+  const handleAdd = () => {
+    if (quantity < 10) {
+      setQuantity(quantity + 1)
+      setNumericPrice(numericPrice + ticketTypeSelected?.basePrice * taxFee)
     }
 
-    const handleSubtract = () => {
-      if (quantity > 1) {
-        setQuantity(quantity - 1)
-      }
-    }
+  }
 
-    const even = Object.values(event).find((event) => event.id === id)
+  const handleSubtract = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1)
+      setNumericPrice(numericPrice - ticketTypeSelected?.basePrice * taxFee)
+    }
+  }
+
+  const currencyConverterPro = (priceToParse, currency) => {
+    if (currency === "USDT") {
+      const formattedPrice = (priceToParse).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      });
+      return `USDT ${formattedPrice}`;
+    }
+    if (currency === "ARS") {
+      const formattedPrice = (priceToParse * 1010).toLocaleString('es-AR', {
+        style: 'currency',
+        currency: 'ARS'
+      });
+      return `AR$ ${formattedPrice}`;
+    }
+    if (currency === "COP") {
+      const formattedPrice = (priceToParse * 3860).toLocaleString('es-CO', {
+        style: 'currency',
+        currency: 'COP'
+      });
+      return `COP ${formattedPrice}`;
+
+    }
+  }
+
+  const handleCurrencySelected = (e) => {
+    const currency = e.target.value;
+    if (currency === "USDT") {
+      setFormatOption({
+        country: 'en-US',
+        currency: 'USD',
+        currencyFactor: 1
+      })
+    }
+    if (currency === "ARS") {
+      setFormatOption({
+        country: 'es-AR',
+        currency: 'ARS',
+        currencyFactor: ARSToUSD
+      })
+    }
+    if (currency === "COP") {
+      setFormatOption({
+        country: 'es-CO',
+        currency: 'COP',
+        currencyFactor: COPToUSD
+      })
+
+
+    }
+  }
+
+  const handleTicketTypeChange = (e) => {
+    const selectedTicketType = event?.ticketTypes?.find(ticket => ticket.type === e.target.value);
+    if (selectedTicketType) {
+      setTicketTypeSelected(selectedTicketType);
+    }
+  }
 
   return (
     /* bg-[url("'+ even.imageURL +'")] reemplazar al tener img*/
@@ -57,25 +153,25 @@ function DetailsEvent() {
       <div className='bg-[#55347b] p-3 w-full rounded-t-2xl md:w-1/2'>
         <div className=''>
           <div className='flex justify-between items-center '>
-            <h2 className='text-white text-2xl font-bold'>{even.name}</h2>
+            <h2 className='text-white text-2xl font-bold'>{event.name}</h2>
             {
-                !onFav ? <CiStar className='text-4xl text-white cursor-pointer' onClick={handleFav}/> : <TiStarFullOutline className=' cursor-pointer text-4xl text-white' onClick={handleFav}/>
+              !onFav ? <CiStar className='text-4xl text-white cursor-pointer' onClick={handleFav} /> : <TiStarFullOutline className=' cursor-pointer text-4xl text-white' onClick={handleFav} />
             }
           </div>
 
           <div className='flex justify-between border-b-2 border-[#8468fb] p-3'>
             <div className='flex flex-col items-start opacity-90'>
-              <p className='text-white pb-3 text-sm items-center flex gap-1'><FaRegCalendarAlt/>{even.date}</p>
-              <p className='text-white pb-3 text-sm items-center flex gap-1'><BsTicketPerforated/>Only {/* even.tickets */} tickets left</p>
-              <p className='text-white text-sm items-center flex gap-1'><FaRegClock/>9:00 PM - 10:00 PM{/* even.time */}</p>
+              <p className='text-white pb-3 text-sm items-center flex gap-1'><FaRegCalendarAlt />{event.date}</p>
+              <p className='text-white pb-3 text-sm items-center flex gap-1'><BsTicketPerforated />Only {ticketTypeSelected.availableQuantity < 10 ? <span className='text-red-500 font-bold '>{ticketTypeSelected.availableQuantity}</span> : ticketTypeSelected.availableQuantity} tickets left</p>
+              <p className='text-white text-sm items-center flex gap-1'><FaRegClock />{event.time}</p>
             </div>
             <section className='flex flex-col items-end opacity-90'>
               {/* Aqui van los precios */}
               <h3 className='font-semibold text-white'>Tickets from</h3>
-              <p className='text-sm text-white'>140.000 COP</p>
-              <p className='text-sm text-white'>30.72 USDT</p>
-              <p className='text-sm text-white'>25.050 ARS</p>
-          </section>
+              <p className='text-sm text-white'>{currencyConverterPro(ticketTypeSelected?.basePrice, "COP")}</p>
+              <p className='text-sm text-white'>{currencyConverterPro(ticketTypeSelected?.basePrice, "USDT")}</p>
+              <p className='text-sm text-white'>{currencyConverterPro(ticketTypeSelected?.basePrice, "ARS")}</p>
+            </section>
 
           </div>
         </div>
@@ -83,42 +179,47 @@ function DetailsEvent() {
           <div className='flex flex-col items-start opacity-90'>
             {/* Moneda de pago */}
             <p className='text-sm text-white py-3'>Your payment will be made in</p>
-            <select className='text-white text-sm mb-2 bg-[#55347b] border py-1 px-3'>
-              <option value="COP" >COP</option>
+            <select onChange={handleCurrencySelected} className='text-white text-sm mb-2 bg-[#55347b] border py-1 px-3'>
+              <option value="COP">COP</option>
+              <option value="USDT">USDT</option>
+              <option value="ARS">ARS</option>
             </select>
           </div>
-            {/* Stocks */}
-          <p className='text-sm text-white p-3'>Only {/* even.tickets */}tickets left </p>
+          {/* Stocks */}
+          <p className='text-sm text-white p-3'>Only {ticketTypeSelected.availableQuantity < 10 ? <span className='text-red-500 font-bold '>{ticketTypeSelected.availableQuantity}</span> : ticketTypeSelected.availableQuantity} tickets left </p>
           <div className='w-screen flex justify-between items-center border-b-2 border-[#8468fb] pb-3'>
             <div>
               {/* Cantidades a comprar */}
               <p className='text-sm text-white text-center pb-1'>Quantity</p>
               <div className='flex'>
-              <IoMdRemoveCircleOutline onClick={handleSubtract} className='text-white text-2xl' />
-              <input type='number' className='text-white w-8 text-center bg-[#55347b]' onInput={handleQuantity} min={1} max={10} value={quantity} />
-              <CgAdd onClick={handleAdd} className='text-white text-2xl'/>
+                <IoMdRemoveCircleOutline onClick={handleSubtract} className='text-white text-2xl' />
+                <input type='number' className='text-white w-8 text-center bg-[#55347b]' onInput={handleQuantity} min={1} max={10} value={quantity} />
+                <CgAdd onClick={handleAdd} className='text-white text-2xl' />
               </div>
             </div>
             {/* Tipo de ticket */}
-            <select className='text-white bg-[#55347b] text-sm border py-1 px-1'>
-              <option value="">General</option>
+            <select onChange={handleTicketTypeChange} c lassName='text-white bg-[#55347b] text-sm border py-1 px-1'>
+              <option defaultValue disabled value={event?.ticketTypes[0]?.type}>Select Type</option>
               {
-                /* even.ticketTypes.map((type, index) => (
-                  <option value={type} key={index}>{type}</option>)) */
+                event.ticketTypes.map((type, index) => (
+                  <option value={type.type} key={index}>{type.type}</option>))
               }
             </select>
             <div>
               <p className='text-sm text-white'>Total with taxes</p>
-              <p className='text-lg font-semibold text-white text-center'>$150.000</p>
+              <p className='text-lg font-semibold text-white text-center'>{(numericPrice ? numericPrice * formatOption.currencyFactor : 0).toLocaleString(formatOption.country, {
+                style: 'currency',
+                currency: formatOption.currency
+              })}</p>
             </div>
           </div>
-          
-        <div onSubmit={handleBuy} className='flex justify-center gap-2 p-3 w-full'>
-          <button type="submit" className='text-white bg-[#8468fb] py-2 w-[50%]  rounded-xl'>Buy</button>
-          <Link to={'/'} className='border-2 border-[#8468fb] py-2 w-[50%] rounded-xl text-center'>
-          <button type="button" className='text-white'>Cancel</button>
-          </Link>
-        </div>
+
+          <div onSubmit={handleBuy} className='flex justify-center gap-2 p-3 w-full'>
+            <button type="submit" className='text-white bg-[#8468fb] py-2 w-[50%]  rounded-xl'>Buy</button>
+            <Link to={'/'} className='border-2 border-[#8468fb] py-2 w-[50%] rounded-xl text-center'>
+              <button type="button" className='text-white'>Cancel</button>
+            </Link>
+          </div>
         </form>
       </div>
 
