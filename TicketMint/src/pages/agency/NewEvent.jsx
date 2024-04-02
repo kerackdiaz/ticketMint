@@ -167,7 +167,7 @@ const NewEvent = () => {
                           name="date"
                           id="date"
                           ref={dateRef}
-                          className=" h-10 border mt-1 rounded px-4 w-full bg-gray-50 w-full"
+                          className=" h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                         />
                       </div>
 
