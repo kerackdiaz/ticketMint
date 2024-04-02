@@ -31,7 +31,7 @@ import { useSelector } from 'react-redux'
 import { ClientProvider } from './Db.jsx'
 import { useEffect } from 'react'
 import EventDetails from '../pages/agency/EventDetails.jsx'
-import Transactions from '../pages/agency/Transactions.jsx'
+import Transaction from '../pages/admin/Transaction.jsx'
 
 const RoleRender = () => {
   const userdata = ClientProvider();
@@ -108,9 +108,10 @@ const admin = () => {
   return <>
   <LayoutAdmin/>
     <Routes>
-      <Route path="/" element={<Events />} />
+      <Route path="/" element={<AllUser />} />
       <Route path="/AllUser" element={<AllUser />} />
       <Route path="/AllEvent" element={<AllEvent />} /> 
+      <Route path='/Transaction' element = {<Transaction/>}/>
     </Routes>
   </>
 }

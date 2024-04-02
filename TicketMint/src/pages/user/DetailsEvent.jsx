@@ -148,8 +148,7 @@ function DetailsEvent() {
   }
 
   return (
-    /* bg-[url("'+ even.imageURL +'")] reemplazar al tener img*/
-    <div className={'bg-[url(/prueba.png)] bg-contain md:bg-cover pb-[50px] desktop:pb-0 md:bg-no-repeat flex flex-col items-center justify-end w-screen h-screen bg-top '}>
+    <div className={'bg-[url("' + event.image + '")] bg-contain md:bg-cover pb-[50px] desktop:pb-0 md:bg-no-repeat flex flex-col items-center justify-end w-screen h-screen bg-top '}>
       <div className='bg-[#55347b] p-3 w-full rounded-t-2xl md:w-1/2'>
         <div className=''>
           <div className='flex justify-between items-center '>
