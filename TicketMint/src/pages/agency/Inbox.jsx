@@ -79,7 +79,7 @@ const Inbox = () => {
           <div className=" items-start flex flex-col gap-4 h-4/5 overflow-y-scroll mt-5 ">
             {filteredEvents.map((event) => (<div key={event.id} className="flex cursor-pointer items-center justify-start gap-5 border-b border-[#55347B]  tablet:w-full py-3 px-5  " onClick={() => handleEventSelect(event)} >
               <img className="object-cover w-7 h-7 rounded-full " src={event.imageURL} alt="" />
-              <h2 className="line-clamp-1 font-bold text-white self-start">{event.name}</h2>
+              <h2 className="line-clamp-1 font-bold dark:text-white text-black self-start">{event.name}</h2>
             </div>
             ))}
           </div>
@@ -89,7 +89,7 @@ const Inbox = () => {
           {selectedEvent && (
             <>
               <div>
-                <h2 className="font-bold text-white text-xl border-b border-[#55347B] py-3 mb-3">{selectedEvent.name}</h2>
+                <h2 className="font-bold dark:text-white text-black  text-xl border-b border-[#55347B] py-3 mb-3">{selectedEvent.name}</h2>
                 <ul className=" flex flex-col gap-2 items-end laptop:h-[45vh] movil:h-[30vh] overflow-y-scroll">
                   {selectedEvent.notifications && selectedEvent.notifications.map((notification, i) => (
                     <>

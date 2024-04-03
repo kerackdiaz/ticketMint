@@ -66,6 +66,7 @@ export default RoleRender
 
 
  const user = (onLogin) => {
+  localStorage.setItem('tourMode', 'false');
   return (
   <>
     <Header />
@@ -94,6 +95,12 @@ export default RoleRender
 
 
 const agency = (onLogin) => {
+  const tourMode = localStorage.getItem('tourMode');
+  if (!tourMode ) {
+    localStorage.setItem('tourMode', 'true');
+  }else if (tourMode === 'true') {
+    localStorage.setItem('tourMode', 'false');
+  }
   return <>
   <Layout onLogin={onLogin}/>
     <Routes>
@@ -111,6 +118,7 @@ const agency = (onLogin) => {
 }
 
 const admin = (onLogin) => {
+  localStorage.setItem('tourMode', 'false');
   return <>
   <LayoutAdmin onLogin={onLogin}/>
     <Routes>
