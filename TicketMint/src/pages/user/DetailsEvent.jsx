@@ -6,7 +6,7 @@ import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { FaRegClock } from "react-icons/fa6";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { BsTicketPerforated } from "react-icons/bs";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from "axios";
 
@@ -30,13 +30,13 @@ function DetailsEvent() {
     currency: 'USD',
     currencyFactor: 1
   })
-  const taxFee = 1.15; //15%
   const COPToUSD = 3860;
   const ARSToUSD = 1010;
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (ticketTypeSelected) {
-      setNumericPrice(Math.round(ticketTypeSelected?.basePrice * taxFee));
+      setNumericPrice(ticketTypeSelected?.basePrice);
       setTicketId(ticketTypeSelected?.id);
     }
   }, [ticketTypeSelected])
@@ -54,29 +54,36 @@ function DetailsEvent() {
     setPurchaseData({
       ticketId: ticketId,
       quantity: quantity,
-      totalPrice: Math.floor(parseFloat(numericPrice) * 0.85)
+      totalPrice: numericPrice
     })
-    axios.post('http://localhost:8080/api/tickets/buy', purchaseData, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+
+    setPurchaseData({
+      ticketId: ticketId,
+      quantity: quantity,
+      totalPrice: numericPrice
     })
-      .then(res => console.log(res.data))
-      .catch(err => console.error(err))
+
+    // axios.post('http://localhost:8080/api/tickets/buy', purchaseData, {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`
+    //   }
+    // })
+    //   .then(res => {
+    //     console.log(res.data)
+    //     alert("Purchase successful!")
+    //     navigate("/myTickets")
+    //   })
+    //   .catch(err => console.error(err))
   }
 
   useEffect(() => {
     console.log(purchaseData);
   }, [purchaseData]);
 
-
-  const handleQuantity = (e) => {
-  }
-
   const handleAdd = () => {
     if (quantity < 10) {
       setQuantity(quantity + 1)
-      setNumericPrice(numericPrice + ticketTypeSelected?.basePrice * taxFee)
+      setNumericPrice(numericPrice + ticketTypeSelected?.basePrice)
     }
 
   }
@@ -84,13 +91,13 @@ function DetailsEvent() {
   const handleSubtract = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1)
-      setNumericPrice(numericPrice - ticketTypeSelected?.basePrice * taxFee)
+      setNumericPrice(numericPrice - ticketTypeSelected?.basePrice)
     }
   }
 
   const currencyConverterPro = (priceToParse, currency) => {
     if (currency === "USDT") {
-      const formattedPrice = (priceToParse).toLocaleString('en-US', {
+      const formattedPrice = (priceToParse)?.toLocaleString('en-US', {
         style: 'currency',
         currency: 'USD'
       });
@@ -135,8 +142,6 @@ function DetailsEvent() {
         currency: 'COP',
         currencyFactor: COPToUSD
       })
-
-
     }
   }
 
@@ -147,7 +152,11 @@ function DetailsEvent() {
     }
   }
 
+  console.log(event.ticketTypes.length);
+  console.log(event.ticketTypes.length === 0);
+
   return (
+
     <div className={'bg-[url("' + event.image + '")] bg-contain md:bg-cover pb-[50px] desktop:pb-0 md:bg-no-repeat flex flex-col items-center justify-end w-screen h-screen bg-top '}>
       <div className='bg-[#55347b] p-3 w-full rounded-t-2xl md:w-1/2'>
         <div className=''>
@@ -161,7 +170,7 @@ function DetailsEvent() {
           <div className='flex justify-between border-b-2 border-[#8468fb] p-3'>
             <div className='flex flex-col items-start opacity-90'>
               <p className='text-white pb-3 text-sm items-center flex gap-1'><FaRegCalendarAlt />{event.date}</p>
-              <p className='text-white pb-3 text-sm items-center flex gap-1'><BsTicketPerforated />Only {ticketTypeSelected.availableQuantity < 10 ? <span className='text-red-500 font-bold '>{ticketTypeSelected.availableQuantity}</span> : ticketTypeSelected.availableQuantity} tickets left</p>
+              <p className='text-white pb-3 text-sm items-center flex gap-1'><BsTicketPerforated />Only {ticketTypeSelected?.availableQuantity < 10 ? <span className='text-red-500 font-bold '>{ticketTypeSelected?.availableQuantity}</span> : ticketTypeSelected?.availableQuantity} tickets left</p>
               <p className='text-white text-sm items-center flex gap-1'><FaRegClock />{event.time}</p>
             </div>
             <section className='flex flex-col items-end opacity-90'>
@@ -179,32 +188,31 @@ function DetailsEvent() {
             {/* Moneda de pago */}
             <p className='text-sm text-white py-3'>Your payment will be made in</p>
             <select onChange={handleCurrencySelected} className='text-white text-sm mb-2 bg-[#55347b] border py-1 px-3'>
-              <option value="COP">COP</option>
               <option value="USDT">USDT</option>
+              <option value="COP">COP</option>
               <option value="ARS">ARS</option>
             </select>
           </div>
           {/* Stocks */}
-          <p className='text-sm text-white p-3'>Only {ticketTypeSelected.availableQuantity < 10 ? <span className='text-red-500 font-bold '>{ticketTypeSelected.availableQuantity}</span> : ticketTypeSelected.availableQuantity} tickets left </p>
+          <p className='text-sm text-white p-3'>Only {ticketTypeSelected?.availableQuantity < 10 ? <span className='text-red-500 font-bold '>{ticketTypeSelected?.availableQuantity}</span> : ticketTypeSelected?.availableQuantity} tickets left </p>
           <div className='w-screen flex justify-between items-center border-b-2 border-[#8468fb] pb-3'>
             <div>
               {/* Cantidades a comprar */}
               <p className='text-sm text-white text-center pb-1'>Quantity</p>
-              <div className='flex'>
+              <div className='flex items-center'>
                 <IoMdRemoveCircleOutline onClick={handleSubtract} className='text-white text-2xl' />
-                <input type='number' className='text-white w-8 text-center bg-[#55347b]' onInput={handleQuantity} min={1} max={10} value={quantity} />
+                <span className='text-white text-lg'>| {quantity} |</span>
                 <CgAdd onClick={handleAdd} className='text-white text-2xl' />
               </div>
             </div>
             {/* Tipo de ticket */}
-            <select onChange={handleTicketTypeChange} c lassName='text-white bg-[#55347b] text-sm border py-1 px-1'>
-              <option defaultValue disabled value={event?.ticketTypes[0]?.type}>Select Type</option>
+            <select onChange={handleTicketTypeChange} className='text-white bg-[#55347b] text-sm border py-1 px-1'>
               {
-                event.ticketTypes.map((type, index) => (
+                event.ticketTypes?.map((type, index) => (
                   <option value={type.type} key={index}>{type.type}</option>))
               }
             </select>
-            <div>
+            <div className='flex flex-col border border-1'>
               <p className='text-sm text-white'>Total with taxes</p>
               <p className='text-lg font-semibold text-white text-center'>{(numericPrice ? numericPrice * formatOption.currencyFactor : 0).toLocaleString(formatOption.country, {
                 style: 'currency',
@@ -221,8 +229,8 @@ function DetailsEvent() {
           </div>
         </form>
       </div>
-
     </div>
+
   )
 }
 
