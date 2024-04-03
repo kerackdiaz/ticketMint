@@ -1,5 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { login,current, logout, getEvents, getCategories, getCities, getNotify } from '../actions/auth.actions';
+import { login,current, logout, getEvents, getCategories, getCities,getTicketTypes,  getNotify, getCurrency } from '../actions/auth.actions';
+
+
 
 const initialState = {
     user:{
@@ -9,7 +11,8 @@ const initialState = {
 
     },
     token: null,
-    timestamps: null
+    timestamps: null,
+    currency: localStorage.getItem('currency') || 'USD',
     }
 
 
@@ -52,13 +55,32 @@ const authReducer = createReducer(initialState, (builder) => {
                 cities:action.payload
                }
         })
+
+        .addCase(getTicketTypes, (state, action) => {
+            return {
+                ...state,
+                ticketTypes:action.payload
+               }
+        })
+       
         .addCase(getNotify, (state, action) => {
             return {
                 ...state,
                 notify:action.payload
                }
         })
-});
 
+        .addCase(getCurrency, (state, action) => {
+            switch (action.type) {
+                case 'SET_CURRENCY':
+                    return {
+                        ...state,
+                        currency: action.payload,
+                    };
+                default:
+                    return state;
+            }
+        } );
 
+    });
 export default authReducer;

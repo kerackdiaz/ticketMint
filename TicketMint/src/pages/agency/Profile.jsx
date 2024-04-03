@@ -3,15 +3,16 @@ import { useSelector } from "react-redux";
 import { IoCameraReverse } from "react-icons/io5";
 import { uploadFile } from '../../utils/Firebase';
 import { changeData, changeAvatar, ClientProvider } from '../../utils/Db';
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const user = useSelector((state) => state.authReducer.user);
   const token = useSelector((state) => state.authReducer.token.token);
-  const [agencyName, setAgencyName] = useState(user.agencyName || "");
+  const [agencyName, setAgencyName] = useState(user.companyName || "");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState(user.phone || "");
   const [address, setAddress] = useState(user.address || "");
-
+  const navigate = useNavigate();
 
   const handleInputChange = (event, setState) => {
     setState(event.target.value);
@@ -21,6 +22,7 @@ const Profile = () => {
     e.preventDefault();
     const response = await changeData({ agencyName, password, phoneNumber, address} , token);
     if (response.success) {
+      navigate('/profile')
     }
   }
 
@@ -29,18 +31,20 @@ const Profile = () => {
     const file = e.target.files[0];
     console.log(file)
    
-      const newId = "/agency/" + user.agencyName+"/" +user.id + "_" +user.firstName
+      const newId = "/agency/" + user.companyName+"/" +user.id + "_" +user.firstName
       const url = await uploadFile(file,newId)
+      console.log(url)
       const res = await changeAvatar(url, token);
       console.log(res)
       if (res.success === true) {
+        console.log(res.success);
         // Swal.fire('Profile picture updated', '', 'success');
-        // navigate('/profile')
+        navigate('/profile')
       }
   };
 
   return (
-    <div className="laptop:w-[65%] relative laptop:left-[15%] tablet:left-[25%] tablet:w-1/2 w-[80%] h-[80%] top-32 right-8 py-6 px-6 rounded-xl border border-gray-200 bg-white mt-10 flex flex-wrap gap-10">
+    <div className="laptop:w-[78%] relative laptop:left-[14%] tablet:left-[25%] tablet:w-1/2 w-[80%] h-[80%] md:w-[490px] top-32 right-8 py-6 px-6 rounded-xl border border-gray-200 bg-[#DBC1FA] mt-10 flex flex-wrap gap-10 dark:bg-[#0B0B1C]">
       <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl">
         <div class="px-6">
           <div class="flex flex-wrap justify-center">
@@ -146,7 +150,7 @@ const Profile = () => {
                       </div>
                     </dl>
                     <div>
-                      <button type="submit" class="w-1/2 mt-6 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                      <button type="submit" class="w-1/2 mt-6 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#CA67F5] hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                         Save 
                       </button>
                     </div>

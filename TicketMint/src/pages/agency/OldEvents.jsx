@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { EventProvider } from "../../utils/Db";
 import { useSelector } from "react-redux";
-import { EventProvider } from "../utils/Db";
-import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCalendarCheck } from "react-icons/fa6";
 
-const AllEvents = () => {
+
+const OldEvents = () => {
   const events = EventProvider();
   const event = useSelector((state) => state.authReducer.events);
- 
+  console.log(event);
 
   const renderEvents = () => {
     if (!event || event.length === 0 || event === undefined || event === null) {
@@ -40,13 +40,10 @@ const AllEvents = () => {
             className={`rounded-full py-1 px-2 text-xs laptop:text-sm ${
               even.status ? "bg-green-500" : "bg-red-500"
             }`}
-           
+          
           >
             {even.status ? "Active" : "Inactive"}
           </button>
-        </td>
-        <td className=" text-blue-500 flex justify-center items-center">
-          <Link to={`/EventDetails/${even.id}`} className="text-blue-500 ml-2 cursor-pointer">EDIT</Link>
         </td>
       </tr>
     ));
@@ -54,12 +51,12 @@ const AllEvents = () => {
   };
 
   return (
-    
-    <div className="w-full bg-white px-5 py-4 max-h-4/5">
-    
-        <h1 className="text-3xl font-thin">Events</h1>
+    <div id="oldEvents" className=" laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-lg flex justify-center">
+    <div className="w-full  rounded-xl mt-10 flex flex-wrap gap-10 p-5 text-[#0B0B1C]">
+      <section className=" bg-white w-full p-5">
+        <h1 className="text-3xl font-thin">Old Events</h1>
         <table className="font-medium border-1 w-full">
-          <thead className="w-full ">
+          <thead className="w-full">
             <tr className="bg--green-500 flex gap-3 laptop:justify-around border-b border-gray-600">
               <th className="py-5 flex justify-center items-center md:w-[150px] w-[60px] border-gray-600 text-start bg--blue-500">
                 Name
@@ -74,14 +71,15 @@ const AllEvents = () => {
                 Location
               
               </th>
-              <th className="py-5 flex justify-center items-center laptop:w-[60px] text-start">Status</th>
-              <th className="py-5 flex justify-center items-center text-start laptop:w-[45px]">Actions</th>
+              <th className="py-5 flex justify-center items-center laptop:w-[60px] text-start">Raise</th>
             </tr>
           </thead>
           <tbody className="overflow-y-scroll">{renderEvents()}</tbody>
         </table>
+      </section>
+    </div>
     </div>
   );
 };
 
-export default AllEvents;
+export default OldEvents;

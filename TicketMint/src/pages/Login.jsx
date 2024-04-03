@@ -4,19 +4,19 @@ import SingIn from '../components/SingIn';
 import SingUp from '../components/SingUp';
 import { useDispatch } from 'react-redux';
 import Slider from 'react-slick';
-
-
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import LoadingScreen from '../components/LoadingScreen';
 
 
-
-
-
 const Login = ({ onLogin }) => {
+    const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('darkMode') === 'true' || false);
     useEffect(() => {
-        document.title = 'Login - TicketMint';
+        if (isDarkMode) {
+            document.body.classList.add('dark');
+          } else {
+            document.body.classList.remove('dark');
+          }
     })
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -27,6 +27,7 @@ const Login = ({ onLogin }) => {
     const [isRegistering, setIsRegistering] = useState(true);
     const [isAgency, setIsAgency] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
 
 
     useEffect(() => {
@@ -105,7 +106,7 @@ const Login = ({ onLogin }) => {
                         <img className="w-48 mb-20" src="/logo.png" alt="Logo TicketMint" />
                     </div>
                     <Slider {...settings}>
-                        <div className='w-full h-full'>
+                        <div className='w-full min-h-full'>
                             <div className='flex flex-col items-center laptop:text-2xl movil:text-xl text-center'>
                                 <img className='w-48 mb-10' src="/pana.png" alt="" />
                                 <p className='text-white'>Buy your tickets with TickMint</p>

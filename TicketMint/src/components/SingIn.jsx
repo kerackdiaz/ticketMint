@@ -23,18 +23,18 @@ const SingIn = ({ handleSubmit, setEmail, setPassword, setIsRegistering, message
  
   return (
     <div className="p-6 space-y-4 md:space-y-6 movil:p-8 flex flex-1 flex-col">
-      <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+      <h1 className="text-xl font-bold leading-tight tracking-tightmd:text-2xl text-white">
         Sign in to your account
       </h1>
       <p className='text-red-500'>{message}</p>
       <form className="space-y-4 md:space-y-6 flex flex-col" onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+          <label htmlFor="email" className="block mb-2 text-sm font-medium text-white">Your email</label>
           <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 movil:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example@example.com" required="" onChange={e => setEmail(e.target.value)} value={email} />
         </div>
         <div className='w-full'>
-          <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-          <input type={showPassword ? "text" : "password"} name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 movil:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" onChange={e => setPassword(e.target.value)} value={password}  />
+          <label htmlFor="password" className="block mb-2 text-sm font-medium text-white">Password</label>
+          <input type={showPassword ? "text" : "password"} name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300  movil:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" onChange={e => setPassword(e.target.value)} value={password}  />
           <button className='relative movil:left-[90%] tablet:left-[96%] bottom-7' onClick={(e) => {
             e.preventDefault();
             setShowPassword(!showPassword);
@@ -53,7 +53,7 @@ const SingIn = ({ handleSubmit, setEmail, setPassword, setIsRegistering, message
           </div>
           <a href="#" className="text-sm font-medium text-gray-400 hover:underline dark:text-primary-500">Forgot password?</a>
         </div>
-        <button type="submit" className="movil:w-3/4 tablet:w-1/5 self-center text-gray-800  bg-white border focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-gray-800 hover:text-white hover:border hover:scale-90 ease-in-out duration-300 dark:focus:ring-primary-800">Sign in</button>
+        <button type="submit" className="movil:w-3/4 tablet:w-1/5 self-center text-gray-800  bg-white border focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600   hover:border hover:scale-90 ease-in-out duration-300 dark:focus:ring-primary-800">Sign in</button>
         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
           Don’t have an account yet?
           <a href="#" className="font-medium  hover:underline dark:text-primary-500" onClick={handleRegister}> Sign up </a>

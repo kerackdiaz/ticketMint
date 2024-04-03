@@ -42,5 +42,64 @@ ul.slick-dots li:last-child {
   }
 
   span.apexcharts-legend-text {
-    color: white!important;
+}
+
+
+@media screen and ( min-width:800px){
+    
+    #ProxEvent{
+        width: 350px;
+    }
+    #ProxEvent h2{
+        width: 200px;
+    }
+
+    div#ProxEvent div div h2, div#ProxEvent div div p {
+        text-align: center;
+        width: 340px;
+        justify-content: center;
+    }
+}
+@media screen and ( min-width:1536px){
+    #ProxEvent{
+        width: 430px;
+    }
+    #ProxEvent h2{
+        width: 300px;
+    }
+
+    div#ProxEvent div div h2, div#ProxEvent div div p {
+        text-align: center;
+        width: 420px;
+        justify-content: center;
+    }
+}
+
+.notificationReceived::after {
+    content: " ";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 50%;
+    transform: translateX(10px);
+}
+
+.Soldout::after {
+    content: "Sold Out";
+    position: absolute;
+    color: red;
+    transform: translate(7vw, -19vh);
+    font-size: 35px;
+}
+
+
+div#ProxEvent div div h2, div#ProxEvent div div p {
+    text-align: center;
+    width: 412px;
+    justify-content: center;
+}
+
+div#ProxEvent img {
+    transform: translateY(50px);
 }
