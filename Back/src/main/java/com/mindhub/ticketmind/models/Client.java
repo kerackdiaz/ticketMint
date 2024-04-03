@@ -29,7 +29,7 @@ public class Client {
 
     private double balance;
 
-    private double commission;
+    private double commission = 10;
 
     private String companyName;
 

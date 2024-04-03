@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -69,6 +70,10 @@ public class ClientController {
         String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(clientService.changeProfilePicture(userMail, img));
     }
-
+    @PutMapping("/status/{id}")
+    public ResponseEntity<?> changeStatus(@PathVariable UUID id) {
+        String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity<>(clientService.changeStatus(id, userMail), HttpStatus.OK);
+    }
 
 }

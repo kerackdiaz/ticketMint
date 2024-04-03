@@ -88,7 +88,7 @@ public class TransactionService {
 
                 Client agency = event.getClient();
 
-                if (ticket.getBasePrice() * ticketPurchaseRecordDTO.quantity() != ticketPurchaseRecordDTO.totalPrice()) {
+                if (ticket.getBasePrice() * ticketPurchaseRecordDTO.quantity() > ticketPurchaseRecordDTO.totalPrice()) {
                     response.put("error", true);
                     response.put("message", "The requested ticket's quantity to be purchased does not match the total price amount sent");
                     return response;
@@ -100,20 +100,18 @@ public class TransactionService {
                     return response;
                 }
 
-                double ticketPrice = ticketPurchaseRecordDTO.totalPrice();
-                double commissionFees = ticketPrice * 0.10;
-                double ticketPriceNet = ticketPrice * 0.90;
 
-            sourceClient.setBalance(sourceClient.getBalance() - ticketPrice);
 
-            admin.setBalance(admin.getBalance() + commissionFees);
-            agency.setBalance(agency.getBalance() + ticketPriceNet);
+
+            sourceClient.setBalance(sourceClient.getBalance() - (ticket.getBasePrice()));
+            admin.setBalance(admin.getBalance() + ticket.getBasePrice() * (ticket.getIncreasePercentage()/100));
+            agency.setBalance(agency.getBalance() + ticket.getBasePrice() * (1 - ticket.getIncreasePercentage()/100));
 
             Transaction sourceClientTransaction = new Transaction();
             sourceClientTransaction.setType(TransactionType.DEBIT);
             sourceClientTransaction.setDescription("Ticket purchase");
             sourceClientTransaction.setDate(new Date());
-            sourceClientTransaction.setAmount(-ticketPrice);
+            sourceClientTransaction.setAmount(-ticket.getBasePrice() * ticketPurchaseRecordDTO.quantity());
             sourceClientTransaction.setClient(sourceClient);
             transactionRepository.save(sourceClientTransaction);
 
@@ -121,7 +119,7 @@ public class TransactionService {
             adminTransaction.setType(TransactionType.CREDIT);
             adminTransaction.setDescription("Ticket sale commission fees");
             adminTransaction.setDate(new Date());
-            adminTransaction.setAmount(commissionFees);
+            adminTransaction.setAmount(ticket.getBasePrice() * (ticket.getIncreasePercentage()/100));
             adminTransaction.setClient(admin);
             transactionRepository.save(adminTransaction);
 
@@ -129,7 +127,7 @@ public class TransactionService {
             agencyTransaction.setType(TransactionType.CREDIT);
             agencyTransaction.setDescription("Ticket sale");
             agencyTransaction.setDate(new Date());
-            agencyTransaction.setAmount(ticketPriceNet);
+            agencyTransaction.setAmount(ticket.getBasePrice() * (1 - ticket.getIncreasePercentage()/100));
             agencyTransaction.setClient(agency);
             transactionRepository.save(agencyTransaction);
 
@@ -166,149 +164,5 @@ public class TransactionService {
         }
         return response;
     }
-
-//    public Map<String, Object> makeTicketTransaction(TicketTransactionRecordDTO ticketTransactionRecordDTO, String userMail) {
-//
-//        Map<String, Object> response = new HashMap<>();
-//
-//        if (ticketTransactionRecordDTO.ticketPrice() < 0) {
-//            response.put("error", true);
-//            response.put("message", "The ticket price cannot nor negative");
-//            return response;
-//        }
-//        if (ticketTransactionRecordDTO.quantity() <= 0) {
-//            response.put("error", true);
-//            response.put("message", "The ticket quantity cannot be zero nor negative");
-//            return response;
-//        }
-//        if (ticketTransactionRecordDTO.ticketDestinationEmail().isBlank() || ticketTransactionRecordDTO.ticketDestinationEmail() == null) {
-//            response.put("error", true);
-//            response.put("message", "The destination client's email wasn't sent");
-//            return response;
-//        }
-//        if (ticketTransactionRecordDTO.ticketID() == null) {
-//            response.put("error", true);
-//            response.put("message", "The ticket UUID wasn't sent");
-//            return response;
-//        }
-//
-//        try {
-//
-//            Client sourceClient = clientRepository.findByEmail(userMail);
-//            Client destinationClient = clientRepository.findByEmail(ticketTransactionRecordDTO.ticketDestinationEmail());
-//
-//            Client admin = clientRepository.findByRole(UserRole.ADMIN);
-//            Optional<ClientTicket> ticketOptional = clientTicketRepository.findById(ticketTransactionRecordDTO.ticketID());
-//
-//            if (destinationClient.getBalance() < ticketTransactionRecordDTO.ticketPrice()) {
-//                response.put("error", true);
-//                response.put("message", "The destination client does not have enough money to buy the ticket");
-//                return response;
-//            }
-//            if (sourceClient == null) {
-//                response.put("error", true);
-//                response.put("message", "Source client not found");
-//                return response;
-//            }
-//            if (destinationClient == null) {
-//                response.put("error", true);
-//                response.put("message", "Destination client not found");
-//                return response;
-//            }
-//
-//            if(ticketOptional.isEmpty()) {
-//                response.put("error", true);
-//                response.put("message", "Ticket requested to transfer not found");
-//                return response;
-//            }
-//            ClientTicket ticket = ticketOptional.get();
-//
-//            if(!sourceClient.getClientTickets().stream().anyMatch(clientTicket -> clientTicket.getId() == ticketTransactionRecordDTO.ticketID())) {
-//                response.put("error", true);
-//                response.put("message", "The ticket exists but it doesn't belong to the client that requested the transfer");
-//                return response;
-//            }
-//
-//            if(destinationClient.getClientTickets().contains(ticket)) {
-//                response.put("error", true);
-//                response.put("message", "The destination client already has that ticket, contact support.");
-//                return response;
-//            }
-//
-//            double ticketPrice = ticketTransactionRecordDTO.ticketPrice();
-//            destinationClient.setBalance(destinationClient.getBalance() - ticketPrice);
-//            double commissionFees = ticketPrice * 0.10;
-//            double ticketPriceNet = ticketPrice * 0.90;
-//            admin.setBalance(admin.getBalance() + commissionFees);
-//            sourceClient.setBalance(sourceClient.getBalance() + ticketPriceNet );
-//
-//            Transaction sourceTransaction = new Transaction();
-//            sourceTransaction.setType(TransactionType.CREDIT);
-//            sourceTransaction.setDescription(ticketTransactionRecordDTO.description());
-//            sourceTransaction.setDate(new Date());
-//            sourceTransaction.setAmount(ticketPriceNet);
-//            sourceTransaction.setClient(sourceClient);
-//            transactionRepository.save(sourceTransaction);
-//
-//            Transaction adminTransaction = new Transaction();
-//            adminTransaction.setType(TransactionType.CREDIT);
-//            adminTransaction.setDescription("Ticket Transaction Sale Commission Fees");
-//            adminTransaction.setDate(new Date());
-//            adminTransaction.setAmount(commissionFees);
-//            adminTransaction.setClient(admin);
-//            transactionRepository.save(adminTransaction);
-//
-//            Transaction destinationTransaction = new Transaction();
-//            destinationTransaction.setType(TransactionType.DEBIT);
-//            destinationTransaction.setDescription(ticketTransactionRecordDTO.description());
-//            destinationTransaction.setDate(new Date());
-//            destinationTransaction.setAmount(-ticketPrice);
-//            destinationTransaction.setClient(destinationClient);
-//            transactionRepository.save(destinationTransaction);
-//
-//            try {
-//
-//                if(ticket.getQuantity() == ticketTransactionRecordDTO.quantity()) {
-//                    List<ClientTicket> sourceClientTickets = sourceClient.getClientTickets();
-//                    sourceClientTickets.remove(ticket);
-//
-//                    List<ClientTicket> destinationClientTickets = destinationClient.getClientTickets();
-//                    destinationClientTickets.add(ticket);
-//
-//                    ticket.setClient(destinationClient);
-//
-//                    clientRepository.save(sourceClient);
-//                    clientRepository.save(destinationClient);
-//                    clientTicketRepository.save(ticket);
-//                } else if (ticket.getQuantity() > ticketTransactionRecordDTO.quantity()){
-//
-//                    ticket.setQuantity(ticket.getQuantity() - ticketTransactionRecordDTO.quantity());
-//                    clientTicketRepository.save(ticket);
-//
-//                    ClientTicket transferredTicket = new ClientTicket(ticket.getOriginalTicketId(), ticket.getEventId(), ticket.getPrice(), ticketTransactionRecordDTO.quantity(), ticket.getTicketType());
-//                    clientTicketRepository.save(transferredTicket);
-//
-//                    List<ClientTicket> destinationClientTickets = destinationClient.getClientTickets();
-//                    destinationClientTickets.add(transferredTicket);
-//                    transferredTicket.setClient(destinationClient);
-//
-//                    clientRepository.save(sourceClient);
-//                    clientRepository.save(destinationClient);
-//                    clientTicketRepository.save(transferredTicket);
-//                }
-//            } catch (Exception e){
-//                response.put("error", true);
-//                response.put("message", "An error occurred transferring the ticket: " + e.getMessage());
-//            }
-//
-//            response.put("success", true);
-//            response.put("message", "Transaction completed successfully");
-//
-//        } catch (Exception e) {
-//            response.put("error", true);
-//            response.put("message", "An error occurred making the transaction: " + e.getMessage());
-//        }
-//        return response;
-//    }
 
 }

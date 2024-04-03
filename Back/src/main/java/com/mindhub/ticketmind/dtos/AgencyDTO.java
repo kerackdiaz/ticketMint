@@ -26,6 +26,8 @@ public class AgencyDTO {
     private List<EventDTO> events;
     private List<TicketDTO> ticket;
 
+    private List<TransactionDTO> transactions;
+
     public AgencyDTO(Client client) {
         this.id = client.getId();
         this.email = client.getEmail();
@@ -40,6 +42,7 @@ public class AgencyDTO {
         this.profilePic = client.getProfilePic()!= null ? client.getProfilePic() : "https://firebasestorage.googleapis.com/v0/b/homebankingapp-4b70f.appspot.com/o/ticketmint%2FAvatar%2Fpp-ulver-bank.jpg?alt=media&token=c2d29368-0f78-4b2b-b845-fd5100e0c70c";
         this.phone = client.getPhone();
         this.address = client.getAddress();
+        this.transactions = client.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toList());
     }
 
     public UUID getId() {
@@ -92,5 +95,9 @@ public class AgencyDTO {
 
     public String getAddress() {
         return address;
+    }
+
+    public List<TransactionDTO> getTransactions() {
+        return transactions;
     }
 }

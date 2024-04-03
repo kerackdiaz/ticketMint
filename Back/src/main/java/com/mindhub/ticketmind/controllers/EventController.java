@@ -49,6 +49,12 @@ public class EventController {
         String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
         return new ResponseEntity<>(eventService.newAlert(notificationRecord, userMail), HttpStatus.OK);
     }
+    @PutMapping("/status/{id}")
+    public ResponseEntity<?> changeStatus(@PathVariable UUID id) {
+        String userMail = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity<>(eventService.changeStatus(id, userMail), HttpStatus.OK);
+    }
+
 
     @DeleteMapping("/deleteAlert/{id}")
     public ResponseEntity<?> deleteAlert(@PathVariable UUID id) {
@@ -65,6 +71,7 @@ public class EventController {
     public ResponseEntity<List<CityDTO>> getEventsByCity() {
         return new ResponseEntity<>(eventService.getAllCities(), HttpStatus.OK);
     }
+
 
 //    @PostMapping("/sendnotification")
 //    public ResponseEntity<?> sendNotification(@RequestBody NotificationRecord notificationRecord){

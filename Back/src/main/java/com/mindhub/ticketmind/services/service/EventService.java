@@ -4,6 +4,7 @@ import com.mindhub.ticketmind.dtos.*;
 import com.mindhub.ticketmind.models.*;
 import com.mindhub.ticketmind.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -148,10 +149,10 @@ public class EventService {
         try {
             Optional<Event> optionalEvent = eventRepository.findById(eventId);
             if (optionalEvent.isPresent()) {
-
+                Client admin = clientRepository.findByRole(UserRole.ADMIN);
                 Event event = optionalEvent.get();
-
-                Ticket ticket = new Ticket(ticketFormDTO.name(), ticketFormDTO.basePrice(), ticketFormDTO.availableQuantity(), client.getCommission(), TicketType.valueOf(ticketFormDTO.type()), event);
+                double totalPrice = ticketFormDTO.basePrice() + (ticketFormDTO.basePrice() * (admin.getCommission() / 100));
+                Ticket ticket = new Ticket(ticketFormDTO.name(), totalPrice, ticketFormDTO.availableQuantity(), admin.getCommission(), TicketType.valueOf(ticketFormDTO.type()), event);
                 ticketRepository.save(ticket);
                 response.put("success", true);
                 response.put("message", "Ticket created successfully");
@@ -246,4 +247,55 @@ public class EventService {
         return response;
     }
 
+   public Map<String , Object> changeStatus(UUID eventId, String userMail){
+        Map<String, Object> response = new HashMap<>();
+        Client client = clientRepository.findByEmail(userMail);
+        try {
+            Optional<Event> optionalEvent = eventRepository.findById(eventId);
+            if (optionalEvent.isPresent() && client != null) {
+                Event event = optionalEvent.get();
+                event.setStatus(!event.isStatus());
+                eventRepository.save(event);
+                response.put("success", true);
+                response.put("message", "Event status changed successfully");
+            } else {
+                response.put("error", false);
+                response.put("message", "Event not found");
+            }
+        } catch (Exception e) {
+            response.put("error", true);
+            response.put("message", "An error occurred while changing event status: " + e.getMessage());
+        }
+        return response;
+    }
+
+    public Map<String, Object> sendNotification(NotificationRecord notificationRecord, String userMail) {
+        Map<String, Object> response = new HashMap<>();
+        Client client = clientRepository.findByEmail(userMail);
+        if (client != null){
+            try {
+                Optional<Event> optionalEvent = eventRepository.findById(notificationRecord.id());
+                if (optionalEvent.isPresent()) {
+                    Event event = optionalEvent.get();
+                    Notification notification = new Notification(notificationRecord.subjet(), event, new Date());
+                    notificationRepository.save(notification);
+                    notificationService.sendNotification(notification);
+                    response.put("success", true);
+                    response.put("message", "Notification sent correctly");
+                } else {
+                    response.put("error", true);
+                    response.put("message", "Event not found");
+                }
+            } catch (NoSuchElementException e) {
+                response.put("error", true);
+                response.put("message", "Event not found");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            response.put("error", true);
+            response.put("message", "Client not found");
+        }
+        return response;
+    }
 }

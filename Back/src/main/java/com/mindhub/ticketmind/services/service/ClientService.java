@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mindhub.ticketmind.dtos.ProfileFormDTO;
 import com.mindhub.ticketmind.models.Client;
+import com.mindhub.ticketmind.models.Event;
 import com.mindhub.ticketmind.models.Ticket;
 import com.mindhub.ticketmind.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -171,5 +172,25 @@ public class ClientService {
     }
 
 
-
+    public Map<String , Object> changeStatus(UUID userId, String userMail){
+        Map<String, Object> response = new HashMap<>();
+        Client client = clientRepository.findByEmail(userMail);
+        try {
+            Optional<Client> optionalClient = clientRepository.findById(userId);
+            if (optionalClient.isPresent() && client != null) {
+                Client user = optionalClient.get();
+                user.setStatus(!user.isStatus());
+                clientRepository.save(user);
+                response.put("success", true);
+                response.put("message", "Event status changed successfully");
+            } else {
+                response.put("error", false);
+                response.put("message", "Event not found");
+            }
+        } catch (Exception e) {
+            response.put("error", true);
+            response.put("message", "An error occurred while changing event status: " + e.getMessage());
+        }
+        return response;
+    }
 }

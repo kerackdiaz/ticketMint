@@ -5,7 +5,6 @@ public enum TicketType {
     VIP,
     PLATINO,
     PREFERENTIAL,
-    EXECUTIVE_SUITE,
     FRONT_ROW,
     BACKSTAGE_PASS,
     MEET_AND_GREET,

@@ -17,13 +17,18 @@ public class Event {
     private UUID id;
 
     private String name;
+    @Column(length = 800)
     private String description;
 
     @ManyToMany
     private List<CategoryEvent> categories;
+
+    @Column(length = 800)
     private String imageURL;
     private Date date;
     private String venueName;
+
+    @Column(length = 800)
     private String venueURL;
 
     private boolean status = false;
