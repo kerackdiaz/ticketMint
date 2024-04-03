@@ -58,6 +58,7 @@ const Configurations = ({ onLogin }) => {
       }
 
     return (
+
         <main className='flex dark:text-white text-[#0b0b1c] flex-col desktop:mt-20 items-center w-full m-auto min-h-screen'>
             <h1 className='text-lg font-medium py-1 text-center desktop:text-5xl'>Configurations</h1>
             <section className='w-[86%] desktop:w-[60%] py-5 bg-desactive-slate-600'>

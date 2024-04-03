@@ -1,37 +1,32 @@
 import React from 'react'
+import { PRIVACY_LIST } from '../../utils/privacy-list'
+import Privacy from '../../../public/privacy.png'
 
 const Privacity = () => {
     return (
-        <main className='w-[80%] m-auto'>
-            <h1 className='text-3xl font-thin text-center'>Transactions</h1>
-            <form className='flex flex-col gap-3 py-5 w-11/12 m-auto rounded-xl'>
-                <label className='text-xl'>
-                    <span>source account:</span>
-                    <div>
-                        <select onInput name='accountOrigin' defaultValue="EJEMPLO" className='w-full p-2 rounded-md'>
-                            <option value="EJEMPLO" disabled>Selected</option>
-                        </select>
-                    </div>
-                </label>
-                <label className='text-xl'>
-                    <span>Account Destination</span>
-                    <div>
-                        <input type="text" onChange name='' className='w-full p-2 pl-3 rounded-md' placeholder='' />
-                    </div>
-                </label>
-                <label className='text-xl'>
-                    <span>Amount:</span>
-                    <div>
-                        <input type="number" onChange name='' className='w-full p-2 pl-3 rounded-md' placeholder='' />
-                    </div>
-                </label>
-                <label className='text-xl'>
-                    <span>Descriptions:</span>
-                    <input type="text" onChange name='' className='w-full p-2 pl-3 rounded-md' placeholder='' />
-                </label>
-                <p className='text-red-500'>errorMessage</p>
-                <input type="submit" value="Confirm" className='w-full py-2 pl-3 text-white text-xl cursor-pointer rounded-md bg-green-500' />
-            </form>
+        <main className='w-full min-h-screen flex flex-col gap-4 mx-auto text-white'>
+            <h1 className='text-lg font-medium md:text-3xl text-center desktop:text-5xl desktop:mt-20'>Privacy</h1>
+            <div className='desktop:bg-slate-800 flex flex-col justify-center w-full items-center desktop:flex-row-reverse'>
+                <div className='self-center movil:w-[90%] desktop:w-1/3 text-base p-5 md:text-lg bg-slate-900 desktop:p-5 bg-slate-8 00 rounded-3xl'>
+                    <ul className='flex flex-col gap-5'>
+                        {
+                            PRIVACY_LIST.map((list) => {
+                                return (
+                                    <li key={list.title} className=''>
+                                        <h3 className='text-lg font-medium'>{list.title}</h3>
+                                        <p className='text-sm'>{list.content}</p>
+                                    </li>
+                                    
+                                )
+                            })
+                        }
+                    </ul>
+
+                </div>
+                <div className='self-center rounded-3xl movil:w-[80%] md:w-[60%] desktop:w-[50%]'>
+                    <img src={Privacy} className='w-[80%] m-auto' alt="privacy" />
+                </div>
+            </div>
         </main>
     )
 }
