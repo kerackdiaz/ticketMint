@@ -54,7 +54,7 @@ function DetailsEvent() {
     setPurchaseData({
       ticketId: ticketId,
       quantity: quantity,
-      totalPrice: Math.floor(parseFloat(numericPrice) * 0.85)
+      totalPrice: numericPrice
     })
     axios.post('http://localhost:8080/api/tickets/buy', purchaseData, {
       headers: {
@@ -198,7 +198,7 @@ function DetailsEvent() {
             </div>
             {/* Tipo de ticket */}
             <select onChange={handleTicketTypeChange} c lassName='text-white bg-[#55347b] text-sm border py-1 px-1'>
-              <option defaultValue disabled value={event?.ticketTypes[0]?.type}>Select Type</option>
+              <option defaultValue  value={event?.ticketTypes[0]?.type}>Select Type</option>
               {
                 event.ticketTypes.map((type, index) => (
                   <option value={type.type} key={index}>{type.type}</option>))
