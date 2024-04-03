@@ -33,7 +33,8 @@
     "reactstrap": "^9.2.2",
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.7.5",
-    "sweetalert2": "^11.10.7"
+    "sweetalert2": "^11.10.7",
+    "sweetalert2-react-content": "^5.0.7"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

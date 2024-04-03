@@ -104,7 +104,7 @@ function Event() {
       return
     }
     return Object.values(cat).map((category, index) => {
-      return <button onClick={handleGenre} value={category.name} key={index} className={genre === category.name ? 'text-white py-1 px-3 rounded-xl bg-[#0B0B1C]' : 'text-white py-1 px-3 rounded-xl dark:bg-[#bbabff] bg-[#0B0B1C]'}>{category.name}</button>
+      return <button onClick={handleGenre} value={category.name} key={index} className={genre === category.name ? 'text-white font-bold py-1 px-3 rounded-xl bg-[#0B0B1C]' : 'text-white py-1 px-3 rounded-xl dark:bg-[#512f6c] bg-[#0B0B1C]'}>{category.name}</button>
     })
   }, [cat, genre, handleGenre, isEmpty]);
 
