@@ -18,10 +18,12 @@ const AllEvents = () => {
 
   const handleChangeStatus = async (e) => {
     e.preventDefault();
-     setEventId(e.target.value);
+    const selectId = e.target.value;   
      console.log(e.target.value);
-    const response = await statusEvent(eventId, token);
-    console.log(response);
+    const response = await statusEvent(selectId, token);
+    if (response.success) {
+      setStatus(true);
+    }
   }
 
   const renderEvents = () => {
@@ -35,7 +37,9 @@ const AllEvents = () => {
       );
     }
 
-    return Object.values(event)?.map((even, index) => (
+    return Object.values(event)
+    .filter(even => new Date(even.date) >= new Date())
+    .map((even, index) => (
       
       <tr key={index} className=" flex gap-2 laptop:justify-around border-b">
         <td className="flex items-center py-5  ">

@@ -15,7 +15,6 @@ const Header = () => {
         const ws = new WebSocket('ws://localhost:8080/alert');
 
         ws.onopen = () => {
-            alert('Conectado');
         };
 
         ws.onmessage = (event) => {
@@ -35,7 +34,7 @@ const Header = () => {
         };
 
         ws.onclose = () => {
-            alert('Desconectado');
+            
         };
 
         return () => { ws.close(); };

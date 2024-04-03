@@ -63,7 +63,7 @@ const Wallet = () => {
                 <div className='flex flex-col text-black gap-3 ** bgblue-500 flex-wrap w-full rounded-xl justify-around'>
                 {transactionsToShow?.length > 0 ? (
                     transactionsToShow.map((transaction) => (
-                        <div className='flex justify-between items-center px-10 py-5 border rounded-lg text-white bg-gray-900'>
+                        <div key={transaction.id} className='flex justify-between items-center px-10 py-5 border rounded-lg text-white bg-gray-900'>
                             <div className="flex gap-3 items-center">
                                 <div className="div p-2 bg-[#6651c3] rounded-full">
                                     <BiSolidStore className='text-3xl text-white' />
@@ -81,14 +81,13 @@ const Wallet = () => {
                 ) : (
                     <div className='flex flex-col justify-center items-center gap-5 w-64 min-h-64 text-center text-green-700 rounded-md bg-[#d1ecf1]'>
                         <p className='text-lg font-semibold'>Do not register Transactions</p>
-                        <p>cucarachita</p>
                     </div>
                 )}
             </div>
             <div className='w-full flex justify-center gap-3'>
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <button className='text-white px-3 py-2 bg-[#0B0B1C] dark:bg-[#6651c3] hover:scale-95 hover:bg-[#6651c3] dark:hover:bg-[#6651c3]' onClick={() => changePage(index + 1)}>{index + 1}</button>
-                ))}
+            {Array.from({ length: totalPages }, (_, index) => (
+                  totalPages <= 1 ? <></> :  <button key={index} className='text-white px-3 py-2 bg-[#0B0B1C] dark:bg-[#6651c3] hover:scale-95 hover:bg-[#6651c3] dark:hover:bg-[#6651c3]' onClick={() => changePage(index + 1)}>{index + 1}</button>
+              ))}
                 </div>
             </section>
         </main>

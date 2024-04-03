@@ -16,6 +16,7 @@
     "@react2svelte/swipeable": "^0.1.4",
     "@reduxjs/toolkit": "^2.2.2",
     "date-fns": "^3.6.0",
+    "driver.js": "^1.3.1",
     "firebase": "^10.9.0",
     "flowbite": "^2.3.0",
     "react": "^18.2.0",

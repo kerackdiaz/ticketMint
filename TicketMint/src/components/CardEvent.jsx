@@ -48,7 +48,7 @@ function CardEvent({ handleFav, onFav, name, date, image, id, quantity, time, pr
                         <p className='text-white text-sm items-center flex gap-1'>{time}</p>
                         <p className='text-white text-sm items-center flex gap-1'>{location}</p>
                     </div>
-                    {formattedTotal == "USDNaN"? <></> :<div className='flex flex-col items-start opacity-90'>
+                    {formattedTotal.includes("NaN")? <></> :<div className='flex flex-col items-start opacity-90'>
                         <h3 className='font-semibold text-white'>Tickets from</h3>
                         <p className='text-sm text-white w-full text-end'>{formattedTotal}</p>
                     </div>}

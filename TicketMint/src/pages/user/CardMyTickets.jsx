@@ -9,7 +9,8 @@ function CardMyTickets({ ticket }) {
 
   return (
     <Link to={`/detailTicket/${1}`}>
-      <div className={`bg-[url("${imageURL}")] bg-top bg-local rounded-2xl flex flex-col justify-end  w-[343px] h-64 border-purple-500 border-solid border shadow-neon`}>
+      <div className='hey bg-top bg-local rounded-2xl flex flex-col justify-end  w-[343px] h-64 border-purple-500 border-solid border shadow-neon'>
+      <img className='object-cover relative w-full h-full translate-y-28 rounded-2xl' src={imageURL} alt="" />
           <div className='h-28 bg-[#523276] opacity-90 w-full rounded-b-2xl flex justify-between px-2 py-1'>
                   <div className=' items-start opacity-90 '>
                       <h2 className='text-white font-bold w-80'>{name}</h2>

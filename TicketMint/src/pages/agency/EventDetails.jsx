@@ -2,8 +2,11 @@ import React,{ useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { IoCameraReverse } from "react-icons/io5";
-import { changeData, changeAvatar, EventProvider } from "../../utils/Db";
+import { changeData, changeAvatar, EventProvider, deleteTicket } from "../../utils/Db";
 import { createTicket } from "../../utils/Db";
+import { useNavigate } from "react-router-dom";
+import { MdDelete } from "react-icons/md";
+import { set } from "date-fns";
 
 
 const EventDetails = () => {
@@ -19,8 +22,9 @@ const EventDetails = () => {
   const [showOtherTypeInput, setShowOtherTypeInput] = useState(false);
   const [banner , setBanner] = useState(even.imageURL || "")
   const [selectedType, setSelectedType] = useState("");
-
-
+  const [ticketId, setTicketId] = useState("");
+  const Navigate = useNavigate();
+  console.log(event);
   const ticketTypes = useSelector((state) => state.authReducer.ticketTypes);
 
   const nameRef = useRef();
@@ -50,6 +54,14 @@ const EventDetails = () => {
     setShowOtherTypeInput(event.target.value === "others");
   };
 
+  const deleteTicketId = async (idTicket) => {
+    console.log(idTicket);
+    const response = await deleteTicket(idTicket, token);
+    if (response.success) {
+      navigate("/Events")
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("banner: " +banner, "description: "+description, "date: "+date, "location: "+location, "url: "+locationURL);
@@ -73,19 +85,12 @@ const EventDetails = () => {
     console.log(ticket);
     const response = await createTicket(even.id, token, ticket);
 
-    console.log(response);
+    if(response.susscess){
+      Navigate("/Events")
+    }
   };
 
-  const getTypeOptions = () => {
-    if (!ticketTypes || ticketTypes.length === 0) {
-      return <option value="">Type</option>;
-    }
-    return ticketTypes.map((type, index) => (
-      <option value={type.name} key={index}>
-        {type.name}
-      </option>
-    ));
-  };
+
 
   return (
     <div id="EventDetails" className=" laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-lg flex justify-center max-h-[80vh]">
@@ -193,11 +198,23 @@ const EventDetails = () => {
                             />
                           </dd>
                         </div>
+                        <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                          <dt class="text-sm font-medium text-gray-500">
+                            Location URL
+                          </dt>
+                          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <lu className="flex justify-center flex-wrap gap-2">
+                            {even.ticketTypes.map((type) => (
+                                <li key={type.id} className="flex gap-5 justify-center bg-gray-200 w-4/5"><span>Name: {type.name}</span> <span>Quantity :{type.availableQuantity}</span> <span>Location: {type.type}</span> <span>Price: ${type.basePrice}</span> <button onClick={() => deleteTicketId(type.id)}><MdDelete className="text-red-500" /> </button></li>
+                                ))}
+                            </lu>
+                          </dd>
+                        </div>
                       </div>
                       <div className="laptop:w-3/12 movil:w-full laptop:border-l border-gray-200">
                         <h3 className="w-full text-center">Event banner</h3>
                         <img className="w-full h-auto object-contain group-hover:opacity-0" src={even.imageURL} alt="" />
-                        <label form="changepic" className="cursor-pointer hover:opacity-100 opacity-0 relative z-10 w-full h-[85%] translate-y-[100%] flex justify-center items-center  bg-[#80808073] text-5xl" >
+                        <label form="changepic" className="cursor-pointer hover:opacity-100 opacity-0 relative z-10 w-full h-[85%] translate-y-[-100%] flex justify-center items-center  bg-[#80808073] text-5xl" >
                           <div>
                             <IoCameraReverse />
                           </div>
@@ -276,7 +293,8 @@ const EventDetails = () => {
                                 onChange={handleTypeChange}
                                 className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             >
-                                {["GENERAL", "VIP", "PLATINO", "PREFERENTIAL", "FRONT_ROW", "BACKSTAGE_PASS", "MEET_AND_GREET", "BALCONY", "ALL_ACCESS_PASS", "VIP_EXPERIENCE", "ULTIMATE_FAN_PACKAGE"].map((option, index) => (
+                                {["Select a location", "GENERAL", "VIP", "PLATINO", "PREFERENTIAL", "FRONT_ROW", "BACKSTAGE_PASS", "MEET_AND_GREET", "BALCONY", "ALL_ACCESS_PASS", "VIP_EXPERIENCE", "ULTIMATE_FAN_PACKAGE"].map((option, index) => (
+                              
                                     <option key={index} value={option}>{option}</option>
                                 ))}
                             </select>

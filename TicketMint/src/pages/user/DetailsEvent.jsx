@@ -146,15 +146,18 @@ function DetailsEvent() {
       }
     })
       .then(res => {
-        console.log(res.data)
+        if(res.data.success) {
+          navigate("/mytickets")
+      }
       })
       .catch(err => console.error(err))
   }
 
   return (
 
-    <div className={'bg-[url("' + event.image + '")] bg-contain md:bg-cover pb-[50px] desktop:pb-0 md:bg-no-repeat flex flex-col items-center justify-end w-screen h-screen bg-top '}>
-      <div className='bg-[#55347b] p-3 w-full rounded-t-2xl md:w-1/2'>
+    <div className=' bg-contain md:bg-cover pb-[50px] desktop:pb-0 md:bg-no-repeat flex flex-col items-center justify-end w-screen h-screen bg-top '>
+      <img className='object-cover absolute -z-0 w-full movil:h-4/5 laptop:h-full movil:bottom-[34%] laptop:bottom-[12%] translate-y-28 rounded-2xl' src={event.imageURL} alt="" />
+      <div className='bg-[#55347b] z-10 p-3 w-full rounded-t-2xl md:w-1/2'>
         <div className=''>
           <div className='flex justify-between items-center '>
             <h2 className='text-white text-2xl font-bold'>{event.name}</h2>

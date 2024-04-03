@@ -97,7 +97,7 @@ const agency = (onLogin) => {
   return <>
   <Layout onLogin={onLogin}/>
     <Routes>
-      <Route path="/" element={<Events />} />
+    <Route path="/" element={<Report />} />
       <Route path="/Events" element={<Events />} />
       <Route path="/OldEvents" element={<OldEvents/>} />
       <Route path="/Report" element={<Report />} />

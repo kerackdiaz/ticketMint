@@ -1,24 +1,62 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { FaSun,FaMoon } from "react-icons/fa";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
 
 const Layout = ({ onLogin }) => {
   const userdata = useSelector((state) => state.authReducer.user);
-
+  const isNew = userdata.events.length
+  console.log(isNew)
   const [showMenu, setShowMenu] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [showDropdownUser, setShowDropdownUser] = useState(false);
-
+  const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('darkMode') === 'true' || false);
   const [search, setSearch] = useState("");
   const [selectedEvent, setSelectedEvent] = useState(null);
+
+  if(isNew === 0){
+    const driverObj = driver({
+      showProgress: true,
+      steps: [
+        { element: 'root', popover: { title: 'Welcome, ' + userdata.firstname , description: 'With TicketMint, you will be able to publish your events, sell tickets and receive your earnings directly into your bank account. In addition, you will have access to complete reports on the performance of your events.', side: "left", align: 'start' }},
+        { element: '#ReportAgency', popover: { title: 'Your\'s reports' , description: 'Your first view will always be your agency\'s sales report.', side: "left", align: 'start' }},
+        { element: '#eventsActive', popover: { title: 'Your\'s events actives' , description: 'Here you will see the active events', side: "left", align: 'start' }},
+        { element: '#totalEvents', popover: { title: 'Total Events' , description: 'Here you will see all your events created on our platform.', side: "left", align: 'start' }},
+        { element: '#todaySales', popover: { title: 'Day-to-day sales' , description: 'Every 24 hours you will see a balance of the sales made during the day.', side: "left", align: 'start' }},
+        { element: '#TotalSales', popover: { title: 'All your sales' , description: 'Find your total balance before it is transferred to your bank account', side: "left", align: 'start' }},
+        { element: '#Chart', popover: { title: 'Sales history for the month' , description: 'You will be able to see a month-by-month graph of your income.', side: "left", align: 'start' }},
+        { element: '#MyEvents', popover: { title: 'My Events' , description: 'Here you can find all your events, as well as create, edit or view more details about them.', side: "left", align: 'start' }},
+        { element: '#todaySales', popover: { title: 'Day-to-day sales' , description: 'Every 24 hours you will see a balance of the sales made during the day.', side: "left", align: 'start' }},
+        { popover: { title: 'Happy Coding', description: 'And that is all, go ahead and start adding tours to your applications.' } }
+      ]
+    });
+    
+    driverObj.drive();
+  }
 
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
   };
 
+  const toggleDarkMode = () => {
+    const newDarkMode = !isDarkMode;
+    setIsDarkMode(newDarkMode);
 
+    localStorage.setItem('darkMode', newDarkMode.toString());
+  };
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+    localStorage.setItem('darkMode', isDarkMode.toString());
+  }, [isDarkMode]);
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
@@ -396,6 +434,20 @@ const Layout = ({ onLogin }) => {
                       >
                         Earnings
                       </Link>
+                    </li>
+                    <li className=" dark:text-white text-gray-700 flex gap-3 text-sm items-center px-4">
+                      Theme:
+                      {
+                        isDarkMode ? ( <button className="block w-full text-center text-gray-700 py-2  hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                        onClick={toggleDarkMode}
+                        role="menuitem">
+                          <FaSun className="text-gray-700 text-lg w-full dark:text-white"/>
+                        </button>) :  (<button className="block w-full text-center text-gray-700 py-2  hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                        onClick={toggleDarkMode}
+                        role="menuitem">
+                          <FaMoon className="text-gray-700 text-lg w-full dark:text-white"/>
+                      </button>)
+                      }
                     </li>
                     <li>
                       <Link

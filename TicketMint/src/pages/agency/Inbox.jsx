@@ -21,7 +21,7 @@ const Inbox = () => {
     const socket = io('http://localhost:9092');
 
     socket.on('notification', (newNotification) => {
- 
+
       alert('Nueva notificación: ' + newNotification);
     });
 
@@ -50,7 +50,7 @@ const Inbox = () => {
       const response = await postAlert({ subjet, id }, token);
       if (response.success) {
         setMessage('');
-        const date = format(new Date(), 'HH:mm eee dd MMM'); 
+        const date = format(new Date(), 'HH:mm eee dd MMM');
         setSelectedEvent(currentEvent => {
           const updatedEvent = {
             ...currentEvent,
@@ -70,41 +70,45 @@ const Inbox = () => {
   );
 
   return (
-    <div className="laptop:w-[78%] relative laptop:left-[14%] tablet:left-[25%] tablet:w-1/2 w-[90%] h-[80%] md:w-[490px] top-32 right-12 py-6 px-6 rounded-xl border border-[#55347B] bg-[#DBC1FA] mt-10 flex flex-wrap gap-10 dark:bg-[#0B0B1C] opacity-80">
-        <div class="flex flex-col h-full w-full  overflow-x-hidden ">
+    <div className="laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-lg flex justify-center">
+      <div class="flex laptop:flex-wrap laptop:flex-row movil:flex-col h-full w-full  overflow-x-hidden ">
+        <div className="laptop:w-2/5 movil:w-full">
           <label className="mb-5">
             <input type="text" value={search} onChange={handleSearchChange} placeholder="Search event" className="w-full laptop:w-1/2 py-1 rounded-lg border border-[#55347B]" />
           </label>
-          <div className="w-full items-start flex flex-col gap-4 h-[191px] overflow-y-scroll ">
-            {filteredEvents.map((event) => (<div key={event.id} className="flex cursor-pointer items-center justify-start gap-5 border-b border-[#55347B] w-[300px] tablet:w-full py-3 px-5 lg:w-[800px] desktop:w-[1073px]" onClick={() => handleEventSelect(event)} >
-              <img className="object-cover w-7 h-7 rounded-full " src="https://firebasestorage.googleapis.com/v0/b/homebankingapp-4b70f.appspot.com/o/AssetsHomebanking%2Fpp-ulver-bank.jpg?alt=media&token=3ce9d213-9ef4-488f-845a-cdbeea119785" alt="" />
+          <div className=" items-start flex flex-col gap-4 h-4/5 overflow-y-scroll mt-5 ">
+            {filteredEvents.map((event) => (<div key={event.id} className="flex cursor-pointer items-center justify-start gap-5 border-b border-[#55347B]  tablet:w-full py-3 px-5  " onClick={() => handleEventSelect(event)} >
+              <img className="object-cover w-7 h-7 rounded-full " src={event.imageURL} alt="" />
               <h2 className="line-clamp-1 font-bold text-white self-start">{event.name}</h2>
             </div>
             ))}
           </div>
-          <div className="w-[100%] mt-5 py-3 px-5 border rounded-xl border-[#55347B] flex flex-col justify-between">
-            {selectedEvent && (
-              <>
-                <div>
-                  <h2 className="font-bold text-white text-xl border-b border-[#55347B] py-3 mb-3">{selectedEvent.name}</h2>
-                  <ul className=" flex flex-col gap-2 items-end h-[30vh] overflow-y-scroll">
-                    {selectedEvent.notifications && selectedEvent.notifications.map((notification, i) => (
-                      <>
+        </div>
+        <div className="laptop:w-3/5 movil:w-full px-4">
+        <div className="mt-12 py-3 px-5 border rounded-xl border-[#55347B] flex flex-col justify-between laptop:h-4/5 movil:h-full">
+          {selectedEvent && (
+            <>
+              <div>
+                <h2 className="font-bold text-white text-xl border-b border-[#55347B] py-3 mb-3">{selectedEvent.name}</h2>
+                <ul className=" flex flex-col gap-2 items-end laptop:h-[45vh] movil:h-[30vh] overflow-y-scroll">
+                  {selectedEvent.notifications && selectedEvent.notifications.map((notification, i) => (
+                    <>
                       <li className="text-white bg-[#6651c3] px-5 py-2 rounded-md" key={i}>{notification.message}</li>
                       <p className=" text-right text-white text-xs">{notification.date}</p>
-                      </>
-                    ))}
-                  </ul>
-                </div>
-                <form onSubmit={handleNotify} className="flex items-center">
-                  <input className="w-4/5 mx-4 border py-2 outline-none px-3 rounded-lg" type="text" value={message} onChange={handleMessageChange} placeholder="Escribir notificación" maxLength="180"  />
-                  <button className="flex align-middle h-7 items-center gap-2 border rounded-lg px-6 bg-[#CA67F5] text-white hover:bg-indigo-800" type="submit">Send <TiArrowRightOutline /></button>
-                </form>
-              </>
-            )}
-          </div>
+                    </>
+                  ))}
+                </ul>
+              </div>
+              <form onSubmit={handleNotify} className="flex items-center">
+                <input className="w-4/5 mx-4 border py-2 outline-none px-3 rounded-lg" type="text" value={message} onChange={handleMessageChange} placeholder="Escribir notificación" maxLength="499" />
+                <button className="flex align-middle h-7 items-center gap-2 border rounded-lg px-6 bg-[#CA67F5] text-white hover:bg-indigo-800" type="submit">Send <TiArrowRightOutline /></button>
+              </form>
+            </>
+          )}
+        </div>
         </div>
       </div>
+    </div>
   );
 };
 

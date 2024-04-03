@@ -216,3 +216,15 @@ export const postLogin = async (data, dispatch) => {
             console.error('Error during event status change:', error);
             return { success: false, message: error.message };
       }}
+
+    export const deleteTicket = async (ticketId, token) => {
+        try {
+            const response = await axios.delete(`${baseURL}tickets/delete/${ticketId}`, {
+                headers: {  'Authorization': `Bearer ${token}`}
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error during ticket deletion:', error);
+            return { success: false, message: error.message };
+        }
+    };

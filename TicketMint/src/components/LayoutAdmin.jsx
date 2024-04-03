@@ -7,13 +7,16 @@ import { MdOutlineEventAvailable } from "react-icons/md";
 import { FaSun } from "react-icons/fa";
 import { FaMoon } from "react-icons/fa";
 
+
 const LayoutAdmin = ({ onLogin }) => {
   const userdata = useSelector((state) => state.authReducer.user);
+  console.log(userdata);
   console.log(userdata);
   const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('darkMode') === 'true' || false);
   const [showMenu, setShowMenu] = useState(false);
   const [showDropdownUser, setShowDropdownUser] = useState(false);
   const [search, setSearch] = useState("");
+
 
 useEffect(() => {
   if (isDarkMode) {

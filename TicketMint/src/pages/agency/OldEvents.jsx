@@ -22,7 +22,9 @@ const OldEvents = () => {
       );
     }
 
-    return Object.values(event)?.map((even, index) => (
+    return Object.values(event)
+    .filter(even => new Date(even.date) < new Date())
+    .map((even, index) => (
       <tr key={index} className=" flex gap-2 laptop:justify-around border-b">
         <td className="flex items-center py-5  ">
      
@@ -51,9 +53,9 @@ const OldEvents = () => {
   };
 
   return (
-    <div id="oldEvents" className=" laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-lg flex justify-center">
-    <div className="w-full  rounded-xl mt-10 flex flex-wrap gap-10 p-5 text-[#0B0B1C]">
-      <section className=" bg-white w-full p-5">
+    <div id="oldEvents" className="laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-lg flex justify-center">
+    <div className="w-full bg-white px-5 py-4 max-h-4/5 text-[#0B0B1C]">
+      <section className=" bg-white w-full">
         <h1 className="text-3xl font-thin">Old Events</h1>
         <table className="font-medium border-1 w-full">
           <thead className="w-full">

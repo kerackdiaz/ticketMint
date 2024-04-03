@@ -1,21 +1,24 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { BsQrCodeScan } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { GiDonkey } from "react-icons/gi";
+import { useNavigate, useParams } from 'react-router-dom'
 import QRCode from "react-qr-code";
 
 
 function SellTicket() {
     const token = useSelector((state) => state.authReducer.token.token)
     const UserData = useSelector((state) => state.authReducer.user)
+    const events = useSelector((state) => state.authReducer.events)
     const MyTickets= Object.values(UserData.clientTicket)
     const [isAGift, setIsAGift] = useState(false)
     const { id } = useParams()
     const [showQR, setShowQR] = useState(false);
     const [qrValue, setQrValue] = useState(`unautorized access`);
     const ticket = MyTickets?.find(ticket => ticket.id === id);
+    const eventTicket = Object.values(events)?.find((event) => event.id === ticket.eventId)
+    console.log(eventTicket)
+    const navigate = useNavigate();
 
     const destinationEmail = useRef("");
     const ticketPricing = useRef(0);
@@ -45,7 +48,9 @@ function SellTicket() {
             }
         })
         .then(res => {
-            console.log(res.data);
+            if(res.data.success) {
+                navigate("/mytickets")
+            }
         })
         .catch(err => console.log(err))
 
@@ -70,10 +75,10 @@ function SellTicket() {
         <div className=' desktop:mt-20 flex flex-1 p-3 gap-6 flex-col items-center'>
             <h2 className='text-3xl dark:text-white text-[#0b0b1c] pt-3 desktop:text-5xl'>Sell Ticket/ Transfer Ticket</h2>
             <form onSubmit={hanleSubmit} className='flex flex-col desktop:w-[420px] gap-2 w-full items-center md:w-1/2 xl:w-1/3 shadow-black shadow-2xl rounded-lg dark:shadow-none'>
-                <img src={"/prueba.png"} alt="" />
+                <img className='laptop:w-4/5 movil:w-1/3' src={eventTicket.imageURL} alt="" />
 
 
-                <label className='desktop:w-full text-center'>
+                <label className='w-full text-center'>
                     <input required 
                     type="number"
                     min={0} 
@@ -83,18 +88,18 @@ function SellTicket() {
                     placeholder='How much will the ticket sell for?' />
                 </label>
 
-                <label className='desktop:w-full text-center'>
+                <label className='w-full text-center'>
                     <input required 
                     type="number"
                     min={0} 
-                    max={ticket.availableQuantity}
+                    max={ticket.quantity}
                     ref={ticketsAmount}
                     className='w-[90%] text-center py-1 text-white  desktop:w-4/5 bg-[#0b0b1c] border border-[#8468fb] placeholder:text-sm placeholder:text-center rounded-lg' 
                     placeholder='How many tickets will you transfer?' />
                 </label>
 
                 <label htmlFor=""></label>
-                <label className='desktop:w-full text-center'>
+                <label className='w-full text-center'>
                     <input required  
                     ref={destinationEmail} 
                     type="email" 

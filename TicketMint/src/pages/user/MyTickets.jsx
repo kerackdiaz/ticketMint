@@ -44,12 +44,17 @@ function MyTickets() {
         let filterEvent = eventsWithTicketCounts;
         const totalPages = Math.ceil(filterEvent.length / itemsPerPage);
         const eventsToShow = filterEvent.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    console.log(eventsToShow)
+    return eventsToShow.length > 0 ? 
+    eventsToShow
     
-        return eventsToShow.length > 0 ? eventsToShow.map((event, index) => (
-            <Link to={`/detailTicket/${event.id}`}>
-                <CardMyTickets key={index} name={event.name} date={event.date} time={event.time} image={event.imageURL} id={event.id} ticketCount={event.ticketCount}/>
-            </Link>
-        )) : <h1 className='dark:text-white text-[0b0b1c]'>No events</h1> 
+      .filter(event => new Date(event.date) > new Date())
+      .map((event, index) => (
+        <Link to={`/detailTicket/${event.id}`} key={index}>
+          <CardMyTickets name={event.name} date={event.date} time={event.time} image={event.imageURL} id={event.id} ticketCount={event.ticketCount}/>
+        </Link>
+      )) 
+  : <h1 className='dark:text-white text-[0b0b1c]'>No events</h1> 
     }
 
 
@@ -62,7 +67,7 @@ function MyTickets() {
                   <button className='text-white' type="button">Collectibles</button>
               </Link>
           </div>
-          <div className='flex flex-wrap gap-5 justify-center'>
+          <div className='flex flex-wrap gap-5 mt-5 justify-center'>
               {getEvents()}
           </div>
           <div>
