@@ -1,82 +1,101 @@
-import React, { useState, useRef } from "react";
-import { useSelector} from "react-redux";
-import { createEvent,CategortiesProvider,CitiesProvider } from "../../utils/Db";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { createEvent, CategortiesProvider, CitiesProvider } from "../../utils/Db";
+import { uploadFile } from '../../utils/Firebase';
+import { useNavigate } from "react-router-dom";
 
 
 const NewEvent = () => {
   const [showOtherCategoryInput, setShowOtherCategoryInput] = useState(false);
   const [showOtherCityInput, setShowOtherCityInput] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [otherCategory, setOtherCategory] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [otherCity, setOtherCity] = useState("");
+  const [url, setUrl] = useState("");
+  const [date, setDate] = useState("");
+  const [venueName, setVenueName] = useState("");
+  const [venueURL, setVenueURL] = useState("");
+  const [cit, setCit] = useState([]);
   const categories1 = CategortiesProvider();
+  const user = useSelector((state) => state.authReducer.user);
   const cat = useSelector((state) => state.authReducer.categories)
   const city = useSelector((state) => state.authReducer.cities)
   const cities = CitiesProvider();
   const token = useSelector((state) => state.authReducer.token.token);
- 
- 
-
-  const full_nameRef = useRef(null);
-  const descriptionRef = useRef(null);
-  const categoryRef = useRef(null);
-  const user_avatarRef = useRef(null);
-  const dateRef = useRef(null);
-  const LocationRef = useRef(null);
-  const Location_UrlRef = useRef(null);
-  const CitRef = useRef(null);
 
   const toggleOtherCategoryInput = (event) => {
+    setSelectedCategory(event.target.value);
     setShowOtherCategoryInput(event.target.value === "others");
   };
+  
   const toggleOtherCityInput = (event) => {
+    setSelectedCity(event.target.value);
     setShowOtherCityInput(event.target.value === "others");
   };
 
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    const newId = "/agency/" + user.companyName + "/" + name
+    const url = await uploadFile(file, newId)
+    console.log(url)
+    setUrl(url);
+  };
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const selectedCategory = categoryRef.current.value;
+  
     const categoriesArray =
-      selectedCategory === "others" ? ["others"] : [selectedCategory];
-    const formattedDate = new Date(dateRef.current.value).toISOString();
+      selectedCategory === "others" ? [otherCategory] : [selectedCategory];
+      const cit = selectedCity === "others" ? otherCity : selectedCity;
+    console.log("categoriesArray", categoriesArray);
+    const formattedDate = new Date(date).toISOString();
+  
     const formData = {
-      name: full_nameRef.current.value,
-      description: descriptionRef.current.value,
+      name: name,
+      description: description,
       categories: categoriesArray,
-      imageURL: "https://via.placeholder.com/150",
+  
+      imageURL: url,
       date: formattedDate,
-      venueName: LocationRef.current.value,
-      venueURL: Location_UrlRef.current.value,
-      city: CitRef.current.value,
+      venueName: venueName,
+      venueURL: venueURL,
+      city: cit,
     };
 
-    console.log("formData", formData);
     const response = await createEvent(formData, token);
-    alert("Event created successfully");
-    console.log("response", response);
-
-    if (response && response.success === true) {
-      window.location.href = `/EventDetails/${response.event}`;
+    if (response.success) {
+      navigate("/events");
     }
-  
   }
   const getCategories = () => {
-    if(!cat || cat.length === 0 || cat === undefined || cat === null){
-      return 
+    if (!cat || cat.length === 0 || cat === undefined || cat === null) {
+      return
     }
     return Object.values(cat).map((category, index) => {
-        return <option value={category.name} key={index}>{category.name}</option>
-      })
+      return <option value={category.name} key={index}>{category.name}</option>
+    })
   }
 
   const getCities = () => {
-    if(!city || city.length === 0 || city === undefined || city === null){
-      return}
+    if (!city || city.length === 0 || city === undefined || city === null) {
+      return
+    }
     return Object.values(city).map((cit, index) => {
-        return <option value={cit.name} key={index}>{cit.name}</option>
-    })}
-  
+      return <option value={cit.name} key={index}>{cit.name}</option>
+    })
+  }
+
 
   return (
-    <div className="lg:w-[78%] relative lg:left-[14%] tablet:left-[25%] tablet:w-1/2 w-[80%] h-[80%] md:w-[490px]   top-32 right-8 py-6 px-6 rounded-xl border border-gray-200 bg-[#DBC1FA] mt-10 flex flex-wrap gap-10 dark:bg-[#0B0B1C]">
+    <div className=" laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-lg flex justify-center">
       <div className=" flex items-center justify-center">
         <div className="container max-w-screen-lg mx-auto">
           <div>
@@ -97,7 +116,8 @@ const NewEvent = () => {
                         <input
                           type="text"
                           id="full_name"
-                          ref={full_nameRef}
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
                           className="h-10 border mt-1 rounded px-4 w-[100%] bg-gray-50"
                         />
                       </div>
@@ -107,10 +127,11 @@ const NewEvent = () => {
                         <input
                           type="text"
                           id="Description"
-                          ref={descriptionRef}
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
                           className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                           placeholder="Festival"
-                         
+
                         />
                       </div>
 
@@ -119,44 +140,45 @@ const NewEvent = () => {
                         <select
                           name="category"
                           id="category"
-                          ref={categoryRef}
+                          value={selectedCategory}
                           onChange={toggleOtherCategoryInput}
                           className=" h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                         >
                           {getCategories()}
-                        
+
+                          <option value=""  >Select a Category</option>
                           <option value="others" className="w-full">Others</option>
-                          <option value="None" disabled >None</option>
                         </select>
                         {showOtherCategoryInput && (
                           <input
                             type="text"
                             id="otherCategoryInput"
                             name="otherCategory"
-                            ref={categoryRef}
+                            value={otherCategory}
+                            onChange={(e) => setOtherCategory(e.target.value)}
                             placeholder="Enter other category"
                             className=" h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                           />
                         )}
-                       
+
                       </div>
                       <div className="md:col-span-5">
                         <label
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                          for="user_avatar"
+                          for="Banner_Event"
                         >
                           Upload file
                         </label>
                         <input
                           className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                          aria-describedby="user_avatar_help"
-                          id="user_avatar"
+                          aria-describedby="Banner_Event_help"
+                          id="Banner_Event"
                           type="file"
-                          ref={user_avatarRef}
+                          onChange={handleFileChange}
                         />
                         <div
                           className="mt-1 text-sm text-gray-500 dark:text-gray-300"
-                          id="user_avatar_help"
+                          id="Banner_Event_help"
                         >
                           A photo is useful to promote your event
                         </div>
@@ -166,7 +188,8 @@ const NewEvent = () => {
                           type="datetime-local"
                           name="date"
                           id="date"
-                          ref={dateRef}
+                          value={date}
+                          onChange={(e) => setDate(e.target.value)}
                           className=" h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                         />
                       </div>
@@ -177,7 +200,8 @@ const NewEvent = () => {
                           type="text"
                           name="Location"
                           id="Location"
-                          ref={LocationRef}
+                          value={venueName}
+                          onChange={(e) => setVenueName(e.target.value)}
                           className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                           placeholder="222 Ave Flower"
                         />
@@ -188,7 +212,8 @@ const NewEvent = () => {
                           type="text"
                           name="Location Url"
                           id="Location Url"
-                          ref={Location_UrlRef}
+                          value={venueURL}
+                          onChange={(e) => setVenueURL(e.target.value)}
                           className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                           placeholder="url"
                         />
@@ -198,26 +223,27 @@ const NewEvent = () => {
                         <select
                           name="Cit"
                           id="Cit"
-                          ref={CitRef}
+                          value={selectedCity}
                           onChange={toggleOtherCityInput}
                           className=" h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                         >
                           {getCities()}
-                        
+
+                          <option value="None"  >Select a city</option>
                           <option value="others" className="w-full">Others</option>
-                          <option value="None" disabled >None</option>
                         </select>
                         {showOtherCityInput && (
                           <input
                             type="text"
                             id="otherCityInput"
                             name="otherCity"
-                            ref={CitRef}
+                            value={otherCity}
+                            onChange={(e) => setOtherCity(e.target.value)}
                             placeholder="Enter other city"
                             className=" h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                           />
                         )}
-                       
+
                       </div>
                       <div className="md:col-span-5">
                         <div className="flex items-center h-5">
@@ -253,7 +279,7 @@ const NewEvent = () => {
                             Submit
                           </button>
                         </div>
-                    
+
                       </div>
                     </div>
                   </form>
@@ -263,7 +289,7 @@ const NewEvent = () => {
           </div>
         </div>
       </div>
-     
+
     </div>
   );
 };

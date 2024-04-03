@@ -8,7 +8,7 @@ import { BsTicketPerforated } from "react-icons/bs";
 function CardEvent({ handleFav, onFav, name, date, image, id, quantity, time, price, location, idProx }) {
     const currency = localStorage.getItem('currency') || 'USD';
     const total = currency === 'COP' ? Math.round(price * localStorage.getItem("conversion_rates")) : price * localStorage.getItem("conversion_rates");
-    
+    const imgformatted = image+".jpg";
     const formattedTotal = new Intl.NumberFormat('en-US',
         {
             style: 'currency',
@@ -32,7 +32,8 @@ function CardEvent({ handleFav, onFav, name, date, image, id, quantity, time, pr
 
     return (
         <Link to={`/details/${id}`} className={soldOut} >
-            <div id={idProx} className={'relative w-80 h-64 bg-[url("' + image + '")] desktop:bg-no-repeat shadow-md shadow-[#0b0b1c] dark:shadow-none desktop:bg-cover desktop:w-[430px] bg-top bg-local rounded-2xl flex flex-col justify-end items-end'}>
+            <div id={idProx} className={`relative w-80 h-64 desktop:bg-no-repeat shadow-md shadow-[#0b0b1c] dark:shadow-none desktop:bg-cover desktop:w-[430px] bg-top bg-local rounded-2xl flex flex-col justify-end items-end`}>
+            <img className='object-cover relative w-full h-full translate-y-28 rounded-2xl' src={image} alt="" />
                 <button className='absolute top-2 right-2 z-50' onClick={handleFavoriteClick}>
                     <FavIcon className='cursor-pointer text-4xl text-white' />
                 </button>

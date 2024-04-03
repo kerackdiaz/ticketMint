@@ -139,7 +139,7 @@ function Event() {
         }
         
         </div>
-        <section className='desktop:fixed desktop:flex desktop:gap-4 desktop:items-center  desktop:flex-col hidden desktop:left-0 desktop:bottom-2 desktop:w-[28%]'>
+        <section className='desktop:fixed desktop:flex desktop:gap-4 desktop:items-center  desktop:flex-col hidden desktop:left-0 desktop:bottom-5 desktop:w-[28%]'>
           <h2 className='dark:text-white text-[#0b0b1c]  desktop:text-4xl'>Upcoming event</h2>
           {
             getNextEvent
