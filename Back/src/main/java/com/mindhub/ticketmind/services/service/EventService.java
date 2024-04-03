@@ -3,12 +3,16 @@ package com.mindhub.ticketmind.services.service;
 import com.mindhub.ticketmind.dtos.*;
 import com.mindhub.ticketmind.models.*;
 import com.mindhub.ticketmind.repositories.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.chrono.ChronoLocalDate;
 import java.util.*;
 
 @Service
@@ -36,6 +40,20 @@ public class EventService {
 
     @Autowired
     private NotificationService notificationService;
+    private static final Logger logger = LoggerFactory.getLogger(EventService.class);
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void updateEventStatus() {
+        logger.info("La tarea programada updateEventStatus ha comenzado");
+        List<Event> events =eventRepository.findAll();
+        Date currentDate = new Date();
+        for (Event event : events) {
+            if (event.getDate().after(currentDate)) {
+                event.setStatus(false);
+                eventRepository.save(event);
+            }
+        }
+        logger.info("La tarea programada updateEventStatus ha terminado");
+    }
 
     public List<EventDTO> getAllEvents(){
         List<Event> events = eventRepository.findAll();
@@ -154,6 +172,9 @@ public class EventService {
                 double totalPrice = ticketFormDTO.basePrice() + (ticketFormDTO.basePrice() * (admin.getCommission() / 100));
                 Ticket ticket = new Ticket(ticketFormDTO.name(), totalPrice, ticketFormDTO.availableQuantity(), admin.getCommission(), TicketType.valueOf(ticketFormDTO.type()), event);
                 ticketRepository.save(ticket);
+                if(!event.isStatus()){
+                    event.setStatus(!event.isStatus());
+                }
                 response.put("success", true);
                 response.put("message", "Ticket created successfully");
             } else {
@@ -254,7 +275,7 @@ public class EventService {
             Optional<Event> optionalEvent = eventRepository.findById(eventId);
             if (optionalEvent.isPresent() && client != null) {
                 Event event = optionalEvent.get();
-                event.setStatus(!event.isStatus());
+                    event.setStatus(!event.isStatus());
                 eventRepository.save(event);
                 response.put("success", true);
                 response.put("message", "Event status changed successfully");
@@ -298,4 +319,5 @@ public class EventService {
         }
         return response;
     }
+
 }

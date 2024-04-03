@@ -106,10 +106,16 @@ public class TransactionService {
             sourceClient.setBalance(sourceClient.getBalance() - (ticket.getBasePrice()));
             admin.setBalance(admin.getBalance() + ticket.getBasePrice() * (ticket.getIncreasePercentage()/100));
             agency.setBalance(agency.getBalance() + ticket.getBasePrice() * (1 - ticket.getIncreasePercentage()/100));
+                String buyDescrip = "";
+            if (ticketPurchaseRecordDTO.quantity() > 1){
+                buyDescrip = "Purchase of " + ticketPurchaseRecordDTO.quantity() + " tickets for" + event.getName() + " event";
+            } else {
+                buyDescrip = "Ticket purchase for " + event.getName() + " event";
+            }
 
             Transaction sourceClientTransaction = new Transaction();
             sourceClientTransaction.setType(TransactionType.DEBIT);
-            sourceClientTransaction.setDescription("Ticket purchase");
+            sourceClientTransaction.setDescription(buyDescrip);
             sourceClientTransaction.setDate(new Date());
             sourceClientTransaction.setAmount(-ticket.getBasePrice() * ticketPurchaseRecordDTO.quantity());
             sourceClientTransaction.setClient(sourceClient);
