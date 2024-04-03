@@ -18,6 +18,8 @@ const EventDetails = () => {
   const [locationURL, setLocationURL] = useState(even.venueURL || "");
   const [showOtherTypeInput, setShowOtherTypeInput] = useState(false);
   const [banner , setBanner] = useState(even.imageURL || "")
+  const [selectedType, setSelectedType] = useState("");
+
 
   const ticketTypes = useSelector((state) => state.authReducer.ticketTypes);
 
@@ -38,6 +40,10 @@ const EventDetails = () => {
 
   const handleInputChange = (event, setState) => {
     setState(event.target.value);
+  };
+
+  const handleTypeChange = (event) => {
+    setSelectedType(event.target.value);
   };
 
   const toggleOtherTypeInput = (event) => {
@@ -62,7 +68,7 @@ const EventDetails = () => {
       name: nameRef.current.value,
       availableQuantity: quantityRef.current.value,
       basePrice: basePriceRef.current.value,
-      TicketType: typeRef.current.value,
+      type: selectedType,
     };
     console.log(ticket);
     const response = await createTicket(even.id, token, ticket);
@@ -190,8 +196,8 @@ const EventDetails = () => {
                       </div>
                       <div className="laptop:w-3/12 movil:w-full laptop:border-l border-gray-200">
                         <h3 className="w-full text-center">Event banner</h3>
-                        <img className="bg-black h-10 group-hover:opacity-0" src={even.imageURL} alt="" />
-                        <label form="changepic" className="cursor-pointer hover:opacity-100 opacity-0 absolute flex justify-center items-center  bg-[#80808073] text-5xl rounded-full" >
+                        <img className="w-full h-auto object-contain group-hover:opacity-0" src={even.imageURL} alt="" />
+                        <label form="changepic" className="cursor-pointer hover:opacity-100 opacity-0 relative z-10 w-full h-[85%] translate-y-[100%] flex justify-center items-center  bg-[#80808073] text-5xl" >
                           <div>
                             <IoCameraReverse />
                           </div>
@@ -262,29 +268,18 @@ const EventDetails = () => {
                         </div>
 
                         <div className="md:col-span-5">
-                          <label for="Type">Type</label>
-                          <select
-                            name="Type"
-                            id="Type"
-                            ref={typeRef}
-                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            onChange={toggleOtherTypeInput}
-                          >
-                            {getTypeOptions()}
-                            {getTypeOptions()}
-                            {getTypeOptions()}
-                            <option value="others">Others</option>
-                          </select>
-                          {showOtherTypeInput && (
-                            <input
-                              type="text"
-                              id="otherTypeInput"
-                              name="otherType"
-                              ref={typeRef}
-                              className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                              placeholder="Enter other type"
-                            />
-                          )}
+                            <label htmlFor="Type">Type</label>
+                            <select
+                                name="Type"
+                                id="Type"
+                                value={selectedType}
+                                onChange={handleTypeChange}
+                                className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            >
+                                {["GENERAL", "VIP", "PLATINO", "PREFERENTIAL", "FRONT_ROW", "BACKSTAGE_PASS", "MEET_AND_GREET", "BALCONY", "ALL_ACCESS_PASS", "VIP_EXPERIENCE", "ULTIMATE_FAN_PACKAGE"].map((option, index) => (
+                                    <option key={index} value={option}>{option}</option>
+                                ))}
+                            </select>
                         </div>
 
                         <div className="md:col-span-5 text-right">

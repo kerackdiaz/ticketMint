@@ -177,21 +177,6 @@ export const postLogin = async (data, dispatch) => {
     }
   }
 
-
-  export const deleteCard = async (id, token) => {
-    try {
-        const response = await axios.delete(`${baseURL}cards/current/cards/${id}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        return response.data;
-    } catch (error) {
-        console.error('Error during password change:', error);
-        return { success: false, message: error.message };
-    }
-  }
-
   export const createEvent = async (data, token) => {
     try {
         const response = await axios.post(`${baseURL}events/create/event`, data, {
@@ -219,3 +204,15 @@ export const postLogin = async (data, dispatch) => {
           console.error('Error during ticket creation:', error);
           return { success: false, message: error.message };
       } }
+
+
+      export const statusEvent = async (eventId, token) => {
+        try {
+            const response = await axios.put(`${baseURL}events/status/${eventId}`, {}, {
+                headers: {  'Authorization': `Bearer ${token}`}
+            });
+            return response.data;
+          }catch (error) {
+            console.error('Error during event status change:', error);
+            return { success: false, message: error.message };
+      }}

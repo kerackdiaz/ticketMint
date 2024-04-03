@@ -1,15 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { EventProvider } from "../utils/Db";
+import { EventProvider, statusEvent } from "../utils/Db";
 import { Link } from "react-router-dom";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCalendarCheck } from "react-icons/fa6";
 
 const AllEvents = () => {
   const events = EventProvider();
+  const token = useSelector((state) => state.authReducer.token.token);
   const event = useSelector((state) => state.authReducer.events);
- 
+  console.log(event);
+  const [status, setStatus] = useState(false);
+  const [eventId, setEventId] = useState("");
+  
+
+
+  const handleChangeStatus = async (e) => {
+    e.preventDefault();
+     setEventId(e.target.value);
+     console.log(e.target.value);
+    const response = await statusEvent(eventId, token);
+    console.log(response);
+  }
 
   const renderEvents = () => {
     if (!event || event.length === 0 || event === undefined || event === null) {
@@ -23,6 +36,7 @@ const AllEvents = () => {
     }
 
     return Object.values(event)?.map((even, index) => (
+      
       <tr key={index} className=" flex gap-2 laptop:justify-around border-b">
         <td className="flex items-center py-5  ">
      
@@ -37,6 +51,8 @@ const AllEvents = () => {
         </td>
         <td className=" flex justify-center laptop:w-[60px] items-center">
           <button
+          onClick={handleChangeStatus}
+          value={even.id}
             className={`rounded-full py-1 px-2 text-xs laptop:text-sm ${
               even.status ? "bg-green-500" : "bg-red-500"
             }`}

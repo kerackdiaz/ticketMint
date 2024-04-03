@@ -101,27 +101,27 @@ const Configurations = ({ onLogin }) => {
                 <h3 className='text-start font-medium text-lg desktop:text-2xl py-3'>Support</h3>
 
                 <ul className='text-sm font-medium'>
-                    <li className='bg-desactive-red-950 flex justify-between items-center gap-3 py-3'>
-                        <Link to='/Help' className='flex items-center gap-3'>
+                    <Link to='/Help' className='bg-desactive-red-950 flex justify-between items-center gap-3 py-3'>
+                        <li className='flex items-center gap-3'>
                             <IoIosHelpCircleOutline className='text-2xl' />
                             <span>Help</span>
-                        </Link>
+                        </li>
                         <IoIosArrowForward className='text-2xl' />
-                    </li>
-                    <li className='bg-desactive-amber-600 flex justify-between items-center gap-3 py-3'>
-                        <Link to='/Privacity' className='flex items-center gap-3 '>
+                    </Link>
+                    <Link to='/Privacity' className='bg-desactive-amber-600 flex justify-between items-center gap-3 py-3'>
+                        <li  className='flex items-center gap-3 '>
                             <MdOutlinePrivacyTip className='text-2xl' />
                             <span>Privacy</span>
-                        </Link>
+                        </li>
                         <IoIosArrowForward className='text-2xl' />
-                    </li>
-                    <li className='bg-desactive-amber-600 flex justify-between items-center gap-3 py-3'>
-                        <Link to='/Contact' className='flex items-center gap-3'>
+                    </Link>
+                    <Link to='/Contact' className='bg-desactive-amber-600 flex justify-between items-center gap-3 py-3'>
+                        <li  className='flex items-center gap-3'>
                             <IoChatbubbleOutline className='text-2xl' />
                             <span>Contact us</span>
-                        </Link>
+                        </li>
                         <IoIosArrowForward className='text-2xl' />
-                    </li>
+                    </Link>
                 </ul>
 
             </section>

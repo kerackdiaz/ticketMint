@@ -12,15 +12,15 @@ const Contact = () => {
                 <form className='flex flex-col text-lg text-black gap-3 p-5 w-[85%] md:w-[60%] desktop:w-1/3 my-auto rounded-lg bg-gray-900'>
                     <label className='relative'>
                         <FaRegUser className='absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500' />
-                        <input type="text" onChange name='' className='w-full p-2 pl-10 rounded-xl bg-[#131516] text-white' placeholder='Full Name' />
+                        <input type="text"  name='' className='w-full p-2 pl-10 rounded-xl bg-[#131516] text-white' placeholder='Full Name' />
                     </label>
                     <label className='relative'>
                         <MdEmail className='absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500' />
-                        <input type="email" onChange name='' className='w-full p-2 pl-10 rounded-xl bg-[#131516] text-white' placeholder='Email Address' />
+                        <input type="email"  name='' className='w-full p-2 pl-10 rounded-xl bg-[#131516] text-white' placeholder='Email Address' />
                     </label>
                     <label className='relative'>
                         <textarea
-                            onChange name=''
+                             name=''
                             className='w-full p-2 pl-3 rounded-xl h-40 bg-[#131516] text-white'
                             placeholder='Message...'
                         />
