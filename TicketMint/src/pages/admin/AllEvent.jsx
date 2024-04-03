@@ -1,10 +1,7 @@
-import React from "react";
-
+import React,{ useState } from "react";
 import { useSelector } from "react-redux";
 import { FaUserAstronaut } from "react-icons/fa";
-import { useState } from "react";
-
-import { EventProvider } from "../../utils/Db";
+import { EventProvider, statusEvent } from "../../utils/Db";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { FaLocationDot } from "react-icons/fa6";
@@ -12,13 +9,24 @@ import { FaCalendarCheck } from "react-icons/fa6";
 
 const AllEvent = () => {
   const user = useSelector((state) => state.authReducer.user);
+  const token = useSelector((state) => state.authReducer.token.token);
   const [clients, setClients] = useState(user.clients);
+  const [status, setStatus] = useState(false);
+  const [eventId, setEventId] = useState("");
   console.log(clients);
 
   const events = EventProvider();
 
   const filteredClients = clients.filter((client) => client.role === "AGENCY");
-
+  const handleChangeStatus = async (e) => {
+    e.preventDefault();
+    const selectId = e.target.value;   
+     console.log(e.target.value);
+    const response = await statusEvent(selectId, token);
+    if (response.success) {
+      setStatus(true);
+    }
+  }
 
   return (
     <div id="oldEvents" className=" laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-lg flex justify-center">
@@ -57,6 +65,8 @@ const AllEvent = () => {
                     </td>
                     <td className=" flex justify-center laptop:w-[60px] items-center">
                       <button
+                      onClick={handleChangeStatus}
+                      value={event.id}
                         className={`rounded-full py-1 px-2 text-xs laptop:text-sm ${event.status ? "bg-green-500" : "bg-red-500"
                         }`}
                       >

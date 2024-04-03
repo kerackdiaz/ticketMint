@@ -125,6 +125,7 @@ const admin = (onLogin) => {
       <Route path="/AllUser" element={<AllUser />} />
       <Route path="/" element={<AllEvent />} /> 
       <Route path='/Transaction' element = {<Transactions/>}/>
+      <Route path='/Profile' element={<Profile/>} /> 
     </Routes>
   </>
 }
