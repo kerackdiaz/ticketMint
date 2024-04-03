@@ -3,7 +3,8 @@ import { FaCcVisa, FaCcMastercard } from "react-icons/fa6";
 import Paymetbanner from '../../../public/paymet-banner.png'
 import { walletCharger } from '../../utils/Db'
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';;
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Payment = () => {
     const token = useSelector((state) => state.authReducer.token.token);
@@ -24,7 +25,16 @@ const Payment = () => {
         const response = await walletCharger(amount, token);
         console.log(response);
         if (response.success) {
-            navigate('/Wallet');
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your work has been saved",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            setTimeout(() => {
+                navigate('/Wallet');
+            }, 2000)
         }
     };
     return (
