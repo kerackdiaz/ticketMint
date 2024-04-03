@@ -41,12 +41,12 @@ function Collectibles() {
           <span class="sr-only">Loading...</span>
         </div>
         )}
-      let filterEvent = eventsWithTicketCounts
+      let filterEvent = eventsWithTicketCounts 
       return filterEvent.length > 0 ? filterEvent.map((event, index) => {
-        return <CardCollectibles key={index} name={event.name} date={event.date} image={event.imageURL} id={event.id } ticketCount={event.ticketCount}/>}) : <h1 className='text-white'>No collectibles</h1>
+        return <CardCollectibles key={index} type={event.ticketTypes} name={event.name} date={event.date} image={event.imageURL} id={event.id } ticketCount={event.ticketCount}/>}) : <h1 className='text-white'>No collectibles</h1>
   }
   return (
-    <div className=' flex flex-1 gap-6 desktop:mt-20 flex-col items-center'>
+    <div className=' flex flex-1 gap-6 desktop:mt-20 mb-20 flex-col items-center'>
     <h2 className='text-lg font-medium py-1 dark:text-white text-[#0b0b1c] desktop:text-5xl desktop:text-start desktop:w-[70%]'>My Collectibles</h2>
       <div className='flex  justify-center  bg-[#bbabff] w-3/4 rounded-lg md:w-1/2'>
         <Link to={'/myTickets'} className='w-1/2 text-center flex justify-center'>
