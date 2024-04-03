@@ -4,14 +4,31 @@ import { useSelector } from "react-redux";
 import { GrTransaction } from "react-icons/gr";
 import { FaUserGroup } from "react-icons/fa6";
 import { MdOutlineEventAvailable } from "react-icons/md";
+import { FaSun } from "react-icons/fa";
+import { FaMoon } from "react-icons/fa";
 
-const LayoutAdmin = () => {
+const LayoutAdmin = ({ onLogin }) => {
   const userdata = useSelector((state) => state.authReducer.user);
   console.log(userdata);
-
+  const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('darkMode') === 'true' || false);
   const [showMenu, setShowMenu] = useState(false);
   const [showDropdownUser, setShowDropdownUser] = useState(false);
   const [search, setSearch] = useState("");
+
+useEffect(() => {
+  if (isDarkMode) {
+    document.body.classList.add('dark');
+  } else {
+    document.body.classList.remove('dark');
+  }
+  localStorage.setItem('darkMode', isDarkMode.toString());
+}, [isDarkMode]);
+
+const toggleDarkMode = () => {
+  const newDarkMode = !isDarkMode;
+  setIsDarkMode(newDarkMode);
+  localStorage.setItem('darkMode', newDarkMode.toString());
+};
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -24,6 +41,10 @@ const LayoutAdmin = () => {
   const toggleDropdownUser = () => {
     setShowDropdownUser(!showDropdownUser);
   };
+
+  const handleLogout = () => {
+    onLogin();
+  }
 
   return (
     <>
@@ -58,7 +79,7 @@ const LayoutAdmin = () => {
                 <ul className="space-y-2 font-medium absolute bg-white p-10 pr-20  top-[125px] left-1 border-2 dark:bg-[#0B0B1C] dark:border-[#55347B]">
                   <li>
                     <Link
-                      to={"/AllEvent"}
+                      to={"/"}
                       className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                     >
                      <MdOutlineEventAvailable className="text-xl" />
@@ -250,6 +271,7 @@ const LayoutAdmin = () => {
                         Profile
                       </Link>
                     </li>
+                    
                     <li>
                       <Link
                         to={"/Report"}
@@ -259,9 +281,24 @@ const LayoutAdmin = () => {
                         Earnings
                       </Link>
                     </li>
+                    <li className=" dark:text-white text-gray-700 flex gap-3 text-sm items-center px-4">
+                      Theme:
+                      {
+                        isDarkMode ? ( <button className="block w-full text-center text-gray-700 py-2  hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                        onClick={toggleDarkMode}
+                        role="menuitem">
+                          <FaSun className="text-gray-700 text-lg w-full dark:text-white"/>
+                        </button>) :  (<button className="block w-full text-center text-gray-700 py-2  hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                        onClick={toggleDarkMode}
+                        role="menuitem">
+                          <FaMoon className="text-gray-700 text-lg w-full dark:text-white"/>
+                      </button>)
+                      }
+                    </li>
                     <li>
                       <Link
-                        to={"/logout"}
+                        to={"/"}
+                        onClick={handleLogout}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         role="menuitem"
                       >
@@ -285,7 +322,7 @@ const LayoutAdmin = () => {
           <ul className="space-y-2 font-medium">
             <li>
               <Link
-                to={"/AllEvent"}
+                to={"/"}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                    <MdOutlineEventAvailable className="text-xl" />
