@@ -172,8 +172,8 @@ function DetailsEvent() {
   return (
 
     <div className=' bg-contain md:bg-cover pb-[50px] desktop:pb-0 md:bg-no-repeat flex flex-col items-center justify-end w-screen h-screen bg-top '>
-      <img className='object-cover absolute -z-0 w-full movil:h-4/5 laptop:h-full movil:bottom-[34%] laptop:bottom-[12%] translate-y-28 rounded-2xl' src={event.imageURL} alt="" />
-      <div className='bg-[#55347b] z-10 p-3 w-full rounded-t-2xl md:w-1/2'>
+      <img className='object-cover absolute -z-0 w-full movil:h-4/5 laptop:h-full movil:bottom-[34%] laptop:bottom-[12%] translate-y-28 ' src={event.imageURL} alt="" />
+      <div className='bg-[#55347b] opacity-90 z-10 p-3 w-full rounded-t-2xl md:w-1/2'>
         <div className=''>
           <div className='flex justify-between items-center '>
             <h2 className='text-white text-2xl font-bold'>{event.name}</h2>
@@ -202,7 +202,7 @@ function DetailsEvent() {
           <div className='flex flex-col items-start opacity-90'>
             {/* Moneda de pago */}
             <p className='text-sm text-white py-3'>Your payment will be made in</p>
-            <select onChange={handleCurrencySelected} className='text-white text-sm mb-2 bg-[#55347b] border py-1 px-3'>
+            <select onChange={handleCurrencySelected} className='text-white text-sm mb-2 bg-[#55347b] border border-[#8468fb] rounded-md py-1 px-3'>
               <option value="USDT">USDT</option>
               <option value="COP">COP</option>
               <option value="ARS">ARS</option>
@@ -222,7 +222,7 @@ function DetailsEvent() {
             </div>
             {/* Tipo de ticket */}
 
-            <select onChange={handleTicketTypeChange} c lassName='text-white bg-[#55347b] text-sm border py-1 px-1'>
+            <select onChange={handleTicketTypeChange} className='text-white bg-[#55347b] text-sm border border-[#8468fb] rounded-md py-1 px-1'>
               <option defaultValue  value={event?.ticketTypes[0]?.type}>Select Type</option>
               {
                 event.ticketTypes?.map((type, index) => (

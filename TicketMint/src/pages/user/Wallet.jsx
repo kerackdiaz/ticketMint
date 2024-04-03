@@ -29,7 +29,7 @@ const Wallet = () => {
 
 
     return (
-        <main className='flex text-white flex-col items-center w-full m-auto min-h-screen ' >
+        <main className='flex text-white flex-col items-center w-full m-auto min-h-screen mb-20' >
 
 
             <h1 className="text-lg dark:text-white text-[#0B0B1C] font-medium py-1 pb-3 text-center">Wallet</h1>
