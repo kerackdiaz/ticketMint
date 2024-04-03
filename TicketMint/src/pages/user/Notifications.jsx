@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 
 const Notifications = () => {
   const notifications = useSelector((state) => state.authReducer.user.notifications)
-
     const [search, setSearch] = useState('')
 
   const events = useSelector((state) => state.authReducer.user.events);
@@ -16,6 +15,7 @@ const Notifications = () => {
         setSearch(e.target.value)
         console.log(e.target.value);
       }
+
 
       const eventIds = Array.from(new Set(notifications?.map((notification) => notification.eventId)));
       const notificationEvents = Object.values(events)?.filter(event => eventIds.includes(event.id));

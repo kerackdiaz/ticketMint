@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
@@ -8,6 +8,7 @@ function MessageEvent() {
     const notifications = useSelector((state) => state.authReducer.user.notifications)
     const event = Object.values(events)?.find((event) => event.id === id)
     const notificationsEvent = Object.values(notifications)?.filter((notification) => notification.eventId === id)
+
     const getMessage = () => {
         return notificationsEvent?.map((notification, index) => (
         <div key={index} className='mb-1 flex flex-col items-start'>
@@ -19,6 +20,8 @@ function MessageEvent() {
         )
         )
     }
+
+
 
   return (
     <main  className=' flex flex-1 desktop:mt-20 flex-col items-center'>

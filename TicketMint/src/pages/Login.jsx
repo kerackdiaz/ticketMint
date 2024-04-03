@@ -12,6 +12,10 @@ import LoadingScreen from '../components/LoadingScreen';
 const Login = ({ onLogin }) => {
     const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('darkMode') === 'true' || false);
     useEffect(() => {
+        const currency = localStorage.getItem('currency') || 'USD';
+        if(currency === 'USD') {
+        localStorage.setItem('currency', currency);}
+        localStorage.setItem('conversion_rates', '1');
         if (isDarkMode) {
             document.body.classList.add('dark');
           } else {

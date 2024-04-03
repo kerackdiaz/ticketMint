@@ -18,13 +18,9 @@ function DetailsEvent() {
   const [quantity, setQuantity] = useState(1)
   const event = Object.values(EVENTS).find(event => event.id === id);
   const [ticketTypeSelected, setTicketTypeSelected] = useState(event?.ticketTypes ? event.ticketTypes[0] : {});
-  const [purchaseData, setPurchaseData] = useState({
-    ticketId: "",
-    quantity: 0,
-    totalPrice: 0
-  })
-  const [ticketId, setTicketId] = useState("");
   const [numericPrice, setNumericPrice] = useState(null);
+  const [purchaseData, setPurchaseData] = useState({})
+  const [ticketId, setTicketId] = useState("");
   const [formatOption, setFormatOption] = useState({
     country: 'en-US',
     currency: 'USD',
@@ -40,45 +36,19 @@ function DetailsEvent() {
       setTicketId(ticketTypeSelected?.id);
     }
   }, [ticketTypeSelected])
-
+  
   const handleFav = () => {
     setOnFav(!onFav)
     if (!onFav) {
       localStorage.setItem('favorite', id)
     }
   }
-
-  const handleBuy = (e) => {
-    e.preventDefault()
-
-    setPurchaseData({
-      ticketId: ticketId,
-      quantity: quantity,
-      totalPrice: numericPrice
-    })
-
-    setPurchaseData({
-      ticketId: ticketId,
-      quantity: quantity,
-      totalPrice: numericPrice
-    })
-
-    // axios.post('http://localhost:8080/api/tickets/buy', purchaseData, {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`
-    //   }
-    // })
-    //   .then(res => {
-    //     console.log(res.data)
-    //     alert("Purchase successful!")
-    //     navigate("/myTickets")
-    //   })
-    //   .catch(err => console.error(err))
-  }
-
   useEffect(() => {
     console.log(purchaseData);
   }, [purchaseData]);
+
+
+
 
   const handleAdd = () => {
     if (quantity < 10) {
@@ -149,11 +119,37 @@ function DetailsEvent() {
     const selectedTicketType = event?.ticketTypes?.find(ticket => ticket.type === e.target.value);
     if (selectedTicketType) {
       setTicketTypeSelected(selectedTicketType);
+      setPurchaseData({
+        ticketId: ticketId,
+        quantity: quantity,
+        totalPrice: selectedTicketType.basePrice
+      })
+
     }
   }
 
-  console.log(event.ticketTypes.length);
-  console.log(event.ticketTypes.length === 0);
+  const handleBuy = (e) => {
+    e.preventDefault()
+  
+    const updatedPurchaseData = {
+      ticketId: ticketId,
+      quantity: quantity,
+      totalPrice: numericPrice
+    };
+  
+    setPurchaseData(updatedPurchaseData)
+  
+    console.log(updatedPurchaseData);
+    axios.post('http://localhost:8080/api/tickets/buy', updatedPurchaseData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => console.error(err))
+  }
 
   return (
 
@@ -216,9 +212,11 @@ function DetailsEvent() {
             </select>
             <div className='flex flex-col border border-1'>
               <p className='text-sm text-white'>Total with taxes</p>
+              
               <p className='text-lg font-semibold text-white text-center'>{(numericPrice ? numericPrice * formatOption.currencyFactor : 0).toLocaleString(formatOption.country, {
                 style: 'currency',
                 currency: formatOption.currency
+                
               })}</p>
             </div>
           </div>

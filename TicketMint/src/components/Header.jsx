@@ -14,7 +14,9 @@ const Header = () => {
     useEffect(() => {
         const ws = new WebSocket('ws://localhost:8080/alert');
 
-        ws.onopen = () => {};
+        ws.onopen = () => {
+            alert('Conectado');
+        };
 
         ws.onmessage = (event) => {
             const notification = JSON.parse(event.data);
@@ -26,12 +28,15 @@ const Header = () => {
                     setNotificationReceived(true);
                     const notisElement = document.getElementById('Notis');
                     notisElement.classList.add('notificationReceived');
+                    localStorage.setItem('notifications', 'newAlert');
                 }
             }};
         ws.onerror = (error) => {
         };
 
-        ws.onclose = () => {};
+        ws.onclose = () => {
+            alert('Desconectado');
+        };
 
         return () => { ws.close(); };
     }, []);
@@ -39,6 +44,7 @@ const Header = () => {
     useEffect(() => {
         if (location.pathname === '/notis' && notificationReceived) {
                 notisElement.classList.remove('notificationReceived');
+                localStorage.removeItem('notifications');
                 setNotificationReceived(false);
         }
     }, [notificationReceived]);
