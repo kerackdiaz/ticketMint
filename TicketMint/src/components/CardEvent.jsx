@@ -21,10 +21,15 @@ function CardEvent({ handleFav, onFav, name, date, image, id, quantity, time, pr
 
     const handleFavoriteClick = (event) => {
         event.preventDefault();
-        handleFav();
+        handleFav(id);
+
     };
     const FavIcon = onFav ? TiStarFullOutline : CiStar;
-    console.log(image)
+    if (onFav) {
+        console.log(Object.keys(onFav))
+        
+    }
+
     return (
         <Link to={`/details/${id}`} className={soldOut} >
             <div id={idProx} className={`relative w-80 h-64 desktop:bg-no-repeat shadow-md shadow-[#0b0b1c] dark:shadow-none desktop:bg-cover desktop:w-[430px] bg-top bg-local rounded-2xl flex flex-col justify-end items-end`}>
