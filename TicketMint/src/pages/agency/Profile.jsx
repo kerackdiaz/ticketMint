@@ -45,7 +45,7 @@ const Profile = () => {
 
   return (
     <div className="laptop:w-[78%] relative laptop:left-[14%] tablet:left-[25%] tablet:w-1/2 w-[80%] h-[80%] md:w-[490px] top-32 right-8 py-6 px-6 rounded-xl border border-gray-200 bg-[#DBC1FA] mt-10 flex flex-wrap gap-10 dark:bg-[#0B0B1C]">
-      <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl">
+      <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl dark:bg-[#0B0B1C] dark:border-2 mt-12">
         <div class="px-6">
           <div class="flex flex-wrap justify-center">
             <div class="w-full flex justify-center">
@@ -77,7 +77,7 @@ const Profile = () => {
           <div class="mt-6 py-6 border-t border-slate-200 text-center">
             <div class="flex flex-wrap justify-center">
               <div class="w-full px-4">
-                <div class="bg-white overflow-hidden shadow rounded-lg border">
+                <div class="bg-white overflow-hidden shadow rounded-lg border dark:bg-[#0B0B1C] dark:border-2 mt-12">
                   <form onSubmit={handleSubmit} class="border-t border-gray-200 px-4 py-5 sm:p-0">
                     <dl class="sm:divide-y sm:divide-gray-200">
                       <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

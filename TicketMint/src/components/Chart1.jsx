@@ -87,7 +87,7 @@ const Chart1 = () => {
     },
   };
   return (
-    <div className="relative flex flex-col justify-center rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+    <div className="relative flex flex-col justify-center rounded-xl bg-white bg-clip-border text-gray-700 shadow-md ">
       <div className="relative mx-4 mt-4 flex flex-col gap-4 overflow-hidden rounded-none bg-transparent bg-clip-border text-gray-700 shadow-none tablet:flex-row tablet:items-center">
         <div className="w-max rounded-lg bg-gray-200 p-5 text-white">
           <svg
