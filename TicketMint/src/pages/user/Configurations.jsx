@@ -6,8 +6,9 @@ import { MdDarkMode, MdOutlinePrivacyTip, MdOutlineLightMode } from "react-icons
 import { PiCurrencyCircleDollarLight } from "react-icons/pi";
 import { IoWalletOutline, IoChatbubbleOutline } from "react-icons/io5"
 import { IoIosQrScanner, IoIosHelpCircleOutline, IoIosArrowForward } from "react-icons/io";
+import { IoLogOut } from "react-icons/io5";
 
-const Configurations = () => {
+const Configurations = ({ onLogin }) => {
     const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('darkMode') === 'true' || false);
     const [isBiometry, setIsBiometry] = useState(false);
     const [currency, setCurrency] = useState(localStorage.getItem('currency') || 'USD');
@@ -52,7 +53,9 @@ const Configurations = () => {
         localStorage.setItem('darkMode', newDarkMode.toString());
     };
 
-
+    const handleLogout = () => {
+        onLogin();
+      }
 
     return (
         <main className='flex dark:text-white text-[#0b0b1c] flex-col desktop:mt-20 items-center w-full m-auto min-h-screen'>
@@ -115,6 +118,20 @@ const Configurations = () => {
                         <Link to='/Contact' className='flex items-center gap-3'>
                             <IoChatbubbleOutline className='text-2xl' />
                             <span>Contact us</span>
+                        </Link>
+                        <IoIosArrowForward className='text-2xl' />
+                    </li>
+                </ul>
+
+            </section>
+            <section className='w-[86%] desktop:w-[60%] py-3 border-t bg-desactive-slate-600' >
+                <h3 className='text-start font-medium text-lg desktop:text-2xl py-3'>Support</h3>
+
+                <ul className='text-sm font-medium'>
+                    <li className='bg-desactive-red-950 flex justify-between items-center gap-3 py-3'>
+                        <Link to='/' onClick={handleLogout} className='flex items-center gap-3'>
+                            <IoLogOut className='text-2xl' />
+                            <span>LogOut</span>
                         </Link>
                         <IoIosArrowForward className='text-2xl' />
                     </li>

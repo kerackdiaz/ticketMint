@@ -34,20 +34,25 @@ import Transactions from '../pages/agency/Transactions.jsx'
 import OldEvents from '../pages/agency/OldEvents.jsx'
 
 
-const RoleRender = () => {
+const RoleRender = ({ onLogin }) => {
   const userdata = ClientProvider();
   const role = useSelector((state) => state.authReducer.user.role);
+
+  const handleLogout = () => {
+    onLogin();
+  }
+
 
       switch (role) {
 
         case 'CLIENT': {
-          return user();
+          return user(onLogin);
         }
         case 'AGENCY': {
-          return agency();
+          return agency(onLogin);
           
         }case 'ADMIN': {
-          return admin();
+          return admin(onLogin);
           
         }
         default: {
@@ -60,7 +65,7 @@ export default RoleRender
 
 
 
- const user = () => {
+ const user = (onLogin) => {
   return (
   <>
     <Header />
@@ -75,7 +80,7 @@ export default RoleRender
       <Route path='/favorites' element={<Favorites />} />
       <Route path='notifications' element = {<Notifications/>}/>
       <Route path='messages/:id' element = {<MessageEvent/>}/>
-      <Route path="/Configurations" element={<Configurations />} />
+      <Route path="/Configurations" element={<Configurations onLogin={onLogin} />} />
       <Route path="/Contact" element={<Contact />} />
       <Route path="/Help" element={<Help />} />
       <Route path="/Privacity" element={<Privacity />} />
@@ -88,9 +93,9 @@ export default RoleRender
 }
 
 
-const agency = () => {
+const agency = (onLogin) => {
   return <>
-  <Layout/>
+  <Layout onLogin={onLogin}/>
     <Routes>
       <Route path="/" element={<Events />} />
       <Route path="/Events" element={<Events />} />
@@ -105,13 +110,13 @@ const agency = () => {
   </>
 }
 
-const admin = () => {
+const admin = (onLogin) => {
   return <>
-  <LayoutAdmin/>
+  <LayoutAdmin onLogin={onLogin}/>
     <Routes>
       <Route path="/AllUser" element={<AllUser />} />
       <Route path="/" element={<AllEvent />} /> 
-      <Route path='/Transaction' element = {<Transaction/>}/>
+      <Route path='/Transaction' element = {<Transactions/>}/>
     </Routes>
   </>
 }

@@ -3,15 +3,16 @@ import { useSelector } from "react-redux";
 import { IoCameraReverse } from "react-icons/io5";
 import { uploadFile } from '../../utils/Firebase';
 import { changeData, changeAvatar, ClientProvider } from '../../utils/Db';
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const user = useSelector((state) => state.authReducer.user);
   const token = useSelector((state) => state.authReducer.token.token);
-  const [agencyName, setAgencyName] = useState(user.agencyName || "");
+  const [agencyName, setAgencyName] = useState(user.companyName || "");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState(user.phone || "");
   const [address, setAddress] = useState(user.address || "");
-
+  const navigate = useNavigate();
 
   const handleInputChange = (event, setState) => {
     setState(event.target.value);
@@ -21,6 +22,7 @@ const Profile = () => {
     e.preventDefault();
     const response = await changeData({ agencyName, password, phoneNumber, address} , token);
     if (response.success) {
+      navigate('/profile')
     }
   }
 
@@ -29,13 +31,15 @@ const Profile = () => {
     const file = e.target.files[0];
     console.log(file)
    
-      const newId = "/agency/" + user.agencyName+"/" +user.id + "_" +user.firstName
+      const newId = "/agency/" + user.companyName+"/" +user.id + "_" +user.firstName
       const url = await uploadFile(file,newId)
+      console.log(url)
       const res = await changeAvatar(url, token);
       console.log(res)
       if (res.success === true) {
+        console.log(res.success);
         // Swal.fire('Profile picture updated', '', 'success');
-        // navigate('/profile')
+        navigate('/profile')
       }
   };
 

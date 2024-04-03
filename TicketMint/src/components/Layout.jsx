@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const Layout = () => {
+const Layout = ({ onLogin }) => {
   const userdata = useSelector((state) => state.authReducer.user);
 
   const [showMenu, setShowMenu] = useState(false);
@@ -34,6 +34,10 @@ const Layout = () => {
   const toggleDropdownUser = () => {
     setShowDropdownUser(!showDropdownUser);
   };
+
+  const handleLogout = () => {
+    onLogin();
+  }
 
   return (
     <>
@@ -395,7 +399,8 @@ const Layout = () => {
                     </li>
                     <li>
                       <Link
-                        to={"/logout"}
+                        to={"/"}
+                        onClick={handleLogout}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         role="menuitem"
                       >

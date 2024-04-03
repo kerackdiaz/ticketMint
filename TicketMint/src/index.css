@@ -100,3 +100,7 @@ div#ProxEvent div div h2, div#ProxEvent div div p {
     width: 412px;
     justify-content: center;
 }
+
+div#ProxEvent img {
+    transform: translateY(50px);
+}
