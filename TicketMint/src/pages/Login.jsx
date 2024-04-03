@@ -7,7 +7,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import LoadingScreen from '../components/LoadingScreen';
-
+import Swal from 'sweetalert2'
 
 const Login = ({ onLogin }) => {
     const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('darkMode') === 'true' || false);
@@ -75,16 +75,38 @@ const Login = ({ onLogin }) => {
     const handleSignUp = async (e) => { 
         e.preventDefault();
         if(isAgency && !isRegistering){
-            const resgisterResponse = await postAgency({ firstName, lastName, email, password }, dispatch);
-            if (resgisterResponse.success) {
-                alert('agency created successfully');
-            } setMenssageError(resgisterResponse.message);
+            const { value: accept } = await Swal.fire({
+                title: "Terms and conditions",
+                input: "checkbox",
+                inputValue: 1,
+                inputPlaceholder: `I agree with the conditions for agencys`,
+                confirmButtonText: `Continue&nbsp;<i class="fa fa-arrow-right"></i>`,
+                inputValidator: (result) => {return !result && "You need to agree with T&C";
+                }});
+
+                if (accept) {
+                    const resgisterResponse = await postAgency({ firstName, lastName, email, password }, dispatch);
+                    if (resgisterResponse.success) {
+                        Swal.fire("Your agency has been created, please check your email for activation.");
+                    } setMenssageError(resgisterResponse.message);
+                }
         }
         if(!isAgency && !isRegistering){
-            const registerResponse = await postRegister({ firstName, lastName, email, password }, dispatch);
-            if (registerResponse.success) {
-                alert('User created successfully');
-            } setMenssageError(registerResponse.message);
+            const { value: accept } = await Swal.fire({
+                title: "Terms and conditions",
+                input: "checkbox",
+                inputValue: 1,
+                inputPlaceholder: `I agree with the conditions for users`,
+                confirmButtonText: `Continue&nbsp;<i class="fa fa-arrow-right"></i>`,
+                inputValidator: (result) => {return !result && "You need to agree with T&C";
+                }});
+
+                if (accept) {
+                    const registerResponse = await postRegister({ firstName, lastName, email, password }, dispatch);
+                if (registerResponse.success) {
+                    Swal.fire("Your account has been created, please check your email for activation.");
+                } setMenssageError(registerResponse.message);
+                }
         }
 
 

@@ -9,6 +9,7 @@ import { BsTicketPerforated } from "react-icons/bs";
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 function DetailsEvent() {
   const { id } = useParams()
@@ -147,7 +148,22 @@ function DetailsEvent() {
     })
       .then(res => {
         if(res.data.success) {
-          navigate("/mytickets")
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: `Ticket bought successfully`
+          });
+          navigate("/mytickets");
       }
       })
       .catch(err => console.error(err))
@@ -213,10 +229,10 @@ function DetailsEvent() {
                   <option value={type.type} key={index}>{type.type}</option>))
               }
             </select>
-            <div className='flex flex-col border border-1'>
-              <p className='text-sm text-white'>Total with taxes</p>
+            <div className='flex flex-col pr-3 w-[120px]'>
+              <p className='text-sm text-end text-white'>Total with taxes</p>
               
-              <p className='text-lg font-semibold text-white text-center'>{(numericPrice ? numericPrice * formatOption.currencyFactor : 0).toLocaleString(formatOption.country, {
+              <p className='text-lg font-semibold text-white text-end'>{(numericPrice ? numericPrice * formatOption.currencyFactor : 0).toLocaleString(formatOption.country, {
                 style: 'currency',
                 currency: formatOption.currency
                 
