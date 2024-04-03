@@ -54,11 +54,12 @@ const AllEvents = () => {
   };
 
   return (
-    <main className=" relative h-full  w-full md:w-[150%]  right-8 rounded-xl   mt-10 flex flex-wrap gap-10 p-5 text-[#0B0B1C]">
-      <section className=" relative bg-white w-[120%] 2k:left-28 left-3 h-[100%] md:w-[467px] laptop:w-[700px] desktop:w-[1030px] md:left-0 laptop:left-[40px] shadow-lg rounded-md latptop:w-[55%]  p-2">
+    
+    <div className="w-full bg-white px-5 py-4 max-h-4/5">
+    
         <h1 className="text-3xl font-thin">Events</h1>
         <table className="font-medium border-1 w-full">
-          <thead className="w-full">
+          <thead className="w-full ">
             <tr className="bg--green-500 flex gap-3 laptop:justify-around border-b border-gray-600">
               <th className="py-5 flex justify-center items-center md:w-[150px] w-[60px] border-gray-600 text-start bg--blue-500">
                 Name
@@ -77,10 +78,9 @@ const AllEvents = () => {
               <th className="py-5 flex justify-center items-center text-start laptop:w-[45px]">Actions</th>
             </tr>
           </thead>
-          <tbody>{renderEvents()}</tbody>
+          <tbody className="overflow-y-scroll">{renderEvents()}</tbody>
         </table>
-      </section>
-    </main>
+    </div>
   );
 };
 

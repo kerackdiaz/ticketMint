@@ -38,7 +38,7 @@ useEffect(() => {
       <UserLayout>
       {isLoggedIn ? (
         <>
-        <RoleRender/>
+        <RoleRender onLogin={handleLogout} />
         </>
         ) : (
           <Routes>

@@ -7,7 +7,7 @@ const Transactions = () => {
 
     const user = useSelector((state) => state.authReducer.user)
 
-    const transactions = user.transactions
+    const transactions = user.transaction
 
     console.log(transactions);
 

@@ -51,10 +51,10 @@ const OldEvents = () => {
   };
 
   return (
-    <div className="laptop:w-[78%] 2k:w-[50%] 2k:left-[30%] relative laptop:left-[14%] tablet:left-[25%] tablet:w-[490px] w-[93%] h-[80%] top-32 right-12 pb-6 px-6 rounded-xl border border-gray-200 mt-10 flex flex-wrap gap-10 bg-[#DBC1FA] dark:bg-[#0B0B1C] ">
-    <main className=" relative h-full w-full md:w-[150%]  right-8 rounded-xl mt-10 flex flex-wrap gap-10 p-5 text-[#0B0B1C]">
-      <section className=" relative bg-white w-[120%] 2k:left-28 left-7 h-[100%] md:w-[467px] laptop:w-[700px] desktop:w-[1030px] md:left-0 laptop:left-[40px] shadow-lg rounded-md latptop:w-[55%]  p-2">
-        <h1 className="text-3xl font-thin">Events</h1>
+    <div id="oldEvents" className=" laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-lg flex justify-center">
+    <div className="w-full  rounded-xl mt-10 flex flex-wrap gap-10 p-5 text-[#0B0B1C]">
+      <section className=" bg-white w-full p-5">
+        <h1 className="text-3xl font-thin">Old Events</h1>
         <table className="font-medium border-1 w-full">
           <thead className="w-full">
             <tr className="bg--green-500 flex gap-3 laptop:justify-around border-b border-gray-600">
@@ -71,13 +71,13 @@ const OldEvents = () => {
                 Location
               
               </th>
-              <th className="py-5 flex justify-center items-center laptop:w-[60px] text-start">Status</th>
+              <th className="py-5 flex justify-center items-center laptop:w-[60px] text-start">Raise</th>
             </tr>
           </thead>
-          <tbody>{renderEvents()}</tbody>
+          <tbody className="overflow-y-scroll">{renderEvents()}</tbody>
         </table>
       </section>
-    </main>
+    </div>
     </div>
   );
 };
