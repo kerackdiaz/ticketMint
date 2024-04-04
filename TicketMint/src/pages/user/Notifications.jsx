@@ -13,13 +13,12 @@ const Notifications = () => {
 
     const handleSearch = (e) => {
         setSearch(e.target.value)
-        console.log(e.target.value);
       }
 
 
       const eventIds = Array.from(new Set(notifications?.map((notification) => notification.eventId)));
       const notificationEvents = Object.values(events)?.filter(event => eventIds.includes(event.id));
-      const fiterNameNotify = notificationEvents?.filter(event => event.name.toLowerCase().includes(search.toLowerCase()))
+      const fiterNameNotify = notificationEvents?.filter(event => event.name.toLowerCase().includes(search.toLowerCase())) 
 
       const viewNotifications = () => {
         return fiterNameNotify ? fiterNameNotify?.map((event, index) => (
@@ -28,9 +27,9 @@ const Notifications = () => {
             <img className='w-8 h-8 desktop:w-16 desktop:h-16 object-cover object-center rounded-full bg-black' src={event.imageURL}  />
             <div className='w-4/5 ml-5'>
               <p className='dark:text-white text-[#0b0b1c]'>{event.name}</p>
-              <p className='text-sm dark:text-white text-[#0b0b1c] line-clamp-1'>{notifications[notifications.length -1].message}</p>
+              <p className='text-sm dark:text-white text-[#0b0b1c] line-clamp-1'>{event.notifications[event.notifications.length -1].message}</p>
             </div>
-            <p className='text-sm dark:text-white text-[#0b0b1c]'>{notifications[notifications.length -1].date}</p>
+            <p className='text-sm dark:text-white text-[#0b0b1c]'>{event.notifications[event.notifications.length -1].date}</p>
           </div>
         </Link>
         )) : <p className='text-sm dark:text-white text-[#0b0b1c] w-full text-center desktop:text-xl'>No event notifications</p>

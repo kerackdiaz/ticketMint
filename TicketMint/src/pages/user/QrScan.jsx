@@ -5,6 +5,8 @@ import { BsQrCodeScan } from "react-icons/bs";
 import { GiDonkey } from "react-icons/gi";
 import QRCode from "react-qr-code";
 import { useSelector } from 'react-redux'
+import Swal from 'sweetalert2';
+
 
 
 function QrScan() {
@@ -27,7 +29,10 @@ function QrScan() {
     if (diffHours <= 5) {
       setShowQR(true);
     } else {
-      alert("The QR code will be available 5 hours before the event starts.");
+      Swal.fire({
+        title: 'The QR code will be available 5 hours before the event starts.',
+        icon: 'warning',
+      })
     }
   };
 
@@ -49,7 +54,7 @@ function QrScan() {
             ></div>
 
        <div className='z-10 p-3 gap-6 flex flex-col justify-center items-center'>
-        <h2 className='text-3xl dark:text-white font-bold text-[#0b0b1c] desktop:text-5xl'>Qr Scan</h2>
+        <h2 className='text-3xl dark:text-white font-bold text-[#0b0b1c] desktop:text-5xl'>QR Scan</h2>
         <CardMyTickets key={eventTicket.id} name={eventTicket.name} date={eventTicket.date} time={eventTicket.time} image={eventTicket.imageURL} id={eventTicket.id} ticketCount={eventTicket.ticketCount}/>
         <div className='flex flex-col items-center'>
             <BsQrCodeScan className='text-3xl dark:text-white text-[#0b0b1c]'/>
