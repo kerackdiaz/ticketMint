@@ -44,8 +44,8 @@ const Profile = () => {
   };
 
   return (
-    <div className="laptop:w-[78%] relative laptop:left-[14%] tablet:left-[25%] tablet:w-1/2 w-[80%] h-[80%] md:w-[490px] top-32 right-8 py-6 px-6 rounded-xl border border-gray-200 bg-[#DBC1FA] mt-10 flex flex-wrap gap-10 dark:bg-[#0B0B1C]">
-      <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl dark:bg-[#0B0B1C] dark:border-2 mt-12">
+    <div className="laptop:w-[78%] relative laptop:left-[14%] tablet:left-[25%] tablet:w-1/2 w-[80%] h-[80%] md:w-[490px] top-32 right-8 py-6 px-6 rounded-3xl border border-gray-200 bg-[#DBC1FA] mt-10 flex flex-wrap gap-10 dark:bg-[#0B0B1C]">
+      <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-3xl dark:bg-[#0B0B1C] dark:border-2">
         <div class="px-6">
           <div class="flex flex-wrap justify-center">
             <div class="w-full flex justify-center">
@@ -66,72 +66,59 @@ const Profile = () => {
             </div>
           </div>
           <div class="text-center mt-2">
-            <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">
+            <h3 class="text-2xl text-slate-700 dark:text-white font-bold leading-normal mb-1">
               {user.firstname} {user.lastname}
             </h3>
-            <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
-              <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>
-              Paris, France
-            </div>
           </div>
-          <div class="mt-6 py-6 border-t border-slate-200 text-center">
+          <div class="my-2 py-6 border-t border-slate-200 text-center">
             <div class="flex flex-wrap justify-center">
               <div class="w-full px-4">
                 <div class="bg-white overflow-hidden shadow rounded-lg border dark:bg-[#0B0B1C] dark:border-2 mt-12">
                   <form onSubmit={handleSubmit} class="border-t border-gray-200 px-4 py-5 sm:p-0">
                     <dl class="sm:divide-y sm:divide-gray-200">
                       <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-white">
                           Agency Name
                         </dt>
-                        {user.companyName == null ? <input type="text" placeholder="Agency Name" className=" text-center  py-2.5 px-0 w-[50%] text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700" value={agencyName} onChange={(e) => handleInputChange(e, setAgencyName)}/> : <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{user.companyName}</dd>}
+                        {user.companyName == null ? <input type="text" placeholder="Agency Name" className=" text-center  py-2.5 px-0 w-[50%] text-sm text-gray-500  dark:text-white  bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:border-gray-700" value={agencyName} onChange={(e) => handleInputChange(e, setAgencyName)}/> : <dd class="mt-1 text-sm text-gray-900  dark:text-white sm:mt-0 sm:col-span-2">{user.companyName}</dd>}
                         
                       </div>
                       <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
+                        <dt class="text-sm font-medium text-gray-500  dark:text-white">
                           Email address
                         </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        <dd class="mt-1 text-sm text-gray-900  dark:text-white sm:mt-0 sm:col-span-2">
                           {user.email}
                         </dd>
                       </div>
                       <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
+                        <dt class="text-sm font-medium text-gray-500  dark:text-white">
                           Password
                         </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 justify-center">
+                        <dd class="mt-1 text-sm text-gray-900  dark:text-white sm:mt-0 sm:col-span-2 justify-center">
                           <input
                             type="password"
                             placeholder="**********"
-                            className=" text-center  py-2.5 px-0 w-[50%] text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700"
+                            className=" text-center  py-2.5 px-0 w-[50%] text-sm text-gray-500  dark:text-white bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-700"
                             value={password} 
                             onChange={(e) => handleInputChange(e, setPassword)}
                           />
                         </dd>
                       </div>
                       <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
+                        <dt class="text-sm font-medium text-gray-500  dark:text-white">
                           Phone number
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
 
                           <div class="relative">
                             <div class="absolute inset-y-0 start-16 laptop:start-[130px] top-0 flex items-center ps-3.5 pointer-events-none">
-                              <svg
-                                class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                                viewBox="0 0 19 18"
-                              >
-                                <path d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z" />
-                              </svg>
                             </div>
                             <input
                               type="text"
                               id="phone-input"
                               aria-describedby="helper-text-explanation"
-                              class=" text-center text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 justify-center w-[50%] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              class=" text-center text-gray-500  bg-transparent border-0 border-b-2 border-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 justify-center w-[50%] ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                               // pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                               placeholder={user.phone==null ? "Phone Number" : user.phone}
                                value={phoneNumber} onChange={(e) => handleInputChange(e, setPhoneNumber)}
@@ -141,16 +128,16 @@ const Profile = () => {
                         </dd>
                       </div>
                       <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
+                        <dt class="text-sm font-medium text-gray-500  dark:text-white">
                           Address
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    <input type="text" placeholder={user.address == null ? "Company Address" : user.address} className=" text-center  py-2.5 px-0 w-[50%] text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700" value={address} onChange={(e) => handleInputChange(e, setAddress)}/>
+                    <input type="text" placeholder={user.address == null ? "Company Address" : user.address} className=" text-center  py-2.5 px-0 w-[50%] text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none  dark:text-white dark:border-gray-700" value={address} onChange={(e) => handleInputChange(e, setAddress)}/>
                         </dd>
                       </div>
                     </dl>
                     <div>
-                      <button type="submit" class="w-1/2 mt-6 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#CA67F5] hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                      <button type="submit" class="w-1/2 my-6 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#CA67F5] hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                         Save 
                       </button>
                     </div>

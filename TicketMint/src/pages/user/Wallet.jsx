@@ -44,7 +44,7 @@ const Wallet = () => {
 
 
 
-            <h1 className="text-lg w-4/5 dark:text-white text-[#0B0B1C] font-medium py-1 pb-3 text-center desktop:pt-20 desktop:text-5xl">Wallet</h1>
+            <h1 className="text-lg w-4/5 dark:text-white text-[#0B0B1C] font-medium py-1 pb-3 text-center desktop:pt-20 desktop:text-5xl movil:mt-5 movil:text-2xl laptop:mt-0">Wallet</h1>
             <section className='** bgslate-500 flex justify-evenly items-center w-full py-4'>
                 <div className='flex flex-col ** bgred-900 py-3 '>
                     <div className='flex gap-5 items-center'>
