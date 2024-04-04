@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { CiStar } from "react-icons/ci";
-import { TiStarFullOutline } from "react-icons/ti";
 import { CgAdd } from "react-icons/cg";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { FaRegClock } from "react-icons/fa6";
@@ -15,7 +13,6 @@ function DetailsEvent() {
   const { id } = useParams()
   const EVENTS = useSelector((state) => state.authReducer.events)
   const token = useSelector((state) => state.authReducer.token.token)
-  const [onFav, setOnFav] = useState(false)
   const [quantity, setQuantity] = useState(1)
   const event = Object.values(EVENTS).find(event => event.id === id);
   const [ticketTypeSelected, setTicketTypeSelected] = useState(event?.ticketTypes ? event.ticketTypes[0] : {});
@@ -38,18 +35,9 @@ function DetailsEvent() {
     }
   }, [ticketTypeSelected])
   
-  const handleFav = () => {
-    setOnFav(!onFav)
-    if (!onFav) {
-      localStorage.setItem('favorite', id)
-    }
-  }
   useEffect(() => {
     console.log(purchaseData);
   }, [purchaseData]);
-
-
-
 
   const handleAdd = () => {
     if (quantity < 10) {
@@ -87,7 +75,6 @@ function DetailsEvent() {
         currency: 'COP'
       });
       return `COP ${formattedPrice}`;
-
     }
   }
 
@@ -177,9 +164,6 @@ function DetailsEvent() {
         <div className=''>
           <div className='flex justify-between items-center '>
             <h2 className='text-white text-2xl font-bold'>{event.name}</h2>
-            {
-              !onFav ? <CiStar className='text-4xl text-white cursor-pointer' onClick={handleFav} /> : <TiStarFullOutline className=' cursor-pointer text-4xl text-white' onClick={handleFav} />
-            }
           </div>
 
           <div className='flex justify-between border-b-2 border-[#8468fb] p-3'>
@@ -189,7 +173,7 @@ function DetailsEvent() {
               <p className='text-white text-sm items-center flex gap-1'><FaRegClock />{event.time}</p>
             </div>
             <section className='flex flex-col items-end opacity-90'>
-              {/* Aqui van los precios */}
+
               <h3 className='font-semibold text-white'>Tickets from</h3>
               <p className='text-sm text-white'>{currencyConverterPro(ticketTypeSelected?.basePrice, "COP")}</p>
               <p className='text-sm text-white'>{currencyConverterPro(ticketTypeSelected?.basePrice, "USDT")}</p>
@@ -200,7 +184,7 @@ function DetailsEvent() {
         </div>
         <form onSubmit={handleBuy} className='flex flex-wrap justify-between '>
           <div className='flex flex-col items-start opacity-90'>
-            {/* Moneda de pago */}
+
             <p className='text-sm text-white py-3'>Your payment will be made in</p>
             <select onChange={handleCurrencySelected} className='text-white text-sm mb-2 bg-[#55347b] border border-[#8468fb] rounded-md py-1 px-3'>
               <option value="USDT">USDT</option>
@@ -208,11 +192,11 @@ function DetailsEvent() {
               <option value="ARS">ARS</option>
             </select>
           </div>
-          {/* Stocks */}
+
           <p className='text-sm text-white p-3'>Only {ticketTypeSelected?.availableQuantity < 10 ? <span className='text-red-500 font-bold '>{ticketTypeSelected?.availableQuantity}</span> : ticketTypeSelected?.availableQuantity} tickets left </p>
           <div className='w-screen flex justify-between items-center border-b-2 border-[#8468fb] pb-3'>
             <div>
-              {/* Cantidades a comprar */}
+
               <p className='text-sm text-white text-center pb-1'>Quantity</p>
               <div className='flex items-center'>
                 <IoMdRemoveCircleOutline onClick={handleSubtract} className='text-white text-2xl' />
@@ -220,7 +204,7 @@ function DetailsEvent() {
                 <CgAdd onClick={handleAdd} className='text-white text-2xl' />
               </div>
             </div>
-            {/* Tipo de ticket */}
+
 
             <select onChange={handleTicketTypeChange} className='text-white bg-[#55347b] text-sm border border-[#8468fb] rounded-md py-1 px-1'>
               <option defaultValue  value={event?.ticketTypes[0]?.type}>Select Type</option>
