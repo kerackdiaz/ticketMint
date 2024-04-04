@@ -64,10 +64,13 @@ const Layout = ({ onLogin }) => {
     }
     localStorage.setItem('darkMode', isDarkMode.toString());
   }, [isDarkMode]);
+
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
 
+  const sidebarRef = useRef(null);
+  
   const toggleMenu2 = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -76,20 +79,61 @@ const Layout = ({ onLogin }) => {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+        if (sidebarRef.current && !sidebarRef.current.contains(event.target) && showMenu) {
+            setShowMenu(false);
+        }
+    };
+
+    if (showMenu) {
+        document.addEventListener('click', handleClickOutside);
+    } else {
+        document.removeEventListener('click', handleClickOutside);
+    }
+
+    return () => {
+        document.removeEventListener('click', handleClickOutside);
+    };
+}, [showMenu]);
+
+
   const toggleDropdownUser = () => {
     setShowDropdownUser(!showDropdownUser);
   };
 
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target) && showDropdownUser) {
+            setShowDropdownUser(false);
+        }
+    };
+
+    if (showDropdownUser) {
+        document.addEventListener('click', handleClickOutside);
+    } else {
+        document.removeEventListener('click', handleClickOutside);
+    }
+
+    return () => {
+        document.removeEventListener('click', handleClickOutside);
+    };
+}, [showDropdownUser]);
+
+
   const handleLogout = () => {
     onLogin();
   }
+  
 
   return (
     <>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-[] dark:bg-[#0B0B1C] dark:border-[#0B0B1C]">
         <div className="px-3 py-3 lg:px-5 lg:pl-3 ">
           <div className="flex items-center justify-between h-[100px] ">
-            <div className="flex items-center justify-start rtl:justify-end">
+            <div ref={sidebarRef} className="flex items-center justify-start rtl:justify-end">
               <button
                 data-drawer-target="logo-sidebar"
                 data-drawer-toggle="logo-sidebar"
@@ -379,7 +423,8 @@ const Layout = ({ onLogin }) => {
               </div>
             <div className="flex items-center ">
               <div className="flex items-center ms-3">
-                <div >
+
+                <div ref={dropdownRef}>
                   <button
                     type="button"
                     className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 "

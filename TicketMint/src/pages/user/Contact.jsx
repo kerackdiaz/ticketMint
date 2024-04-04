@@ -5,7 +5,7 @@ import Mesagge from '../../../public/mesagge.png'
 
 const Contact = () => {
     return (
-        <main className=' flex flex-col w-full gap-2 desktop:gap-5 min-h-screen mx-auto text-white bg-[#0B0B1C]'>
+        <main className=' w-full min-h-screen desktop:mt-1 gap-10 text-white flex flex-col m-auto bg-[#0B0B1C]'>
             <h1 className='text-lg md:text-3xl font-medium text-center desktop:text-5xl desktop:mt-20'>Contact Us</h1>
             <h2 className='text-base md:text-lg text-center desktop:text-xl px-5 md:w-[75%] mx-auto'>We are here to help you. Please do not hesitate to contact us. Your opinion matters to us. Write to us and we'll get back to you soon. Thank you for choosing TicketMint.</h2>
             <div className='desktop:bg-slate-800 flex flex-col justify-center items-center desktop:flex-row-reverse desktop:w-full desktop:py-2'>
