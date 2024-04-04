@@ -1,6 +1,7 @@
 import React,{useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import moment from 'moment';
 
 function MessageEvent() {
     const {id} = useParams()
@@ -15,7 +16,7 @@ function MessageEvent() {
             <div  className=' rounded-lg bg-[#6651c3] '>
                 <p className='text-white p-1 px-3'>{notification.message}</p>
             </div>
-                <p className='dark:text-white text-[#0b0b1c] text-sm'>{notification.date}</p>
+            <p className='dark:text-white text-[#0b0b1c] text-sm'>{moment(notification.date).format('MMMM Do YYYY, h:mm:ss a')}</p>
         </div>
         )
         )

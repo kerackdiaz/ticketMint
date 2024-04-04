@@ -16,6 +16,7 @@ const Header = () => {
 
         ws.onopen = () => {
             console.log('connected');
+
         };
 
         ws.onmessage = (event) => {
@@ -42,7 +43,7 @@ const Header = () => {
     }, []);
 
     useEffect(() => {
-        if (location.pathname === '/notis' && notificationReceived) {
+        if (location.pathname === '/notifications' && notificationReceived) {
                 notisElement.classList.remove('notificationReceived');
                 localStorage.removeItem('notifications');
                 setNotificationReceived(false);
