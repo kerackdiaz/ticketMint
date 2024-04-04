@@ -104,7 +104,7 @@ function Event() {
       return
     }
     return Object.values(cat).map((category, index) => {
-      return <button onClick={handleGenre} value={category.name} key={index} className={genre === category.name ? 'text-white font-bold py-1 px-3 rounded-xl bg-[#0B0B1C]' : 'text-white py-1 px-3 rounded-xl dark:bg-[#512f6c] bg-[#0B0B1C]'}>{category.name}</button>
+      return <button onClick={handleGenre} value={category.name} key={index} className={genre === category.name ? 'text-white font-bold py-1 px-3 rounded-xl bg-[#0B0B1C]' : 'text-white py-1 desktop:px-1 movil:px-1 movil:min-w-36 rounded-xl dark:bg-[#512f6c] bg-[#0B0B1C]'}>{category.name}</button>
     })
   }, [cat, genre, handleGenre, isEmpty]);
 
@@ -132,10 +132,13 @@ function Event() {
 
   return (
     <main className='flex flex-1 flex-col desktop:mt-20 desktop:flex-wrap items-center'>
-      <section className='flex flex-col gap-3 justify-around w-screen items-center desktop:self-start desktop:w-[30%]'>
-        <h1 className='text-lg md:text-5xl py-1 dark:text-white text-[#0b0b1c] font-bold  desktop:fixed desktop:top-20 desktop:left-5'>Events</h1>
+      <div className='w-full flex flex-col items-center'>
+          <h1 className='text-2xl text-center pt-5 md:text-5xl py-1 dark:text-white text-[#0b0b1c] font-bold desktop:pt-0'>Events</h1>
+      </div>
+      <section className=' desktop:flex flex-col gap-3 justify-around w-screen items-center desktop:self-start desktop:w-[30%]'>
+        <h2 className='desktop:block text-lg md:text-3xl py-1 dark:text-white text-[#0b0b1c] font-bold  desktop:fixed desktop:top-36 desktop:left-5 hidden'>Genre's</h2>
         
-        <div className='flex desktop:flex-wrap desktop:items-start desktop:fixed desktop:overflow-y-auto desktop:justify-start desktop:left-5 desktop:top-36 desktop:w-[25%] desktop:min-h-[12%]  md:justify-center gap-2 overflow-x-auto w-[80%] px-5 desktop:px-0 my-4'>
+        <div className='ml-[10%] desktop:ml-0 flex desktop:flex-wrap desktop:items-start desktop:fixed desktop:overflow-y-auto desktop:justify-start desktop:left-5 desktop:top-44 desktop:w-[25%] desktop:min-h-[12%]  md:justify-center gap-2 overflow-x-auto w-[80%] px-5 desktop:px-0 my-4'>
           {
             getCategories
           }
