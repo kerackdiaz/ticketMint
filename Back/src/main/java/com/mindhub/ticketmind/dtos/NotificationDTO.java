@@ -9,7 +9,7 @@ public class NotificationDTO {
     private UUID id;
     private String message;
     private UUID eventId;
-    private String date;
+    private Date date;
 
 
     public NotificationDTO(Notification notification) {
@@ -34,5 +34,5 @@ public class NotificationDTO {
         return eventId;
     }
 
-    public String getDate() { return date;}
+    public Date getDate() { return date;}
 }

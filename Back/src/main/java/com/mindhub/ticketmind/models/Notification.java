@@ -58,10 +58,7 @@ public class Notification {
         this.event = event;
     }
 
-    public String getDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm EEE dd MMM");
-        return formatter.format(this.date);
-    }
+    public Date getDate() {return date;}
 
     public void setDate(Date date) {
         this.date = date;
