@@ -25,7 +25,7 @@ function DetailTicket() {
 
 
   return (
-    <div className=' p-4 flex flex-1 gap-5 flex-col desktop:mt-20 items-center'>
+    <div className=' p-4 flex flex-1 gap-5 flex-col desktop:mt-20 items-center min-h-screen'>
         <h2 className='text-3xl desktop:text-5xl dark:text-white text-[#0b0b1c] mb-5'>{/* Arch Enemy */}{eventTicket.name}</h2>
         <CardMyTickets key={eventTicket.id} name={eventTicket.name} date={eventTicket.date} time={eventTicket.time} image={eventTicket.imageURL} id={eventTicket.id} ticketCount={eventTicket.ticketCount}/>
         <div className='flex justify-between desktop:w-[420px] items-center w-full md:w-1/2 xl:w-1/3'>

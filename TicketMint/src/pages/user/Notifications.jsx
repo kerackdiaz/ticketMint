@@ -36,7 +36,7 @@ const Notifications = () => {
         )) : <p className='text-sm dark:text-white text-[#0b0b1c] w-full text-center desktop:text-xl'>No event notifications</p>
       }
   return (
-    <div className=' desktop:mt-20 flex flex-1 flex-col items-center'>
+    <div className=' desktop:mt-20 flex flex-1 flex-col items-center min-h-screen'>
       <h1 className='text-lg font-medium py-1 dark:text-white text-[#0b0b1c] desktop:text-5xl'>Notifications</h1>
       <div className='flex justify-between items-center w-1/2 px-3 py-1 border border-[#6651c3] rounded-lg'>
                 <div className="flex gap-2 w-full">

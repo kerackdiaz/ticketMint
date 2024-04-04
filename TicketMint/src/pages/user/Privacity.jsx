@@ -4,7 +4,7 @@ import Privacy from '../../../public/privacy.png'
 
 const Privacity = () => {
     return (
-        <main className='w-full min-h-screen flex flex-col gap-4 mx-auto text-white'>
+        <main className='w-full min-h-screen desktop:mt-1 gap-10 text-white flex flex-col m-auto bg-[#0B0B1C]'>
             <h1 className='text-lg font-medium md:text-3xl text-center desktop:text-5xl desktop:mt-20'>Privacy</h1>
             <div className='desktop:bg-slate-800 flex flex-col justify-center w-full items-center desktop:flex-row-reverse'>
                 <div className='self-center movil:w-[90%] desktop:w-1/3 text-base p-5 md:text-lg bg-slate-900 desktop:p-5 bg-slate-8 00 rounded-3xl'>
