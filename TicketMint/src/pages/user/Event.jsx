@@ -131,7 +131,7 @@ function Event() {
   }, [])
 
   return (
-    <main className=' flex flex-1 flex-col desktop:mt-20 desktop:flex-wrap items-center '>
+    <main className='flex flex-1 flex-col desktop:mt-20 desktop:flex-wrap items-center'>
       <section className='flex flex-col gap-3 justify-around w-screen items-center desktop:self-start desktop:w-[30%]'>
         <h1 className='text-lg md:text-5xl py-1 dark:text-white text-[#0b0b1c] font-bold  desktop:fixed desktop:top-20 desktop:left-5'>Events</h1>
         <Link to={'/favorites'}>
