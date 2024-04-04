@@ -27,7 +27,7 @@ function DetailTicket() {
   return (
 
     <div className=' p-4 flex flex-1 gap-5 flex-col desktop:mt-20 items-center min-h-screen'>
-        <h2 className='text-3xl desktop:text-5xl dark:text-white text-[#0b0b1c] mb-5'>{/* Arch Enemy */}{eventTicket.name}</h2>
+        
                   <div
                 className='absolute inset-0 w-full h-full opacity-50'
                 style={{

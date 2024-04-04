@@ -9,7 +9,7 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'logo': "url('/public/logo-transparent.png')",
+        'logo': "url('/public/logo.png')",
       },
       fontFamily: {
         'gemunu': ['Gemunu Libre', 'sans-serif'],
