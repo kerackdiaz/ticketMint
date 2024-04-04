@@ -131,12 +131,10 @@ function Event() {
   }, [])
 
   return (
-    <main className='flex flex-1 flex-col desktop:mt-20 desktop:flex-wrap items-center'>
+    <main className='flex flex-1 flex-col desktop:mt-20 desktop:flex-wrap items-center '>
       <section className='flex flex-col gap-3 justify-around w-screen items-center desktop:self-start desktop:w-[30%]'>
         <h1 className='text-lg md:text-5xl py-1 dark:text-white text-[#0b0b1c] font-bold  desktop:fixed desktop:top-20 desktop:left-5'>Events</h1>
-        <Link to={'/favorites'}>
-          <button type="button" className='text-white  font-medium desktop:fixed desktop:left-64 desktop:top-24 dark:bg-[#8468fb] bg-[#0B0B1C] py-1 px-3 flex items-center gap-2 rounded-xl'>Favorites <TiStarFullOutline /></button>
-        </Link>
+        
         <div className='flex desktop:flex-wrap desktop:items-start desktop:fixed desktop:overflow-y-auto desktop:justify-start desktop:left-5 desktop:top-36 desktop:w-[25%] desktop:min-h-[12%]  md:justify-center gap-2 overflow-x-auto w-[80%] px-5 desktop:px-0 my-4'>
           {
             getCategories
@@ -150,7 +148,7 @@ function Event() {
           }
         </section>
       </section>
-      <div className='flex justify-center items-around w-full desktop:w-[70%] gap-4 mb-10 mt-3 desktop:ml-[30%] desktop:self-start px-5 md:w-[450px]'>
+      <div className='flex justify-center items-around w-full desktop:w-[70%] gap-4 mb-10 mt-10 desktop:ml-[30%] desktop:self-start px-5 md:w-[450px]'>
         <select name="location" onChange={handleLocation} className='bg-[#0B0B1C] text-white py-2 px-4 flex '>
           <option className='text-white ' value={''} >Location</option>
           {

@@ -25,14 +25,14 @@ const salesToday = sales.transactions
         <div className="flex flex-wrap justify-center removable   flex-col md:flex-row lg:flex-nowrap lg:flex-col  ">
           <div id="eventsActive" className="w-1/4 max-w-full px-3 movil:w-1/2  movil:flex-none laptop:mb-0 laptop:w-1/4">
             <div  className="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border mb-4 ">
-              <div  className="flex-auto border-2 p-5 rounded-xl shadow-lg  tablet:w-[200px]  w-[200px] bg-white">
+              <div  className="flex-auto border-2 p-5 rounded-xl shadow-lg  tablet:w-[200px]  w-[200px] bg-white dark:bg-gray-900 dark:text-white">
                 <div className="flex flex-row -mx-3  ">
                   <div className="flex-none w-2/3 max-w-full ">
                     <div >
-                      <p className="mb-0 font-sans font-semibold leading-normal text-sm">
+                      <p className="mb-0 font-sans font-semibold leading-normal text-sm pl-2">
                         Events Active
                       </p>
-                      <h5 className="mb-0 text-left font-bold">
+                      <h5 className="mb-0 text-left font-bold pl-2">
                         {eventsActual.length}
                       </h5>
                     </div>
@@ -48,7 +48,7 @@ const salesToday = sales.transactions
           </div>
           <div id="totalEvents" className="w-1/4 max-w-full px-3 movil:w-1/2 movil:flex-none laptop:mb-0 laptop:w-1/4">
             <div className="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border mb-4">
-              <div id="totalEvents" className="flex-auto border-2 p-5 rounded-xl shadow-lg  tablet:w-[200px] w-[200px] bg-white">
+              <div id="totalEvents" className="flex-auto border-2 p-5 rounded-xl shadow-lg  tablet:w-[200px] w-[200px] bg-white dark:bg-gray-900 dark:text-white">
                 <div className="flex flex-row -mx-3">
                   <div className="flex-none w-2/3 max-w-full px-3">
                     <div>
@@ -71,7 +71,7 @@ const salesToday = sales.transactions
           </div>
           <div id="todaySales" className="w-1/4 max-w-full px-3 movil:w-1/2 movil:flex-none laptop:mb-0 laptop:w-1/4">
             <div className="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border mb-4">
-              <div  className="flex-auto border-2 p-5 rounded-xl shadow-lg  tablet:w-[200px] w-[200px] bg-white">
+              <div  className="flex-auto border-2 p-5 rounded-xl shadow-lg  tablet:w-[200px] w-[200px] bg-white dark:bg-gray-900 dark:text-white">
                 <div className="flex flex-row -mx-3">
                   <div className="flex-none w-2/3 max-w-full px-3">
                     <div>
@@ -94,7 +94,7 @@ const salesToday = sales.transactions
           </div>
           <div id="TotalSales" className="w-1/4 max-w-full px-3 movil:w-1/2 movil:flex-none laptop:w-1/4">
             <div className="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border mb-4">
-              <div  className="flex-auto border-2 p-5 rounded-xl shadow-lg  tablet:w-[200px] w-[200px] bg-white">
+              <div  className="flex-auto border-2 p-5 rounded-xl shadow-lg  tablet:w-[200px] w-[200px] bg-white dark:bg-gray-900 dark:text-white">
                 <div className="flex flex-row -mx-3">
                   <div className="flex-none w-2/3 max-w-full px-3">
                     <div>
@@ -103,7 +103,7 @@ const salesToday = sales.transactions
                       </p>
                       <h5 className="mb-0 font-bold">
                         {" "}
-                        $ {sales.balance}{" "}
+                        $ {sales.balance}{" "} USD
                         <span className="leading-normal hidden text-sm font-weight-bolder text-lime-500 p-5">
                           +5%
                         </span>
@@ -123,7 +123,7 @@ const salesToday = sales.transactions
           </div>
         </div>
       </div>
-      <div id="Chart" className="flex justify-evenly w-full ">
+      <div id="Chart" className="flex justify-evenly w-full  ">
         <Chart1 />
       </div>
     </>

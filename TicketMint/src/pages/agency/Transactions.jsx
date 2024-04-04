@@ -30,7 +30,7 @@ const Transactions = () => {
                 <div className='flex flex-col text-black gap-3 ** bgblue-500 flex-wrap w-full rounded-xl justify-around'>
                     {transactionsToShow?.length > 0 ? (
                         transactionsToShow.map((transaction) => (
-                            <div key={transaction.id} className='flex justify-between items-center px-10 py-5 border rounded-lg text-white bg-gray-900'>
+                            <div key={transaction.id} className='flex justify-between items-center px-10 py-5 border rounded-lg text-black bg-[#DBC1FA] dark:bg-[#55347B] dark:text-white'>
                                 <div className="flex gap-3 items-center">
                                     <div className="div p-2 bg-[#6651c3] rounded-full">
                                         <BiSolidStore className='text-3xl text-white' />

@@ -12,10 +12,20 @@ const Wallet = () => {
     const user = useSelector((state) => state.authReducer.user)
     const transactions = user.transactions
     const balance = user.balance
-    const currency = localStorage.getItem('conversion_rates')
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const totalPages = Math.ceil(transactions?.length / itemsPerPage);
+
+    const currency = localStorage.getItem('currency') || 'USD';
+    const total = currency === 'COP' ? Math.round(balance * localStorage.getItem("conversion_rates")) : balance * localStorage.getItem("conversion_rates");
+    const formattedTotal = new Intl.NumberFormat('en-US',
+        {
+            style: 'currency',
+            currency: currency,
+            currencyDisplay: 'code',
+            minimumFractionDigits: ['USD', 'ARS'].includes(currency) ? 2 : 0
+        }).format(total);
+
 
     const changePage = (newPage) => {
         setCurrentPage(newPage);
@@ -44,7 +54,7 @@ const Wallet = () => {
                         </div>
                         <IoEyeOutline className='text-2xl dark:text-white text-[#0B0B1C]' />
                     </div>
-                    <h3 className="dark:text-white text-[#0B0B1C] bgamber-900 text-4xl font-medium">{(balance * currency).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</h3>
+                    <h3 className="dark:text-white text-[#0B0B1C] bgamber-900 text-4xl font-medium">{formattedTotal}</h3>
                 </div>
                 <div className='bg-[#8468fb] w-[45%] py-2 flex flex-col justify-center items-center gap-1 rounded-xl'>
                     <GiDonkey className='w-8  bgorange-400 h-8' />
@@ -60,9 +70,9 @@ const Wallet = () => {
                 </div>
                 < IoMdCloseCircle className='text-lg text-[#e8635c]' />
             </div>
-            <section className='flex flex-col ** bgred-500 gap-5 w-[90%] py-4'>
+            <section className='flex flex-col items-center bgred-500 gap-5 w-[90%] py-4'>
                 <h1 className='text-3xl font-bold dark:text-white text-[#0B0B1C] '>Transactions</h1>
-                <div className='flex flex-col text-black gap-3 ** bgblue-500 flex-wrap w-full rounded-xl justify-around'>
+                <div className='flex flex-col text-black gap-3 ** bgblue-500 flex-wrap w-[90%] rounded-xl justify-around'>
                 {transactionsToShow?.length > 0 ? (
                     transactionsToShow.map((transaction) => (
                         <div key={transaction.id} className='flex justify-between items-center px-10 py-5 border rounded-lg  text-black dark:text-white dark:bg-gray-900'>
@@ -76,7 +86,7 @@ const Wallet = () => {
                                 </div>
                             </div>
                             <div className="div">
-                                <p className='font-bold'>{transaction.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })}</p>
+                                <p className='font-bold'>{transaction.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })} USD</p>
                             </div>
                         </div>
                     ))

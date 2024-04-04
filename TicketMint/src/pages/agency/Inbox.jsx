@@ -70,11 +70,11 @@ const Inbox = () => {
   );
 
   return (
-    <div className="laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-lg flex justify-center">
+    <div className="laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-lg flex justify-center border p-5 bg-[#dbc1fa] dark:bg-gray-900">
       <div class="flex laptop:flex-wrap laptop:flex-row movil:flex-col h-full w-full  overflow-x-hidden ">
         <div className="laptop:w-2/5 movil:w-full">
           <label className="mb-5">
-            <input type="text" value={search} onChange={handleSearchChange} placeholder="Search event" className="w-full laptop:w-1/2 py-1 rounded-lg border border-[#55347B]" />
+            <input type="text" value={search} onChange={handleSearchChange} placeholder="Search event" className="w-full laptop:w-1/2 py-1 rounded-lg border border-[#55347B] pl-2" />
           </label>
           <div className=" items-start flex flex-col gap-4 h-4/5 overflow-y-scroll mt-5 ">
             {filteredEvents.map((event) => (<div key={event.id} className="flex cursor-pointer items-center justify-start gap-5 border-b border-[#55347B]  tablet:w-full py-3 px-5  " onClick={() => handleEventSelect(event)} >
@@ -101,7 +101,7 @@ const Inbox = () => {
               </div>
               <form onSubmit={handleNotify} className="flex items-center">
                 <input className="w-4/5 mx-4 border py-2 outline-none px-3 rounded-lg" type="text" value={message} onChange={handleMessageChange} placeholder="Escribir notificación" maxLength="499" />
-                <button className="flex align-middle h-7 items-center gap-2 border rounded-lg px-6 bg-[#CA67F5] text-white hover:bg-indigo-800" type="submit">Send <TiArrowRightOutline /></button>
+                <button className="flex align-middle h-7 items-center gap-2 border rounded-lg px-6 bg-[#CA67F5] text-white hover:bg-indigo-800 h-[43px]" type="submit">Send <TiArrowRightOutline /></button>
               </form>
             </>
           )}

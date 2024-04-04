@@ -28,14 +28,14 @@ const OldEvents = () => {
       <tr key={index} className=" flex gap-2 laptop:justify-around border-b">
         <td className="flex items-center py-5  ">
      
-          <span className="ml-1 text-xs laptop:text-sm w-[60px] md:w-[150px] px-1 line-clamp-2" >{even.name}</span>
+          <span className="ml-1 text-xs laptop:text-sm w-[60px] md:w-[150px] px-1 line-clamp-2 text-center" >{even.name}</span>
         </td>
         <td className=" flex justify-center items-center laptop:w-[60px] "> 
-          <p className="text-xs laptop:text-sm font-medium text-gray-900"> {format(new Date(even.date), "dd/MM/yy")}</p>
+          <p className="text-xs laptop:text-sm font-medium text-gray-900 dark:text-white"> {format(new Date(even.date), "dd/MM/yy")}</p>
           
         </td>
         <td className=" flex justify-center w-[60px] md:w-[100px] laptop:w-[170px] items-center">
-            <p className="text-xs laptop:text-sm font-medium text-gray-900 line-clamp-1 laptop:line-clamp-2 ml-1">{even.venueName}</p>
+            <p className="text-xs laptop:text-sm font-medium text-gray-900 line-clamp-1 laptop:line-clamp-2 ml-1 dark:text-white text-center">{even.venueName}</p>
         </td>
         <td className=" flex justify-center laptop:w-[60px] items-center">
           <button
@@ -53,9 +53,9 @@ const OldEvents = () => {
   };
 
   return (
-    <div id="oldEvents" className="laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-lg flex justify-center">
-    <div className="w-full bg-white px-5 py-4 max-h-4/5 text-[#0B0B1C]">
-      <section className=" bg-white w-full">
+    <div id="oldEvents" className="laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-3xl flex justify-center">
+    <div className="w-full bg-[#dbc1fa] px-5 py-4 max-h-4/5 text-[#0B0B1C] dark:bg-gray-900 dark:border-2 dark:text-white rounded-3xl">
+      <section className=" bg-[#dbc1fa] w-full dark:bg-gray-900  dark:text-white ">
         <h1 className="text-3xl font-thin">Old Events</h1>
         <table className="font-medium border-1 w-full">
           <thead className="w-full">

@@ -44,14 +44,14 @@ const AllEvents = () => {
       <tr key={index} className=" flex gap-2 laptop:justify-around border-b">
         <td className="flex items-center py-5  ">
      
-          <span className="ml-1 text-xs laptop:text-sm w-[60px] md:w-[150px] px-1 line-clamp-2" >{even.name}</span>
+          <span className="ml-1 text-xs laptop:text-sm w-[60px] md:w-[150px] px-1 line-clamp-2 text-center " >{even.name}</span>
         </td>
         <td className=" flex justify-center items-center laptop:w-[60px] "> 
-          <p className="text-xs laptop:text-sm font-medium text-gray-900"> {format(new Date(even.date), "dd/MM/yy")}</p>
+          <p className="text-xs laptop:text-sm font-medium text-gray-900 dark:text-white"> {format(new Date(even.date), "dd/MM/yy")}</p>
           
         </td>
         <td className=" flex justify-center w-[60px] md:w-[100px] laptop:w-[170px] items-center">
-            <p className="text-xs laptop:text-sm font-medium text-gray-900 line-clamp-1 laptop:line-clamp-2 ml-1">{even.venueName}</p>
+            <p className="text-xs laptop:text-sm font-medium text-gray-900 line-clamp-1 laptop:line-clamp-2 ml-1 dark:text-white text-center">{even.venueName}</p>
         </td>
         <td className=" flex justify-center laptop:w-[60px] items-center">
           <button
@@ -75,7 +75,7 @@ const AllEvents = () => {
 
   return (
     
-    <div className="w-full bg-white px-5 py-4 max-h-4/5">
+    <div className="w-full bg-[#dbc1fa] dark:bg-gray-900 dark:border-2 dark:text-white px-5 py-4 max-h-4/5 rounded-3xl">
     
         <h1 className="text-3xl font-thin">Events</h1>
         <table className="font-medium border-1 w-full">

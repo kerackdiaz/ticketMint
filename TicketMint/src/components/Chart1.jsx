@@ -47,7 +47,7 @@ const Chart1 = () => {
       },
       labels: {
         style: {
-          colors: "#0B0B1C",
+          colors: "#fff",
           fontSize: "12px",
           fontFamily: "inherit",
           fontWeight: 400,
@@ -58,7 +58,7 @@ const Chart1 = () => {
     yaxis: {
       labels: {
         style: {
-          colors: "#0B0B1C",
+          colors: "#fff",
           fontSize: "12px",
           fontFamily: "inherit",
           fontWeight: 400,
@@ -87,7 +87,7 @@ const Chart1 = () => {
     },
   };
   return (
-    <div className="relative flex flex-col justify-center rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+    <div className="relative flex flex-col justify-center rounded-xl bg-[#0b0b1c] bg-clip-border text-gray-700 shadow-md ">
       <div className="relative mx-4 mt-4 flex flex-col gap-4 overflow-hidden rounded-none bg-transparent bg-clip-border text-gray-700 shadow-none tablet:flex-row tablet:items-center">
         <div className="w-max rounded-lg bg-gray-200 p-5 text-white">
           <svg
@@ -107,15 +107,15 @@ const Chart1 = () => {
           </svg>
         </div>
         <div>
-          <h6 className=" text-xl font-bold block font-sans text-gray-900 leading-relaxed tracking-normal  antialiased">
+          <h6 className=" text-xl font-bold block font-sans text-white leading-relaxed tracking-normal  antialiased">
             My Balance
           </h6>
-          <p className="block max-w-sm font-sans text-sm font-normal leading-normal text-gray-700 antialiased">
+          <p className="block max-w-sm font-sans text-sm font-normal leading-normal text-white antialiased">
             Visualize the sales you have had in the last months.
           </p>
         </div>
       </div>
-      <div className="pt-6 px-2 pb-0">
+      <div className="pt-6 px-2 pb-0 ">
         <Chart
           options={chartConfig}
           series={chartConfig.series}
