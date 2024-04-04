@@ -15,7 +15,8 @@ const Header = () => {
         const ws = new WebSocket('ws://localhost:8080/alert');
 
         ws.onopen = () => {
-            alert('Conexión establecida');
+            console.log('connected');
+
         };
 
         ws.onmessage = (event) => {
@@ -56,7 +57,7 @@ const Header = () => {
                 <div className="bg-logo w-20 h-20 bg-cover bg-transparent absolute translate-x-[-200px] translate-y-3 "></div>
                 {LINKS_HEADER.map((link) => {
                     const isActive = location.pathname === link.href;
-                    return (<Anchor key={link.href} href={link.href} iconSelect={link.iconSelect}  icon={link.icon} content={link.name} isActive={isActive} ></Anchor>)
+                    return (<Anchor key={link.href} href={link.href} iconSelect={link.iconSelect} id={link.name} icon={link.icon} content={link.name} isActive={isActive} ></Anchor>)
                 })
                 }
 

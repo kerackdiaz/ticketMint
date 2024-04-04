@@ -35,9 +35,6 @@ function DetailsEvent() {
     }
   }, [ticketTypeSelected])
   
-  useEffect(() => {
-    console.log(purchaseData);
-  }, [purchaseData]);
 
   const handleAdd = () => {
     if (quantity < 10) {
@@ -126,10 +123,18 @@ function DetailsEvent() {
     };
   
     setPurchaseData(updatedPurchaseData)
-  
-    console.log(updatedPurchaseData);
-    axios.post('http://localhost:8080/api/tickets/buy', updatedPurchaseData, {
-      headers: {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "The money will be deducted from your account, do you wish to continue?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.post('http://localhost:8080/api/tickets/buy', updatedPurchaseData, {
+        headers: {
         Authorization: `Bearer ${token}`
       }
     })
@@ -154,6 +159,15 @@ function DetailsEvent() {
       }
       })
       .catch(err => console.error(err))
+      } if (result.isDismissed) {
+        Swal.fire({
+          title: "Cancelled",
+          icon: "warning",
+          confirmButtonText: "Ok"
+        });
+      }
+    })
+    
   }
 
   return (

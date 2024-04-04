@@ -132,7 +132,7 @@ function SellTicket() {
                                     placeholder="client@example.com" />
                             </label>
                             {
-                                isAGift ? <button className='bg--[#8468fb] py-2 w-[60%] md:w-[150px] rounded-lg text-white' type="submit">Give away</button>
+                                isAGift ? <button className='bg-[#8468fb] py-2 w-[60%] md:w-[150px] rounded-lg text-white' type="submit">Give away</button>
                                     : <button className='bg-[#8468fb] w-[60%] py-2 md:w-[150px] rounded-lg text-white' type="submit">Transfer</button>
                             }
 

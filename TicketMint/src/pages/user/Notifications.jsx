@@ -11,10 +11,12 @@ const Notifications = () => {
   console.log(notifications);
   const events = useSelector((state) => state.authReducer.user.events);
 
+
   const handleSearch = (e) => {
     setSearch(e.target.value)
     console.log(e.target.value);
   }
+
 
 
   const eventIds = Array.from(new Set(notifications?.map((notification) => notification.eventId)));
