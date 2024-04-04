@@ -11,7 +11,7 @@ const Help = () => {
 
     return (
         <main className='w-full min-h-screen desktop:mt-[58px] gap-10 text-white flex flex-col m-auto dark:bg-[#0B0B1C]'>
-            <h1 className='text-lg font-medium text-black dark:text-white text-center md:text-3xl desktop:text-5xl desktop:mt-6'>Help</h1>
+            <h1 className='text-lg font-bold text-black dark:text-white text-center md:text-3xl desktop:text-5xl desktop:mt-6'>Help</h1>
             <div className='w-full'>
                 <p className='text-center text-black dark:text-white desktop:text-lg w-[90%] m-auto'>
                     Welcome to the TicketMint Help Center! We are here to help you with any questions or concerns you may have about our platform.

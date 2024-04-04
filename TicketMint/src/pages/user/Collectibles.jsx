@@ -47,7 +47,7 @@ function Collectibles() {
   }
   return (
     <div className=' flex flex-1 gap-6 desktop:mt-20 mb-20 flex-col items-center'>
-    <h2 className='text-lg font-medium py-1 dark:text-white text-[#0b0b1c] desktop:text-5xl desktop:text-start desktop:w-[70%]'>My Collectibles</h2>
+    <h2 className='text-lg font-bold py-1 dark:text-white text-[#0b0b1c] desktop:text-5xl desktop:text-start desktop:w-[70%]'>My Collectibles</h2>
       <div className='flex  justify-center  bg-[#bbabff] w-3/4 rounded-lg md:w-1/2'>
         <Link to={'/myTickets'} className='w-1/2 text-center flex justify-center'>
         <button className=' text-white' type="button">Tickets</button>

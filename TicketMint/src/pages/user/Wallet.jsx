@@ -44,7 +44,7 @@ const Wallet = () => {
 
 
 
-            <h1 className="text-lg w-4/5 dark:text-white text-[#0B0B1C] font-medium py-1 pb-3 text-center desktop:pt-20 desktop:text-5xl movil:mt-5 movil:text-2xl laptop:mt-0">Wallet</h1>
+            <h1 className="text-lg w-4/5 dark:text-white text-[#0B0B1C] font-bold py-1 pb-3 text-center desktop:pt-20 desktop:text-5xl movil:mt-5 movil:text-2xl laptop:mt-0">Wallet</h1>
             <section className='** bgslate-500 flex justify-evenly items-center w-full py-4'>
                 <div className='flex flex-col ** bgred-900 py-3 '>
                     <div className='flex gap-5 items-center'>
@@ -63,10 +63,10 @@ const Wallet = () => {
                 </div>
             </section>
 
-            <div className='flex justify-between items-center w-[90%] px-3 py-1 border border-[#6651c3] rounded-lg'>
-                <div className="flex gap-2 w-full">
+            <div className='flex justify-between items-center w-4/5 px-3 py-1 border border-[#6651c3] rounded-lg'>
+            <div className="flex gap-2 w-full">
                     <IoSearchOutline className='text-xl dark:text-white text-[#0B0B1C]' />
-                    <input type="text" className="w-full appearance-none border-none bg-transparent outline-none text-xs placeholder:text-[#0B0B1C] dark:placeholder:text-gray-500" placeholder=' Search currency' />
+                    <input type="text" className="w-full text-white appearance-none border-none bg-transparent outline-none text-xs placeholder:text-[#0B0B1C] dark:placeholder:text-gray-500" placeholder=' Search any transaction' />
                 </div>
                 < IoMdCloseCircle className='text-lg text-[#e8635c]' />
             </div>

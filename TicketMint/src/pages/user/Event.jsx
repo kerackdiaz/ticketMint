@@ -159,12 +159,13 @@ function Event() {
             getCities
           }
         </select>
-        <label className=' desktop:w-[70%] flex justify-center desktop:mt-0 md:w-[450px]'>
-          <div className='flex justify-between items-center w-[90%] px-3 py-1 border dark:border-[#6651c3] border-[#0b0b1c] rounded-lg'>
-            <IoSearchOutline className='text-xl dark:text-white text-[#0b0b1c]' />
-            <input onInput={handleSearch} type="search" className="appearance-none text-white placeholder:text-start w-full px-1 border-none bg-transparent  outline-none text-xs placeholder:text-[#0B0B1C]" placeholder=' Search currency' />
-          </div>
-        </label>
+        <div className='flex justify-between items-center w-1/2 px-3 py-1 border border-[#6651c3] rounded-lg'>
+                <div className="flex gap-2 w-full">
+                    <IoSearchOutline className='text-xl dark:text-white text-[#0B0B1C]' />
+                    <input type="text" onInput={handleSearch} value={search} className="w-full text-white appearance-none border-none bg-transparent outline-none text-xs placeholder:text-[#0B0B1C] dark:placeholder:text-gray-500" placeholder=' Search currency' />
+                </div>
+                < IoMdCloseCircle onClick={() => {setSearch('')}} className='text-lg text-[#e8635c]' />
+            </div>
       </div>
 
       <div className='flex flex-wrap gap-4 mb-20 desktop:mb-3 desktop:ml-[29%] justify-center desktop:w-[70%] desktop:mt-10 desktop:self-start'>

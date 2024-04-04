@@ -37,7 +37,7 @@ const Notifications = () => {
       }
   return (
     <div className=' desktop:mt-20 flex flex-1 flex-col items-center min-h-screen'>
-      <h1 className='text-lg font-medium py-1 dark:text-white text-[#0b0b1c] desktop:text-5xl movil:mt-5 movil:text-2xl laptop:mt-0'>Notifications</h1>
+      <h1 className='text-lg font-bold py-1 dark:text-white text-[#0b0b1c] mb-10 desktop:text-5xl movil:mt-5 movil:text-2xl laptop:mt-0'>Notifications</h1>
       <div className='flex justify-between items-center w-1/2 px-3 py-1 border border-[#6651c3] rounded-lg'>
                 <div className="flex gap-2 w-full">
                     <IoSearchOutline className='text-xl dark:text-white text-[#0B0B1C]' />

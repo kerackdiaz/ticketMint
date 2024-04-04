@@ -49,7 +49,7 @@ function QrScan() {
             ></div>
 
        <div className='z-10 p-3 gap-6 flex flex-col justify-center items-center'>
-        <h2 className='text-3xl dark:text-white text-[#0b0b1c] desktop:text-5xl'>Qr Scan</h2>
+        <h2 className='text-3xl dark:text-white font-bold text-[#0b0b1c] desktop:text-5xl'>Qr Scan</h2>
         <CardMyTickets key={eventTicket.id} name={eventTicket.name} date={eventTicket.date} time={eventTicket.time} image={eventTicket.imageURL} id={eventTicket.id} ticketCount={eventTicket.ticketCount}/>
         <div className='flex flex-col items-center'>
             <BsQrCodeScan className='text-3xl dark:text-white text-[#0b0b1c]'/>

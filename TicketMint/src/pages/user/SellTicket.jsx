@@ -94,7 +94,7 @@ function SellTicket() {
 
 
                 <div className='z-10 p-3 gap-6 flex flex-col justify-center items-center mt-20'>
-                    <h2 className='text-3xl dark:text-white text-[#0b0b1c] pt-3 desktop:text-5xl'>Sell Ticket/ Transfer Ticket</h2>
+                    <h2 className='text-3xl dark:text-white text-[#0b0b1c] font-bold pt-3 desktop:text-5xl'>Sell Ticket/ Transfer Ticket</h2>
                     <form onSubmit={hanleSubmit} className=' bg--slate-500 flex flex-col justify-center desktop:gap-20 movil:gap-5   desktop:w-[80%] desktop:flex-row w-full items-center md:w-1/2 xl:w-1/3 shadow-black shadow-2xl rounded-lg dark:shadow-none'>
                         <img className='bg--purple-500 laptop:w-4/5 movil:w-1/3 desktop:w-1/3' src={eventTicket.imageURL} alt="" />
 
