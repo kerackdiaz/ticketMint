@@ -15,6 +15,7 @@ const Header = () => {
         const ws = new WebSocket('ws://localhost:8080/alert');
 
         ws.onopen = () => {
+            alert('Conexión establecida');
         };
 
         ws.onmessage = (event) => {
@@ -25,7 +26,7 @@ const Header = () => {
                 if (events.length > 0) {
                     dispatch(getNotify(events));
                     setNotificationReceived(true);
-                    const notisElement = document.getElementById('Notis');
+                    const notisElement = document.getElementById('Notices');
                     notisElement.classList.add('notificationReceived');
                     localStorage.setItem('notifications', 'newAlert');
                 }
@@ -41,7 +42,7 @@ const Header = () => {
     }, []);
 
     useEffect(() => {
-        if (location.pathname === '/notis' && notificationReceived) {
+        if (location.pathname === '/notifications' && notificationReceived) {
                 notisElement.classList.remove('notificationReceived');
                 localStorage.removeItem('notifications');
                 setNotificationReceived(false);
