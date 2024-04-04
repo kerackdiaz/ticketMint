@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import QRCode from "react-qr-code";
 import { MdKeyboardDoubleArrowUp } from "react-icons/md";
 import ScanQr from '../../../public/ScanQR.png'
+import { FaWindowClose } from "react-icons/fa";
 
 
 
@@ -68,7 +69,7 @@ function SellTicket() {
     }
 
     const handleTap = () => {
-        setShowQR(true);
+        setShowQR(!showQR);
     };
 
     useEffect(() => {
@@ -92,13 +93,13 @@ function SellTicket() {
             ></div>
 
 
-                <div className='z-10 p-3 gap-6 flex flex-col justify-center items-center'>
+                <div className='z-10 p-3 gap-6 flex flex-col justify-center items-center mt-20'>
                     <h2 className='text-3xl dark:text-white text-[#0b0b1c] pt-3 desktop:text-5xl'>Sell Ticket/ Transfer Ticket</h2>
-                    <form onSubmit={hanleSubmit} className=' bg--slate-500 flex flex-col justify-center gap-20 desktop:w-[80%] desktop:flex-row w-full items-center md:w-1/2 xl:w-1/3 shadow-black shadow-2xl rounded-lg dark:shadow-none'>
+                    <form onSubmit={hanleSubmit} className=' bg--slate-500 flex flex-col justify-center desktop:gap-20 movil:gap-5   desktop:w-[80%] desktop:flex-row w-full items-center md:w-1/2 xl:w-1/3 shadow-black shadow-2xl rounded-lg dark:shadow-none'>
                         <img className='bg--purple-500 laptop:w-4/5 movil:w-1/3 desktop:w-1/3' src={eventTicket.imageURL} alt="" />
 
 
-                        <div className='flex flex-col items-center gap-2 w-1/4 text-center bg--green-50'>
+                        <div className='flex flex-col items-center gap-2 laptop:w-1/4 movil:w-1/2 text-center bg--green-50'>
                             <label className='w-full text-center'>
                                 <p className='dark:text-white text-center'>How much will the ticket sell for?</p>
                                 <input required
@@ -136,26 +137,26 @@ function SellTicket() {
                             }
 
 
-                            <div className='flex flex-col gap-2'>
+                            <div className='flex flex-col gap-2 '>
 
-                                {
-                                    showQR ?
-                                        <>
-                                            <div className='bg-red-500 flex flex-col items-center'>
+                                            <div className='flex flex-col items-center'>
                                                 <BsQrCodeScan className='text-3xl dark:text-white text-[#0b0b1c]' />
                                                 <p className='dark:text-white text-[#0b0b1c] opacity-90' onClick={handleTap}>Present QR on scanner</p>
                                             </div>
-
+                                {
+                                    showQR ?
+                                        <div className='absolute w-full top-0 left-0 bg-[#000000b5] h-full flex justify-center items-center'>
+                                            <div onClick={handleTap} className=' w-14 h-14 absolute movil:top-3 movil:right-6 desktop:top-20'><FaWindowClose className='w-[90%] h-[90%] text-red-700 hover:scale-90 hover:text-red-900' /></div>
                                             <div id='qr' className='mx-auto w-[256px] h-[256px] p-4 bg-white flex justify-center items-center rounded-xl'>
                                                 <QRCode value={qrValue} size={228} style={{ height: "auto", maxWidth: "100%", width: "100%" }} />
                                             </div>
-                                        </> :
-                                        <div className='dark:bg-gray-900 bg-white m-auto rounded-xl w-[228px] h-[228px]'>
-                                            <MdKeyboardDoubleArrowUp className='text-3xl m-auto dark:text-gray-300 text-[#0b0b1c]' />
+                                        </div> :
+                                        <div className='dark:bg-gray-900 bg-white m-auto rounded-xl '>
+                                            {/* <MdKeyboardDoubleArrowUp className='text-3xl m-auto dark:text-gray-300 text-[#0b0b1c]' />
                                             <p className='dark:text-gray-300 text-xs text-[#0b0b1c]'>
                                                 Press the Transfer to generate a scan.
                                             </p>
-                                            <img src={ScanQr} className='w-52 relative bottom-2 mx-auto' alt="" />
+                                            <img src={ScanQr} className='w-52 relative bottom-2 mx-auto' alt="" /> */}
                                         </div>
                                 }
                                 <div>
@@ -167,7 +168,7 @@ function SellTicket() {
 
                 </div>
             </div>
-        </div>
+    
     )
 }
 

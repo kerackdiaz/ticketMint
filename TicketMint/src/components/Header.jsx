@@ -51,8 +51,8 @@ const Header = () => {
 
     return (
         <header>
-            <div className="flex desktop:fixed desktop:z-50 desktop:top-0 desktop:border-b-2 desktop:px-96 fixed bottom-0 z-10 px-10 justify-between lg:px-28 items-center w-full min-h-[58px] max-h-[58px] bg-[#0B0B1C]">
-                <div className="bg-logo w-20 h-20 bg-cover bg-[#0b0b1c] absolute translate-x-[-200px] translate-y-3 "></div>
+            <div className="flex desktop:fixed desktop:z-50 desktop:top-0 desktop:border-b-2 desktop:px-96 fixed bottom-0  px-10 justify-between lg:px-28 items-center w-full min-h-[58px] max-h-[58px] bg-[#0B0B1C] z-50">
+                <div className="bg-logo w-20 h-20 bg-cover bg-transparent absolute translate-x-[-200px] translate-y-3 "></div>
                 {LINKS_HEADER.map((link) => {
                     const isActive = location.pathname === link.href;
                     return (<Anchor key={link.href} href={link.href} iconSelect={link.iconSelect}  icon={link.icon} content={link.name} isActive={isActive} ></Anchor>)
