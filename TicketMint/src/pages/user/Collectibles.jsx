@@ -14,7 +14,10 @@ function Collectibles() {
   const events = Object.values(eventsData).filter(event => 
     MyTickets.some(ticket => ticket.eventId === event.id)
   );
-  const filteredEvents = events.filter(event => new Date(event.date + "T00:00:00Z") < new Date())
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  
+  const filteredEvents = events.filter(event => new Date(event.date + "T00:00:00Z") < yesterday);
 
   const ticketCounts = MyTickets.reduce((counts, ticket) => {
     counts[ticket.eventId] = (counts[ticket.eventId] || 0) + ticket.quantity;

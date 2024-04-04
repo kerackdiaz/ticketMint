@@ -51,7 +51,7 @@ const Login = ({ onLogin }) => {
             setTimeout(() => {
                 onLogin();
                 setIsLoading(false);
-            }, 3000);
+            }, 1000);
         }
         setMenssageError(response.message);
     };

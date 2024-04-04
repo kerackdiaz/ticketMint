@@ -38,7 +38,7 @@ const AllEvents = () => {
     }
 
     return Object.values(event)
-    .filter(even => new Date(even.date) >= new Date())
+    .filter(even => new Date(even.date) > new Date().setHours(new Date().getHours() - 24))
     .map((even, index) => (
       
       <tr key={index} className=" flex gap-2 laptop:justify-around border-b">

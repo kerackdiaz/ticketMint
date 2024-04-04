@@ -95,7 +95,7 @@ const Inbox = () => {
                   {selectedEvent.notifications && selectedEvent.notifications.map((notification, i) => (
                     <>
                       <li className="text-white bg-[#6651c3] px-5 py-2 rounded-md" key={i}>{notification.message}</li>
-                      <p className=" text-right dark:text-white text-black  text-xs">{moment(notification.date).format('MMMM Do YYYY, h:mm:ss a')}</p>
+                      <p className=" text-right dark:text-white text-black  text-xs">{moment(notification.date, 'YYYY-MM-DD HH:mm:ss.SSS').format('MMMM Do YYYY, h:mm:ss a')}</p>
                     </>
                   ))}
                 </ul>

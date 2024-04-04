@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect, useRef} from 'react'
 import { useLocation } from 'react-router-dom';
 import { LINKS_HEADER } from '../utils/links'
 import Anchor from './Anchor'
@@ -10,12 +10,12 @@ const Header = () => {
     const [notificationReceived, setNotificationReceived] = useState(false);
     const location = useLocation();
     const dispatch = useDispatch();
-
+    const notisElement = useRef(null);
     useEffect(() => {
         const ws = new WebSocket('ws://localhost:8080/alert');
 
         ws.onopen = () => {
-            alert('Conexión establecida');
+            console.log('Conexión establecida');
         };
 
         ws.onmessage = (event) => {
@@ -56,7 +56,7 @@ const Header = () => {
                 <div className="bg-logo w-20 h-20 bg-cover bg-transparent absolute translate-x-[-200px] translate-y-3 "></div>
                 {LINKS_HEADER.map((link) => {
                     const isActive = location.pathname === link.href;
-                    return (<Anchor key={link.href} href={link.href} iconSelect={link.iconSelect}  icon={link.icon} content={link.name} isActive={isActive} ></Anchor>)
+                    return (<Anchor id={link.name} key={link.href} href={link.href} iconSelect={link.iconSelect}  icon={link.icon} content={link.name} isActive={isActive} ></Anchor>)
                 })
                 }
 
