@@ -75,7 +75,7 @@ const AllEvents = () => {
 
   return (
     
-    <div className="w-full bg-white dark:bg-[#0B0B1C] dark:border-2 dark:text-white px-5 py-4 max-h-4/5">
+    <div className="w-full bg-[#dbc1fa] dark:bg-gray-900 dark:border-2 dark:text-white px-5 py-4 max-h-4/5 rounded-3xl">
     
         <h1 className="text-3xl font-thin">Events</h1>
         <table className="font-medium border-1 w-full">

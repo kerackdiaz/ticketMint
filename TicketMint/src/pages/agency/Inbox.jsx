@@ -70,7 +70,7 @@ const Inbox = () => {
   );
 
   return (
-    <div className="laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-lg flex justify-center">
+    <div className="laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-lg flex justify-center border p-5 bg-[#dbc1fa] dark:bg-gray-900">
       <div class="flex laptop:flex-wrap laptop:flex-row movil:flex-col h-full w-full  overflow-x-hidden ">
         <div className="laptop:w-2/5 movil:w-full">
           <label className="mb-5">

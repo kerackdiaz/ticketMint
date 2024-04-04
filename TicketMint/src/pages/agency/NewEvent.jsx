@@ -103,11 +103,11 @@ const NewEvent = () => {
   };
 
   return (
-    <div className=" laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-lg flex justify-center">
+    <div className=" laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh]  flex justify-center ">
       <div className=" flex items-center justify-center ">
         <div className="container max-w-screen-lg mx-auto  ">
           <div>
-            <div className="bg-white dark:bg-[#0B0B1C] dark:border-2 mt-12 shadow-lg p-4 px-4 md:p-8 mb-6">
+            <div className="bg-[#dbc1fa] dark:bg-gray-900 dark:border-2 mt-12 shadow-lg rounded-3xl p-4 px-4 md:p-8 mb-6">
               <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                 <div className="text-gray-600 dark:text-white">
                   <p className="font-medium text-lg ">Create New Event</p>
@@ -116,9 +116,9 @@ const NewEvent = () => {
 
                 <div className="lg:col-span-2">
                   <form onSubmit={handleSubmit}>
-                    <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                    <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5 text-white">
                       <div className="md:col-span-5">
-                        <label for="full_name">Name</label>
+                        <label for="full_name ">Name</label>
                         <input
                           type="text"
                           id="full_name"

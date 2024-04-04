@@ -53,9 +53,9 @@ const OldEvents = () => {
   };
 
   return (
-    <div id="oldEvents" className="laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-lg flex justify-center">
-    <div className="w-full bg-white px-5 py-4 max-h-4/5 text-[#0B0B1C] dark:bg-[#0B0B1C] dark:border-2 dark:text-white ">
-      <section className=" bg-white w-full dark:bg-[#0B0B1C]  dark:text-white ">
+    <div id="oldEvents" className="laptop:translate-x-[10vw] laptop:translate-y-[15vh] laptop:w-4/5 movil:w-full max-h-[80vh]  movil:translate-x-[-8vw] movil:translate-y-[18vh] rounded-3xl flex justify-center">
+    <div className="w-full bg-[#dbc1fa] px-5 py-4 max-h-4/5 text-[#0B0B1C] dark:bg-gray-900 dark:border-2 dark:text-white rounded-3xl">
+      <section className=" bg-[#dbc1fa] w-full dark:bg-gray-900  dark:text-white ">
         <h1 className="text-3xl font-thin">Old Events</h1>
         <table className="font-medium border-1 w-full">
           <thead className="w-full">
