@@ -29,7 +29,7 @@ const Wallet = () => {
 
 
     return (
-        <main className='flex text-white flex-col items-center w-full m-auto min-h-screen mb-20' >
+        <main className='flex text-white flex-col items-center w-full m-auto min-h-screen mb-20 desktop:mt-20' >
 
 
             <h1 className="text-lg dark:text-white text-[#0B0B1C] font-medium py-1 pb-3 text-center">Wallet</h1>
@@ -37,7 +37,7 @@ const Wallet = () => {
                 <div className='flex flex-col ** bgred-900 py-3 '>
                     <div className='flex gap-5 items-center'>
                         <div>
-                            <h2 className="dark:text-white text-[#0B0B1C] bgblue-500 text-base font-medium h2">Cantidad Total</h2>
+                            <h2 className="dark:text-white text-[#0B0B1C] bgblue-500 text-base font-medium h2">Total Amount</h2>
                             <p className="** bgred-900 text-xs text-center dark:text-white text-[#0B0B1C]">{transactions.length} / transactions</p>
                         </div>
                         <IoEyeOutline className='text-2xl dark:text-white text-[#0B0B1C]' />
