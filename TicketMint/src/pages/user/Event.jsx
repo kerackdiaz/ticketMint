@@ -136,7 +136,7 @@ function Event() {
           <h1 className='text-2xl text-center pt-5 md:text-5xl py-1 dark:text-white text-[#0b0b1c] font-bold desktop:pt-0'>Events</h1>
       </div>
       <section className=' desktop:flex flex-col gap-3 justify-around w-screen items-center desktop:self-start desktop:w-[30%]'>
-        <h2 className='desktop:block text-lg md:text-3xl py-1 dark:text-white text-[#0b0b1c] font-bold  desktop:fixed desktop:top-36 desktop:left-5 hidden'>Genre's</h2>
+        <h2 className='desktop:block text-lg md:text-3xl py-1 dark:text-white text-[#0b0b1c] font-bold  desktop:fixed desktop:top-36 desktop:left-5 hidden'>Genres</h2>
 
         
         <div className='ml-[10%] desktop:ml-0 flex desktop:flex-wrap desktop:items-start desktop:fixed desktop:overflow-y-auto desktop:justify-start desktop:left-5 desktop:top-44 desktop:w-[25%] desktop:min-h-[12%]  md:justify-center gap-2 overflow-x-auto w-[80%] px-5 desktop:px-0 my-4'>

@@ -42,8 +42,6 @@ const Wallet = () => {
 
         <main className='flex text-white flex-col items-center w-full m-auto min-h-screen' >
 
-
-
             <h1 className="text-lg w-4/5 dark:text-white text-[#0B0B1C] font-bold py-1 pb-3 text-center desktop:pt-20 desktop:text-5xl movil:mt-5 movil:text-2xl laptop:mt-0">Wallet</h1>
             <section className='** bgslate-500 flex justify-evenly items-center w-full py-4'>
                 <div className='flex flex-col ** bgred-900 py-3 '>
@@ -52,14 +50,13 @@ const Wallet = () => {
                             <h2 className="dark:text-white text-[#0B0B1C] bgblue-500 text-base font-medium h2">Total Amount</h2>
                             <p className="** bgred-900 text-xs text-center dark:text-white text-[#0B0B1C]">{transactions.length} / transactions</p>
                         </div>
-                        <IoEyeOutline className='text-2xl dark:text-white text-[#0B0B1C]' />
                     </div>
                     <h3 className="dark:text-white text-[#0B0B1C] bgamber-900 text-4xl font-medium">{formattedTotal}</h3>
                 </div>
-                <div className='bg-[#8468fb] w-[45%] py-2 flex flex-col justify-center items-center gap-1 rounded-xl'>
+                <div className='bg-[#8468fb] w-[45%] desktop:w-[25%] py-2 flex flex-col justify-center items-center gap-1 rounded-xl'>
                     <GiDonkey className='w-8  bgorange-400 h-8' />
-                    <p className="text-xs  text-center">Want to recharge your wallet?</p>
-                    <Link to={'/Payment'} className="px-5 py-1 ** bgpurple-500 button border rounded-lg text-xs text-center"> Connect </Link>
+                    <p className="text-xs desktop:text-sm text-center">Want to recharge your wallet?</p>
+                    <Link to={'/Payment'} className="px-5 py-1 ** bgpurple-500 button border rounded-lg desktop:text-sm text-xs text-center"> Connect </Link>
                 </div>
             </section>
 
