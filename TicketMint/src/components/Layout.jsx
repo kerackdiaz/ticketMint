@@ -215,7 +215,7 @@ const Layout = ({ onLogin }) => {
                         </li>
                         <li>
                           <Link
-                            to={"/"}
+                            to={"/Events"}
                             className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                           >
                             All Events
@@ -421,18 +421,19 @@ const Layout = ({ onLogin }) => {
                   {userdata.companyName}
                 </h2>
               </div>
-            <div className="flex items-center">
+            <div className="flex items-center ">
               <div className="flex items-center ms-3">
+
                 <div ref={dropdownRef}>
                   <button
                     type="button"
-                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 "
                     aria-expanded="false"
                     onClick={toggleDropdownUser}
                   >
                     <span className="sr-only">Open user menu</span>
                     <img id="MyProfile"
-                      className="w-20 h-20 rounded-full"
+                      className="w-10 h-10 rounded-full  tablet:w-20 tablet:h-20 laptop:w-16 laptop:h-16 desktop:w-20 desktop:h-20  "
                       src={userdata.profilePic}
                       alt="user photo"
                     />
@@ -459,15 +460,7 @@ const Layout = ({ onLogin }) => {
                     </p>
                   </div>
                   <ul className="py-1" role="none">
-                    <li>
-                      <Link
-                        to={"/"}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        role="menuitem"
-                      >
-                        Dashboard
-                      </Link>
-                    </li>
+                   
                     <li>
                       <Link
                         to={"/Profile"}
@@ -477,15 +470,7 @@ const Layout = ({ onLogin }) => {
                         Profile
                       </Link>
                     </li>
-                    <li>
-                      <Link
-                        to={"/Report"}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        role="menuitem"
-                      >
-                        Earnings
-                      </Link>
-                    </li>
+                  
                     <li className=" dark:text-white text-gray-700 flex gap-3 text-sm items-center px-4">
                       Theme:
                       {

@@ -212,7 +212,7 @@ const EventDetails = () => {
                         </div>
                       </div>
                       <div className="laptop:w-3/12 movil:w-full laptop:border-l border-gray-200">
-                        <h3 className="w-full text-center">Event banner</h3>
+                        <h3 className="w-full text-center text-gray-500">Event banner</h3>
                         <img className="w-full h-auto object-contain group-hover:opacity-0" src={even.imageURL} alt="" />
                         <label form="changepic" className="cursor-pointer hover:opacity-100 opacity-0 relative z-10 w-full h-[85%] translate-y-[-100%] flex justify-center items-center  bg-[#80808073] text-5xl" >
                           <div>
