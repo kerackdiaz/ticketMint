@@ -37,6 +37,18 @@ function QrScan() {
 
   return (
     <div className=' flex flex-1 p-3 gap-6 desktop:mt-20 flex-col items-center'>
+                        <div
+                className='absolute inset-0 w-full h-full opacity-50'
+                style={{
+                    backgroundImage: `url(${eventTicket.imageURL})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    filter: 'blur(10px)',
+                    zIndex: 0,
+                }}
+            ></div>
+
+       <div className='z-10 p-3 gap-6 flex flex-col justify-center items-center'>
         <h2 className='text-3xl dark:text-white text-[#0b0b1c] desktop:text-5xl'>Qr Scan</h2>
         <CardMyTickets key={eventTicket.id} name={eventTicket.name} date={eventTicket.date} time={eventTicket.time} image={eventTicket.imageURL} id={eventTicket.id} ticketCount={eventTicket.ticketCount}/>
         <div className='flex flex-col items-center'>
@@ -49,6 +61,7 @@ function QrScan() {
         </div>}
         <div>
             <p className='dark:text-white text-[#0b0b1c] opacity-60 w-[185px] text-center'>This code is unique and will be deactivated once scanned.</p>
+        </div>
         </div>
     </div>
   )
